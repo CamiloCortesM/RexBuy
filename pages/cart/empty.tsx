@@ -17,7 +17,14 @@ const EmptyPage = () => {
         height="calc(100vh - 200px)"
         sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
       >
-        <RemoveShoppingCartOutlined sx={{ fontSize: 100 }} />
+        <img
+          src={'/emptycart.png'}
+          alt="emptycart"
+          style={{
+            width: '100%',
+            maxWidth: 400,
+          }}
+        />
         <Box display="flex" flexDirection="column" alignItems="center">
           <Typography>Su carrito está vació</Typography>
           <NextLink href="/" passHref legacyBehavior>
