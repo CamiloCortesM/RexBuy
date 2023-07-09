@@ -20,8 +20,7 @@ type TechnologyType =
   | 'accesorios'
   | 'tabletas'
   | 'smartwatch'
-  | 'monitores'
-  | 'accesorios';
+  | 'monitores';
 
 interface SeedData {
   products: SeedProduct[];
@@ -41,24 +40,6 @@ export const initialData: SeedData = {
       tags: ['smartphone', 'Apple', 'iOS'],
       brand: 'Apple',
       model: 'iPhone 12',
-      type: 'celulares',
-    },
-    {
-      title: 'Samsung Galaxy S21',
-      description: 'Teléfono Android con pantalla AMOLED y potente procesador.',
-      images: [
-        'galaxys21.webp',
-        'galaxys21-2.webp',
-        'galaxys21-3.webp',
-        'galaxys21-4.webp',
-      ],
-      inStock: 30,
-      price: 899.99,
-      capacidad: ['256GB', '512GB'],
-      slug: 'samsung-galaxy-s21',
-      tags: ['smartphone', 'Samsung', 'Android'],
-      brand: 'Samsung',
-      model: 'Galaxy S21',
       type: 'celulares',
     },
     {
@@ -543,6 +524,24 @@ export const initialData: SeedData = {
       brand: 'JBL',
       model: 'Flip 5',
       type: 'accesorios',
+    },
+    {
+      title: 'Samsung Galaxy S21',
+      description: 'Teléfono Android con pantalla AMOLED y potente procesador.',
+      images: [
+        'galaxys21.webp',
+        'galaxys21-2.webp',
+        'galaxys21-3.webp',
+        'galaxys21-4.webp',
+      ],
+      inStock: 30,
+      price: 899.99,
+      capacidad: ['256GB', '512GB'],
+      slug: 'samsung-galaxy-s21',
+      tags: ['smartphone', 'Samsung', 'Android'],
+      brand: 'Samsung',
+      model: 'Galaxy S21',
+      type: 'celulares',
     },
   ],
 };
