@@ -1,8 +1,26 @@
+import { NextPage } from 'next';
+import { Typography } from '@mui/material';
 
-export default function Home() {
+import { ShopLayout } from '@/components/layouts/ShopLayout';
+import { initialData } from '../database/products';
+import { ProductList } from '../components/products';
+
+const Home: NextPage = () => {
   return (
-    <>
-      <h1>Hello world</h1>
-    </>
-  )
-}
+    <ShopLayout
+      title={'RexBuy - Home'}
+      pageDescription={'Encuentra los mejores productos de tecnologia aquí'}
+    >
+      <Typography variant="h1" component="h1" color="primary">
+        Tienda
+      </Typography>
+      <Typography variant="h2" sx={{ mb: 1 }}>
+        Todos los productos
+      </Typography>
+
+      <ProductList products={initialData.products as any} />
+    </ShopLayout>
+  );
+};
+
+export default Home;
