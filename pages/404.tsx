@@ -11,7 +11,7 @@ const Custom404 = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        height="calc(100vh - 200px)"
+        height="calc(100vh - 220px)"
         sx={{ flexDirection: 'column' }}
       >
         <img

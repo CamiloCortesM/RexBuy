@@ -4,21 +4,13 @@ import { ProductSlideshow, ItemSelector } from '../../components/products';
 import { initialData } from '../../database/products';
 import { ItemCounter } from '../../components/ui/ItemCounter';
 
-const product = initialData.products[6];
+const product = initialData.products[0];
 
 const ProductPage = () => {
   return (
     <ShopLayout title={product.title} pageDescription={product.description}>
-      <Grid
-        container
-        spacing={4}
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
-        <Grid item xs={12} sm={6}>
+      <Grid container spacing={4}>
+        <Grid item xs={12} sm={7}>
           <ProductSlideshow images={product.images} />
         </Grid>
 
@@ -74,6 +66,31 @@ const ProductPage = () => {
               <Typography variant="body2">{product.description}</Typography>
             </Box>
           </Box>
+        </Grid>
+        <Grid
+          item
+          sm={7}
+          container
+          spacing={3}
+          sx={{
+            display: { xs: 'none', sm: 'block' },
+          }}
+        >
+          {product.images.map((image) => (
+            <img
+              src={`/products/${image}`}
+              alt={product.title}
+              style={{
+                width: '25%',
+                maxWidth: 150,
+                minHeight: 120,
+                objectFit: 'contain',
+                border: '1px solid rgba(0,0,0,0.05)',
+                borderRadius: 15,
+                margin: '10px',
+              }}
+            />
+          ))}
         </Grid>
       </Grid>
     </ShopLayout>
