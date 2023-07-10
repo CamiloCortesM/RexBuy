@@ -90,10 +90,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
 
         <CardContent sx={{ mt: 0.5 }} className="fadeIn">
           <Typography variant="h2" fontWeight={500}>
-            {`$${product.price}`}{' '}
-            <Typography variant="caption" fontWeight={500} color="secondary">
-              Envío gratis
-            </Typography>
+            {`$${product.price}`}
           </Typography>
           <Typography
             variant="subtitle2"
