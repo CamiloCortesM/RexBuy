@@ -9,9 +9,13 @@ export interface IProduct {
   title: string;
   brand: string;
   model: string;
-  capacidad?: string[];
+  capacity?: string[];
   ram?: string[];
   type: ITechnologyType;
+
+  // TODO: add createdAt and updatedAt
+  createdAt: string;
+  updatedAt: string;
 }
 
 type ITechnologyType =
