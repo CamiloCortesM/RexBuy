@@ -8,7 +8,7 @@ interface SeedProduct {
   title: string;
   brand: string;
   model: string;
-  capacidad?: string[];
+  capacity?: string[];
   ram?: string[];
   type: TechnologyType;
 }
@@ -35,7 +35,7 @@ export const initialData: SeedData = {
       images: ['iphone12.webp', 'iphone12-2.webp', 'iphone12-3.webp'],
       inStock: 50,
       price: 999.99,
-      capacidad: ['128GB', '256GB', '512GB', '1TB'],
+      capacity: ['128GB', '256GB', '512GB', '1TB'],
       slug: 'iphone-12',
       tags: ['smartphone', 'Apple', 'iOS'],
       brand: 'Apple',
@@ -48,7 +48,7 @@ export const initialData: SeedData = {
         'Portátil ultradelgado con pantalla táctil y potente rendimiento.',
       images: ['xps13.webp', 'xps13-2.webp', 'xps13-3.webp'],
       inStock: 20,
-      capacidad: ['512GB', '1TB'],
+      capacity: ['512GB', '1TB'],
       ram: ['4GB', '8GB'],
       price: 1499.99,
       slug: 'dell-xps-13',
@@ -536,7 +536,7 @@ export const initialData: SeedData = {
       ],
       inStock: 30,
       price: 899.99,
-      capacidad: ['256GB', '512GB'],
+      capacity: ['256GB', '512GB'],
       slug: 'samsung-galaxy-s21',
       tags: ['smartphone', 'Samsung', 'Android'],
       brand: 'Samsung',
