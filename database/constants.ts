@@ -1,11 +1,11 @@
 export const SHOP_CONSTANTS = {
   validTypes: [
-    'smartphones',
-    'computers',
+    'celulares',
+    'computadores',
     'videojuegos',
-    'accessories',
-    'tablets',
-    'smartwatches',
-    'monitors',
+    'accesorios',
+    'tabletas',
+    'smartwatch',
+    'monitores',
   ],
 };
