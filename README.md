@@ -2,6 +2,21 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+To run locally, you need the database.
+
+```
+docker-compose up -d
+```
+
+* The -d flag stands for __detached__.
+
+## Setting up environment variables
+Rename the __.env.template__ file to __.env__.
+* Local MongoDB URL:
+```
+MONGO_URL=mongodb://localhost:27018/rexbuydb
+```
+
 First, run the development server:
 
 ```bash
@@ -13,6 +28,11 @@ pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Endpoints Rexbuy
+
+ Documentation [https://documenter.getpostman.com/view/20418283/2s946bCurN]
+
 
 You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
