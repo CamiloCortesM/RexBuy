@@ -20,6 +20,7 @@ const Custom404 = () => {
           style={{
             width: '100%',
             maxWidth: 400,
+            opacity:.6
           }}
         />
 

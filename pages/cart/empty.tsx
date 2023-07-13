@@ -1,6 +1,5 @@
 import NextLink from 'next/link';
 
-import { RemoveShoppingCartOutlined } from '@mui/icons-material';
 import { Box, Link, Typography } from '@mui/material';
 import { ShopLayout } from '../../components/layouts';
 
@@ -14,7 +13,7 @@ const EmptyPage = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        height="calc(100vh - 200px)"
+        height="calc(100vh - 220px)"
         sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
       >
         <img
@@ -23,6 +22,7 @@ const EmptyPage = () => {
           style={{
             width: '100%',
             maxWidth: 400,
+            opacity: 0.6,
           }}
         />
         <Box display="flex" flexDirection="column" alignItems="center">
