@@ -29,14 +29,14 @@ const ProductPage = () => {
             <Box sx={{ my: 2 }}>
               <Typography variant="subtitle2">Cantidad</Typography>
               <ItemCounter />
-              {product.capacidad && (
+              {product.capacity && (
                 <>
                   <Typography mt={1} variant="subtitle2">
                     Capacidad
                   </Typography>
                   <ItemSelector
-                    selecteditem={product.capacidad[0]}
-                    items={product.capacidad}
+                    selecteditem={product.capacity[0]}
+                    items={product.capacity}
                   />
                 </>
               )}
