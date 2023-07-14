@@ -5,4 +5,4 @@ interface ContextProps {
   toggleSideMenu: () => void;
 }
 
-export const UIContext = createContext({} as ContextProps);
+export const UiContext = createContext({} as ContextProps);

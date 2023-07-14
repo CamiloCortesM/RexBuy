@@ -28,13 +28,25 @@ import {
   DesktopWindowsOutlined,
   WatchSharp,
 } from '@mui/icons-material';
+import { useContext } from 'react';
+import { UiContext } from '@/context';
+import { useRouter } from 'next/router';
 
 export const SideMenu = () => {
+  const { isMenuOpen, toggleSideMenu } = useContext(UiContext);
+  const router = useRouter();
+
+  const navigateTo = (url: string) => {
+    toggleSideMenu();
+    router.push(url);
+  };
+
   return (
     <Drawer
-      open={false}
+      open={isMenuOpen}
       anchor="right"
       sx={{ backdropFilter: 'blur(4px)', transition: 'all 0.5s ease-out' }}
+      onClose={() => toggleSideMenu()}
     >
       <Box sx={{ width: 250, paddingTop: 5 }}>
         <List>
@@ -66,45 +78,66 @@ export const SideMenu = () => {
             <ListItemText primary={'Mis Ordenes'} />
           </ListItemButton>
 
-          <ListItemButton sx={{ display: { xs: '', md: 'none' } }}>
+          <ListItemButton
+            sx={{ display: { xs: '', md: 'none' } }}
+            onClick={() => navigateTo('/category/cellphones')}
+          >
             <ListItemIcon>
               <PhoneAndroidOutlined />
             </ListItemIcon>
             <ListItemText primary={'celulares'} />
           </ListItemButton>
 
-          <ListItemButton sx={{ display: { xs: '', md: 'none' } }}>
+          <ListItemButton
+            sx={{ display: { xs: '', md: 'none' } }}
+            onClick={() => navigateTo('/category/computers')}
+          >
             <ListItemIcon>
               <ComputerOutlined />
             </ListItemIcon>
             <ListItemText primary={'computadores'} />
           </ListItemButton>
 
-          <ListItemButton sx={{ display: { xs: '', md: 'none' } }}>
+          <ListItemButton
+            sx={{ display: { xs: '', md: 'none' } }}
+            onClick={() => navigateTo('/category/videogames')}
+          >
             <ListItemIcon>
               <GamesOutlined />
             </ListItemIcon>
             <ListItemText primary={'videojuegos'} />
           </ListItemButton>
-          <ListItemButton sx={{ display: { xs: '', md: 'none' } }}>
+          <ListItemButton
+            sx={{ display: { xs: '', md: 'none' } }}
+            onClick={() => navigateTo('/category/accessories')}
+          >
             <ListItemIcon>
               <HeadphonesBatteryOutlined />
             </ListItemIcon>
             <ListItemText primary={'accesorios'} />
           </ListItemButton>
-          <ListItemButton sx={{ display: { xs: '', md: 'none' } }}>
+          <ListItemButton
+            sx={{ display: { xs: '', md: 'none' } }}
+            onClick={() => navigateTo('/category/tablets')}
+          >
             <ListItemIcon>
               <TabletAndroidOutlined />
             </ListItemIcon>
             <ListItemText primary={'tabletas'} />
           </ListItemButton>
-          <ListItemButton sx={{ display: { xs: '', md: 'none' } }}>
+          <ListItemButton
+            sx={{ display: { xs: '', md: 'none' } }}
+            onClick={() => navigateTo('/category/monitors')}
+          >
             <ListItemIcon>
               <DesktopWindowsOutlined />
             </ListItemIcon>
             <ListItemText primary={'monitores'} />
           </ListItemButton>
-          <ListItemButton sx={{ display: { xs: '', md: 'none' } }}>
+          <ListItemButton
+            sx={{ display: { xs: '', md: 'none' } }}
+            onClick={() => navigateTo('/category/smartwatch')}
+          >
             <ListItemIcon>
               <WatchSharp />
             </ListItemIcon>
