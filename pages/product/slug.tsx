@@ -76,8 +76,9 @@ const ProductPage = () => {
             display: { xs: 'none', sm: 'block' },
           }}
         >
-          {product.images.map((image) => (
+          {product.images.map((image, i) => (
             <img
+              key={i}
               src={`/products/${image}`}
               alt={product.title}
               style={{
