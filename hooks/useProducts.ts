@@ -9,6 +9,11 @@ export const useProducts = (url: string, config: SWRConfiguration = {}) => {
     fetcher,
     config
   );
+//   const { data, error, isLoading } = useSWR<IProduct[]>(
+//     `/api/${url}`,
+//     fetcher,
+//     config
+//   );
 
   return {
     protucts: data || [],
