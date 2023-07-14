@@ -2,10 +2,13 @@ import { NextPage } from 'next';
 import { Typography } from '@mui/material';
 
 import { ShopLayout } from '@/components/layouts/ShopLayout';
-import { initialData } from '../database/products';
 import { ProductList } from '../components/products';
+import { useProducts } from '@/hooks';
 
 const Home: NextPage = () => {
+  const { isError, isLoading, protucts } = useProducts('products');
+
+  console.log(protucts);
   return (
     <ShopLayout
       title={'RexBuy - Home'}
@@ -18,7 +21,7 @@ const Home: NextPage = () => {
         Todos los productos
       </Typography>
 
-      <ProductList products={initialData.products as any} />
+      {isLoading ? <h3>Cargando..</h3> : <ProductList products={protucts} />}
     </ShopLayout>
   );
 };
