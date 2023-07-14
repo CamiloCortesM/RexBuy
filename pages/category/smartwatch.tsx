@@ -7,7 +7,7 @@ import { ProductList } from '@/components/products';
 import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
 
 const SmartWatchPage: NextPage = () => {
-  const { isError, isLoading, protucts } = useProducts(
+  const { isError, isLoading, products } = useProducts(
     'products?type=smartwatch'
   );
   return (
@@ -21,7 +21,7 @@ const SmartWatchPage: NextPage = () => {
       <Typography variant="h2" sx={{ mb: 1 }}>
         Selección de SmartWatch
       </Typography>
-      {isLoading ? <FullScreenLoading /> : <ProductList products={protucts} />}
+      {isLoading ? <FullScreenLoading /> : <ProductList products={products} />}
     </ShopLayout>
   );
 };

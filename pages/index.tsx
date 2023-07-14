@@ -7,7 +7,7 @@ import { useProducts } from '@/hooks';
 import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
 
 const Home: NextPage = () => {
-  const { isError, isLoading, protucts } = useProducts('products');
+  const { isError, isLoading, products } = useProducts('products');
   return (
     <ShopLayout
       title={'RexBuy - Home'}
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
       <Typography variant="h2" sx={{ mb: 1 }}>
         Todos los productos
       </Typography>
-      {isLoading ? <FullScreenLoading /> : <ProductList products={protucts} />}
+      {isLoading ? <FullScreenLoading /> : <ProductList products={products} />}
     </ShopLayout>
   );
 };

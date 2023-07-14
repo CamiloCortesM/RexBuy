@@ -7,7 +7,7 @@ import { ProductList } from '@/components/products';
 import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
 
 const ComputersPage: NextPage = () => {
-  const { isError, isLoading, protucts } = useProducts(
+  const { isError, isLoading, products } = useProducts(
     'products?type=computers'
   );
   return (
@@ -21,7 +21,7 @@ const ComputersPage: NextPage = () => {
       <Typography variant="h2" sx={{ mb: 1 }}>
         Selección de Computadoras
       </Typography>
-      {isLoading ? <FullScreenLoading /> : <ProductList products={protucts} />}
+      {isLoading ? <FullScreenLoading /> : <ProductList products={products} />}
     </ShopLayout>
   );
 };
