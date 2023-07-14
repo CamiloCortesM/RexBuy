@@ -1,13 +1,16 @@
-import { NextPage } from 'next';
+import { NextPage, GetServerSideProps } from 'next';
+
 import { Typography } from '@mui/material';
 
-import { useProducts } from '@/hooks';
 import { ShopLayout } from '@/components/layouts';
-import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
 import { ProductList } from '@/components/products';
+import { dbProducts } from '@/database';
+import { IProduct } from '@/interfaces';
 
-const SearchPage: NextPage = () => {
-  const { isError, isLoading, protucts } = useProducts('products');
+interface Props {
+  products: IProduct[];
+}
+const SearchPage: NextPage<Props> = ({ products }) => {
   return (
     <ShopLayout
       title={'RexBuy - Search'}
@@ -19,9 +22,32 @@ const SearchPage: NextPage = () => {
       <Typography variant="h2" sx={{ mb: 1 }}>
         ABC --- 123
       </Typography>
-      {isLoading ? <FullScreenLoading /> : <ProductList products={protucts} />}
+      <ProductList products={products} />
     </ShopLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { query = '' } = params as { query: string };
+
+  console.log(query);
+
+  if (query.length === 0) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: true,
+      },
+    };
+  }
+  let products = await dbProducts.getPorductsByTerm(query);
+  console.log(products);
+
+  //TODO: return another products if there isn't products
+
+  return {
+    props: { products },
+  };
 };
 
 export default SearchPage;

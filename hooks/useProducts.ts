@@ -15,7 +15,7 @@ export const useProducts = (url: string, config: SWRConfiguration = {}) => {
 //   );
 
   return {
-    protucts: data || [],
+    products: data || [],
     isLoading,
     isError: error,
   };
