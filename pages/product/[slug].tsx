@@ -1,12 +1,19 @@
+import { NextPage } from 'next';
+import { GetServerSideProps } from 'next';
+
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { ShopLayout } from '../../components/layouts';
 import { ProductSlideshow, ItemSelector } from '../../components/products';
-import { initialData } from '../../database/products';
 import { ItemCounter } from '../../components/ui/ItemCounter';
+import { IProduct } from '../../interfaces/products';
+import { dbProducts } from '@/database';
 
-const product = initialData.products[0];
+interface Props {
+  product: IProduct;
+}
 
-const ProductPage = () => {
+const ProductPage: NextPage<Props> = ({ product }) => {
+  console.log(product);
   return (
     <ShopLayout title={product.title} pageDescription={product.description}>
       <Grid container spacing={4}>
@@ -29,7 +36,7 @@ const ProductPage = () => {
             <Box sx={{ my: 2 }}>
               <Typography variant="subtitle2">Cantidad</Typography>
               <ItemCounter />
-              {product.capacity && (
+              {product.capacity && product.capacity.length > 0 && (
                 <>
                   <Typography mt={1} variant="subtitle2">
                     Capacidad
@@ -40,7 +47,7 @@ const ProductPage = () => {
                   />
                 </>
               )}
-              {product.ram && (
+              {product.ram && product.ram!.length > 0 && (
                 <>
                   <Typography mt={1} variant="subtitle2">
                     Ram
@@ -96,6 +103,29 @@ const ProductPage = () => {
       </Grid>
     </ShopLayout>
   );
+};
+
+//getServerSideProps
+// You should use getServerSideProps when:
+// - Only if you need to pre-render a page whose data must be fetched at request time
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  const { slug = '' } = params as { slug: string };
+  const product = await dbProducts.getProductBySlug(slug);
+
+  if (!product) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+
+  return {
+    props: {
+      product,
+    },
+  };
 };
 
 export default ProductPage;

@@ -67,7 +67,12 @@ export const ProductCard: FC<Props> = ({ product }) => {
             left: 5,
           }}
         />
-        <NextLink href="/product/slug" passHref prefetch={false} legacyBehavior>
+        <NextLink
+          href={`/product/${product.slug}`}
+          passHref
+          prefetch={false}
+          legacyBehavior
+        >
           <Link>
             <CardActionArea
               sx={{
