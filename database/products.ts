@@ -14,13 +14,13 @@ interface SeedProduct {
 }
 
 type TechnologyType =
-  | 'celulares'
-  | 'computadores'
-  | 'videojuegos'
-  | 'accesorios'
-  | 'tabletas'
+  | 'cellphones'
+  | 'computers'
+  | 'videogames'
+  | 'accessories'
+  | 'tablets'
   | 'smartwatch'
-  | 'monitores';
+  | 'monitors';
 
 interface SeedData {
   products: SeedProduct[];
@@ -40,7 +40,7 @@ export const initialData: SeedData = {
       tags: ['smartphone', 'Apple', 'iOS'],
       brand: 'Apple',
       model: 'iPhone 12',
-      type: 'celulares',
+      type: 'cellphones',
     },
     {
       title: 'Dell XPS 13',
@@ -55,7 +55,7 @@ export const initialData: SeedData = {
       tags: ['laptop', 'Dell', 'Windows'],
       brand: 'Dell',
       model: 'XPS 13',
-      type: 'computadores',
+      type: 'computers',
     },
     {
       title: 'Nintendo Switch',
@@ -73,7 +73,7 @@ export const initialData: SeedData = {
       tags: ['videojuegos', 'Nintendo', 'Consola'],
       brand: 'Nintendo',
       model: 'Switch',
-      type: 'videojuegos',
+      type: 'videogames',
     },
     {
       title: 'MacBook Pro',
@@ -86,7 +86,7 @@ export const initialData: SeedData = {
       tags: ['laptop', 'Apple', 'macOS'],
       brand: 'Apple',
       model: 'MacBook Pro',
-      type: 'computadores',
+      type: 'computers',
     },
     {
       title: 'Samsung Galaxy S20',
@@ -104,7 +104,7 @@ export const initialData: SeedData = {
       tags: ['smartphone', 'Samsung', 'Android'],
       brand: 'Samsung',
       model: 'Galaxy S20',
-      type: 'celulares',
+      type: 'cellphones',
     },
     {
       title: 'HP Spectre x360',
@@ -122,7 +122,7 @@ export const initialData: SeedData = {
       tags: ['laptop', 'HP', 'Windows'],
       brand: 'HP',
       model: 'Spectre x360',
-      type: 'computadores',
+      type: 'computers',
     },
     {
       title: 'Sony PlayStation 5',
@@ -142,7 +142,7 @@ export const initialData: SeedData = {
       tags: ['videojuegos', 'Sony', 'Consola'],
       brand: 'Sony',
       model: 'PlayStation 5',
-      type: 'videojuegos',
+      type: 'videogames',
     },
     {
       title: 'LG OLED TV',
@@ -155,7 +155,7 @@ export const initialData: SeedData = {
       tags: ['accesorios', 'LG', 'Televisor'],
       brand: 'LG',
       model: 'OLED TV',
-      type: 'accesorios',
+      type: 'accessories',
     },
     {
       title: 'Canon EOS R5',
@@ -173,7 +173,7 @@ export const initialData: SeedData = {
       tags: ['accesorios', 'Canon', 'Cámara'],
       brand: 'Canon',
       model: 'EOS R5',
-      type: 'accesorios',
+      type: 'accessories',
     },
     {
       title: 'Google Pixel 5',
@@ -190,7 +190,7 @@ export const initialData: SeedData = {
       tags: ['smartphone', 'Google', 'Android'],
       brand: 'Google',
       model: 'Pixel 5',
-      type: 'celulares',
+      type: 'cellphones',
     },
     {
       title: 'Lenovo ThinkPad X1 Carbon',
@@ -206,7 +206,7 @@ export const initialData: SeedData = {
       tags: ['laptop', 'Lenovo', 'Windows'],
       brand: 'Lenovo',
       model: 'ThinkPad X1 Carbon',
-      type: 'computadores',
+      type: 'computers',
     },
     {
       title: 'Apple Watch Series 6',
@@ -219,7 +219,7 @@ export const initialData: SeedData = {
       tags: ['accesorios', 'Apple', 'Smartwatch'],
       brand: 'Apple',
       model: 'Watch Series 6',
-      type: 'accesorios',
+      type: 'accessories',
     },
     {
       title: 'Microsoft Xbox Series X',
@@ -232,7 +232,7 @@ export const initialData: SeedData = {
       tags: ['videojuegos', 'Microsoft', 'Consola'],
       brand: 'Microsoft',
       model: 'Xbox Series X',
-      type: 'videojuegos',
+      type: 'videogames',
     },
     {
       title: 'Sony WH-1000XM4',
@@ -249,7 +249,7 @@ export const initialData: SeedData = {
       tags: ['accesorios', 'Sony', 'Auriculares'],
       brand: 'Sony',
       model: 'WH-1000XM4',
-      type: 'accesorios',
+      type: 'accessories',
     },
     {
       title: 'OnePlus 9 Pro',
@@ -267,7 +267,7 @@ export const initialData: SeedData = {
       tags: ['smartphone', 'OnePlus', 'Android'],
       brand: 'OnePlus',
       model: '9 Pro',
-      type: 'celulares',
+      type: 'cellphones',
     },
     {
       title: 'HP Envy 27',
@@ -279,7 +279,7 @@ export const initialData: SeedData = {
       tags: ['monitores', 'HP', 'Monitor'],
       brand: 'HP',
       model: 'Envy 27',
-      type: 'monitores',
+      type: 'monitors',
     },
     {
       title: 'Apple AirPods Pro',
@@ -297,7 +297,7 @@ export const initialData: SeedData = {
       tags: ['accesorios', 'Apple', 'Auriculares'],
       brand: 'Apple',
       model: 'AirPods Pro',
-      type: 'accesorios',
+      type: 'accessories',
     },
     {
       title: 'LG Gram 17',
@@ -310,7 +310,7 @@ export const initialData: SeedData = {
       tags: ['laptop', 'LG', 'Windows'],
       brand: 'LG',
       model: 'Gram 17',
-      type: 'computadores',
+      type: 'computers',
     },
     {
       title: 'GoPro Hero9 Black',
@@ -328,7 +328,7 @@ export const initialData: SeedData = {
       tags: ['accesorios', 'GoPro', 'Cámara'],
       brand: 'GoPro',
       model: 'Hero9 Black',
-      type: 'accesorios',
+      type: 'accessories',
     },
     {
       title: 'Samsung Galaxy Tab S7',
@@ -345,7 +345,7 @@ export const initialData: SeedData = {
       tags: ['tabletas', 'Samsung', 'Android'],
       brand: 'Samsung',
       model: 'Galaxy Tab S7',
-      type: 'tabletas',
+      type: 'tablets',
     },
     {
       title: 'Fitbit Charge 4',
@@ -358,7 +358,7 @@ export const initialData: SeedData = {
       tags: ['accesorios', 'Fitbit', 'Fitness'],
       brand: 'Fitbit',
       model: 'Charge 4',
-      type: 'accesorios',
+      type: 'accessories',
     },
     {
       title: 'Microsoft Surface Pro 7',
@@ -371,7 +371,7 @@ export const initialData: SeedData = {
       tags: ['tabletas', 'Microsoft', 'Windows'],
       brand: 'Microsoft',
       model: 'Surface Pro 7',
-      type: 'tabletas',
+      type: 'tablets',
     },
     {
       title: 'Razer Blade 15',
@@ -389,7 +389,7 @@ export const initialData: SeedData = {
       tags: ['laptop', 'Razer', 'Windows'],
       brand: 'Razer',
       model: 'Blade 15',
-      type: 'computadores',
+      type: 'computers',
     },
     {
       title: 'Sony Xperia 1 III',
@@ -402,7 +402,7 @@ export const initialData: SeedData = {
       tags: ['smartphone', 'Sony', 'Android'],
       brand: 'Sony',
       model: 'Xperia 1 III',
-      type: 'celulares',
+      type: 'cellphones',
     },
     {
       title: 'Logitech MX Master 3',
@@ -420,7 +420,7 @@ export const initialData: SeedData = {
       tags: ['accesorios', 'Logitech', 'Ratón'],
       brand: 'Logitech',
       model: 'MX Master 3',
-      type: 'accesorios',
+      type: 'accessories',
     },
     {
       title: 'Acer Predator Helios 300',
@@ -438,7 +438,7 @@ export const initialData: SeedData = {
       tags: ['laptop', 'Acer', 'Windows'],
       brand: 'Acer',
       model: 'Predator Helios 300',
-      type: 'computadores',
+      type: 'computers',
     },
     {
       title: 'Alienware Aurora R10',
@@ -454,10 +454,10 @@ export const initialData: SeedData = {
       inStock: 3,
       price: 2499.99,
       slug: 'alienware-aurora-r10',
-      tags: ['computadores', 'Alienware', 'Gaming'],
+      tags: ['computers', 'Alienware', 'Gaming'],
       brand: 'Alienware',
       model: 'Aurora R10',
-      type: 'computadores',
+      type: 'computers',
     },
     {
       title: 'Lenovo Yoga C940',
@@ -474,7 +474,7 @@ export const initialData: SeedData = {
       tags: ['laptop', 'Lenovo', 'Windows'],
       brand: 'Lenovo',
       model: 'Yoga C940',
-      type: 'computadores',
+      type: 'computers',
     },
     {
       title: 'Xiaomi Mi 11',
@@ -492,7 +492,7 @@ export const initialData: SeedData = {
       tags: ['smartphone', 'Xiaomi', 'Android'],
       brand: 'Xiaomi',
       model: 'Mi 11',
-      type: 'celulares',
+      type: 'cellphones',
     },
     {
       title: 'AOC CQ32G1',
@@ -510,7 +510,7 @@ export const initialData: SeedData = {
       tags: ['monitores', 'AOC', 'Monitor'],
       brand: 'AOC',
       model: 'CQ32G1',
-      type: 'monitores',
+      type: 'monitors',
     },
     {
       title: 'JBL Flip 5',
@@ -523,7 +523,7 @@ export const initialData: SeedData = {
       tags: ['accesorios', 'JBL', 'Altavoz'],
       brand: 'JBL',
       model: 'Flip 5',
-      type: 'accesorios',
+      type: 'accessories',
     },
     {
       title: 'Samsung Galaxy S21',
@@ -541,7 +541,7 @@ export const initialData: SeedData = {
       tags: ['smartphone', 'Samsung', 'Android'],
       brand: 'Samsung',
       model: 'Galaxy S21',
-      type: 'celulares',
+      type: 'cellphones',
     },
   ],
 };
