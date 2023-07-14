@@ -45,7 +45,7 @@ export const Navbar = () => {
               <Button>computadores</Button>
             </Link>
           </NextLink>
-          <NextLink href="/category/games" passHref legacyBehavior>
+          <NextLink href="/category/videogames" passHref legacyBehavior>
             <Link>
               <Button>videojuegos</Button>
             </Link>

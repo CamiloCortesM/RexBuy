@@ -219,7 +219,7 @@ export const initialData: SeedData = {
       tags: ['accesorios', 'Apple', 'Smartwatch'],
       brand: 'Apple',
       model: 'Watch Series 6',
-      type: 'accessories',
+      type: 'smartwatch',
     },
     {
       title: 'Microsoft Xbox Series X',
@@ -358,7 +358,7 @@ export const initialData: SeedData = {
       tags: ['accesorios', 'Fitbit', 'Fitness'],
       brand: 'Fitbit',
       model: 'Charge 4',
-      type: 'accessories',
+      type: 'smartwatch',
     },
     {
       title: 'Microsoft Surface Pro 7',
