@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 import NextLink from 'next/link';
 import {
   Box,
@@ -10,31 +10,29 @@ import {
   Typography,
 } from '@mui/material';
 
-import { initialData } from '../../database/products';
 import { ItemCounter } from '../ui';
-
-const productsInCart = [
-  initialData.products[0],
-  initialData.products[1],
-  initialData.products[2],
-];
+import { CartContext } from '@/context';
 
 interface Props {
   editable?: boolean;
 }
 
 export const CartList: FC<Props> = ({ editable = false }) => {
+  const { cart } = useContext(CartContext);
+
+  console.log(cart);
+
   return (
     <>
-      {productsInCart.map((product) => (
+      {cart.map((product) => (
         <Grid container spacing={2} key={product.slug} sx={{ mb: 2 }}>
           <Grid item xs={3} md={2}>
             {/* TODO: llevar a la página del producto */}
-            <NextLink href="/product/slug" passHref legacyBehavior>
+            <NextLink href={`/product/${product.slug}`} passHref legacyBehavior>
               <Link>
                 <CardActionArea>
                   <CardMedia
-                    image={`/products/${product.images[0]}`}
+                    image={`/products/${product.image}`}
                     component="img"
                     sx={{
                       borderRadius: '5px',
@@ -50,19 +48,26 @@ export const CartList: FC<Props> = ({ editable = false }) => {
               <Typography variant="body1" fontWeight={500}>
                 {product.title}
               </Typography>
-              {product.capacity && product.capacity.length > 0 && (
+              {product.capacity && (
                 <Typography variant="caption">
-                  Capacidad: {product.capacity[0]}
+                  Capacidad: {product.capacity}
                 </Typography>
               )}
 
-              {product.ram && product.ram.length > 0 && (
-                <Typography variant="caption">Ram: {product.ram[0]}</Typography>
+              {product.ram && (
+                <Typography variant="caption">Ram: {product.ram}</Typography>
               )}
               {editable ? (
-                <ItemCounter />
+                <ItemCounter
+                  currentValue={product.quantity}
+                  onUpdateValue={() => {}}
+                  maxValue={10}
+                />
               ) : (
-                <Typography variant="h5">3 items</Typography>
+                <Typography variant="h5">
+                  {product.quantity}{' '}
+                  {product.quantity > 1 ? 'productos' : 'producto'}
+                </Typography>
               )}
             </Box>
           </Grid>

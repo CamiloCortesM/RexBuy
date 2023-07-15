@@ -22,7 +22,7 @@ const ProductPage: NextPage<Props> = ({ product }) => {
   const router = useRouter();
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
     _id: product._id,
-    images: product.images[0],
+    image: product.images[0],
     price: product.price,
     slug: product.slug,
     title: product.title,
