@@ -28,23 +28,50 @@ import {
   DesktopWindowsOutlined,
   WatchSharp,
 } from '@mui/icons-material';
+import { useContext, useState } from 'react';
+import { UiContext } from '@/context';
+import { useRouter } from 'next/router';
 
 export const SideMenu = () => {
+  const { isMenuOpen, toggleSideMenu } = useContext(UiContext);
+  const router = useRouter();
+
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const onSearchTerm = () => {
+    if (searchTerm.trim().length === 0) return;
+    toggleSideMenu();
+    router.push(`/search/${searchTerm}`);
+  };
+
+  const navigateTo = (url: string) => {
+    toggleSideMenu();
+    router.push(url);
+  };
+
   return (
     <Drawer
-      open={false}
+      open={isMenuOpen}
       anchor="right"
       sx={{ backdropFilter: 'blur(4px)', transition: 'all 0.5s ease-out' }}
+      onClose={() => toggleSideMenu()}
     >
       <Box sx={{ width: 250, paddingTop: 5 }}>
         <List>
           <ListItem>
             <Input
+              autoFocus
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              onKeyUp={(e) => (e.key === 'Enter' ? onSearchTerm() : null)}
               type="text"
               placeholder="Buscar..."
               endAdornment={
                 <InputAdornment position="end">
-                  <IconButton aria-label="toggle password visibility">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={onSearchTerm}
+                  >
                     <SearchOutlined />
                   </IconButton>
                 </InputAdornment>
@@ -66,45 +93,66 @@ export const SideMenu = () => {
             <ListItemText primary={'Mis Ordenes'} />
           </ListItemButton>
 
-          <ListItemButton sx={{ display: { xs: '', md: 'none' } }}>
+          <ListItemButton
+            sx={{ display: { xs: '', md: 'none' } }}
+            onClick={() => navigateTo('/category/cellphones')}
+          >
             <ListItemIcon>
               <PhoneAndroidOutlined />
             </ListItemIcon>
             <ListItemText primary={'celulares'} />
           </ListItemButton>
 
-          <ListItemButton sx={{ display: { xs: '', md: 'none' } }}>
+          <ListItemButton
+            sx={{ display: { xs: '', md: 'none' } }}
+            onClick={() => navigateTo('/category/computers')}
+          >
             <ListItemIcon>
               <ComputerOutlined />
             </ListItemIcon>
             <ListItemText primary={'computadores'} />
           </ListItemButton>
 
-          <ListItemButton sx={{ display: { xs: '', md: 'none' } }}>
+          <ListItemButton
+            sx={{ display: { xs: '', md: 'none' } }}
+            onClick={() => navigateTo('/category/videogames')}
+          >
             <ListItemIcon>
               <GamesOutlined />
             </ListItemIcon>
             <ListItemText primary={'videojuegos'} />
           </ListItemButton>
-          <ListItemButton sx={{ display: { xs: '', md: 'none' } }}>
+          <ListItemButton
+            sx={{ display: { xs: '', md: 'none' } }}
+            onClick={() => navigateTo('/category/accessories')}
+          >
             <ListItemIcon>
               <HeadphonesBatteryOutlined />
             </ListItemIcon>
             <ListItemText primary={'accesorios'} />
           </ListItemButton>
-          <ListItemButton sx={{ display: { xs: '', md: 'none' } }}>
+          <ListItemButton
+            sx={{ display: { xs: '', md: 'none' } }}
+            onClick={() => navigateTo('/category/tablets')}
+          >
             <ListItemIcon>
               <TabletAndroidOutlined />
             </ListItemIcon>
             <ListItemText primary={'tabletas'} />
           </ListItemButton>
-          <ListItemButton sx={{ display: { xs: '', md: 'none' } }}>
+          <ListItemButton
+            sx={{ display: { xs: '', md: 'none' } }}
+            onClick={() => navigateTo('/category/monitors')}
+          >
             <ListItemIcon>
               <DesktopWindowsOutlined />
             </ListItemIcon>
             <ListItemText primary={'monitores'} />
           </ListItemButton>
-          <ListItemButton sx={{ display: { xs: '', md: 'none' } }}>
+          <ListItemButton
+            sx={{ display: { xs: '', md: 'none' } }}
+            onClick={() => navigateTo('/category/smartwatch')}
+          >
             <ListItemIcon>
               <WatchSharp />
             </ListItemIcon>

@@ -26,8 +26,8 @@ export const ProductCard: FC<Props> = ({ product }) => {
 
   const productImage = useMemo(() => {
     return isHovered && product.images.length > 1
-      ? `products/${product.images[1]}`
-      : `products/${product.images[0]}`;
+      ? `/products/${product.images[1]}`
+      : `/products/${product.images[0]}`;
   }, [isHovered, product.images]);
 
   return (
@@ -67,7 +67,12 @@ export const ProductCard: FC<Props> = ({ product }) => {
             left: 5,
           }}
         />
-        <NextLink href="/product/slug" passHref prefetch={false} legacyBehavior>
+        <NextLink
+          href={`/product/${product.slug}`}
+          passHref
+          prefetch={false}
+          legacyBehavior
+        >
           <Link>
             <CardActionArea
               sx={{
@@ -85,19 +90,18 @@ export const ProductCard: FC<Props> = ({ product }) => {
                 alt={product.title}
               />
             </CardActionArea>
+            <CardContent sx={{ mt: 0.5 }} className="fadeIn">
+              <Typography variant="h2" fontWeight={500}>
+                {`$${product.price}`}
+              </Typography>
+              <Typography
+                variant="subtitle2"
+                fontWeight={200}
+              >{`36x $ 10.99`}</Typography>
+              <Typography fontWeight={700}>{product.title}</Typography>
+            </CardContent>
           </Link>
         </NextLink>
-
-        <CardContent sx={{ mt: 0.5 }} className="fadeIn">
-          <Typography variant="h2" fontWeight={500}>
-            {`$${product.price}`}
-          </Typography>
-          <Typography
-            variant="subtitle2"
-            fontWeight={200}
-          >{`36x $ 10.99`}</Typography>
-          <Typography fontWeight={700}>{product.title}</Typography>
-        </CardContent>
       </Card>
     </Grid>
   );

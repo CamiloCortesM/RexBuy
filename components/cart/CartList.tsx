@@ -50,13 +50,13 @@ export const CartList: FC<Props> = ({ editable = false }) => {
               <Typography variant="body1" fontWeight={500}>
                 {product.title}
               </Typography>
-              {product.capacidad && (
+              {product.capacity && product.capacity.length > 0 && (
                 <Typography variant="caption">
-                  Capacidad: {product.capacidad[0]}
+                  Capacidad: {product.capacity[0]}
                 </Typography>
               )}
 
-              {product.ram && (
+              {product.ram && product.ram.length > 0 && (
                 <Typography variant="caption">Ram: {product.ram[0]}</Typography>
               )}
               {editable ? (

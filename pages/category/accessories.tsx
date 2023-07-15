@@ -1,27 +1,29 @@
 import { NextPage } from 'next';
 import { Typography } from '@mui/material';
 
-import { ShopLayout } from '@/components/layouts/ShopLayout';
-import { ProductList } from '../components/products';
 import { useProducts } from '@/hooks';
+import { ShopLayout } from '@/components/layouts';
+import { ProductList } from '@/components/products';
 import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
 
-const Home: NextPage = () => {
-  const { isError, isLoading, products } = useProducts('products');
+const AccessoriesPage: NextPage = () => {
+  const { isError, isLoading, products } = useProducts(
+    'products?type=accessories'
+  );
   return (
     <ShopLayout
-      title={'RexBuy - Home'}
-      pageDescription={'Encuentra los mejores productos de tecnologia aquí'}
+      title={'RexBuy - Accesorios'}
+      pageDescription={'Encuentra los mejores accesorios de tecnologia'}
     >
       <Typography variant="h1" component="h1" color="primary">
-        Tienda
+        Accesorios
       </Typography>
       <Typography variant="h2" sx={{ mb: 1 }}>
-        Todos los productos
+        Selección de Accesorios
       </Typography>
       {isLoading ? <FullScreenLoading /> : <ProductList products={products} />}
     </ShopLayout>
   );
 };
 
-export default Home;
+export default AccessoriesPage;
