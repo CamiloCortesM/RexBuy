@@ -90,7 +90,7 @@ const ProductPage: NextPage<Props> = ({ product }) => {
               style={{
                 width: '25%',
                 maxWidth: 150,
-                minHeight: 120,
+                height: 160,
                 objectFit: 'contain',
                 border: '1px solid rgba(0,0,0,0.05)',
                 borderRadius: 15,
