@@ -12,20 +12,27 @@ import {
 
 import { ItemCounter } from '../ui';
 import { CartContext } from '@/context';
+import { ICartProduct } from '@/interfaces/cart';
 
 interface Props {
   editable?: boolean;
 }
 
 export const CartList: FC<Props> = ({ editable = false }) => {
-  const { cart } = useContext(CartContext);
+  const { cart, updateCartQuantity } = useContext(CartContext);
 
-  console.log(cart);
+  const onNewCartQuantityValue = (
+    product: ICartProduct,
+    newQuantityValue: number
+  ) => {
+    product.quantity = newQuantityValue;
+    updateCartQuantity(product);
+  };
 
   return (
     <>
-      {cart.map((product) => (
-        <Grid container spacing={2} key={product.slug} sx={{ mb: 2 }}>
+      {cart.map((product, i) => (
+        <Grid container spacing={2} key={product.slug + i} sx={{ mb: 2 }}>
           <Grid item xs={3} md={2}>
             {/* TODO: llevar a la página del producto */}
             <NextLink href={`/product/${product.slug}`} passHref legacyBehavior>
@@ -60,7 +67,9 @@ export const CartList: FC<Props> = ({ editable = false }) => {
               {editable ? (
                 <ItemCounter
                   currentValue={product.quantity}
-                  onUpdateValue={() => {}}
+                  onUpdateValue={(value) =>
+                    onNewCartQuantityValue(product, value)
+                  }
                   maxValue={10}
                 />
               ) : (
