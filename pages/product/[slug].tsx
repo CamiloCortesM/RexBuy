@@ -1,5 +1,7 @@
+import { useContext, useState } from 'react';
 import { NextPage } from 'next';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import { useRouter } from 'next/router';
 
 import { Box, Button, Chip, Grid, Typography } from '@mui/material';
 import { ShopLayout } from '../../components/layouts';
@@ -7,12 +9,51 @@ import { ProductSlideshow, ItemSelector } from '../../components/products';
 import { ItemCounter } from '../../components/ui/ItemCounter';
 import { IProduct } from '../../interfaces/products';
 import { dbProducts } from '@/database';
+import { ICartProduct } from '@/interfaces/cart';
+import { CartContext } from '@/context';
 
 interface Props {
   product: IProduct;
 }
 
 const ProductPage: NextPage<Props> = ({ product }) => {
+  const { addProductToCart } = useContext(CartContext);
+
+  const router = useRouter();
+  const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
+    _id: product._id,
+    image: product.images[0],
+    price: product.price,
+    slug: product.slug,
+    title: product.title,
+    brand: product.brand,
+    model: product.model,
+    capacity: undefined,
+    ram: undefined,
+    quantity: 1,
+  });
+
+  const onSelectedSize = (value: string, name: string = 'capacity') => {
+    setTempCartProduct((currectProduct) => ({
+      ...currectProduct,
+      [`${name}`]: value,
+    }));
+  };
+
+  const onAddProduct = () => {
+    if (product.capacity!.length > 0 && !tempCartProduct.capacity) return;
+    if (product.ram!.length > 0 && !tempCartProduct.ram) return;
+    addProductToCart(tempCartProduct);
+    router.push('/cart');
+  };
+
+  const onUpdateValue = (quantity: number) => {
+    setTempCartProduct((currectProduct) => ({
+      ...currectProduct,
+      quantity,
+    }));
+  };
+
   return (
     <ShopLayout title={product.title} pageDescription={product.description}>
       <Grid container spacing={4}>
@@ -34,14 +75,20 @@ const ProductPage: NextPage<Props> = ({ product }) => {
             {/* Cantidad */}
             <Box sx={{ my: 2 }}>
               <Typography variant="subtitle2">Cantidad</Typography>
-              <ItemCounter />
+              <ItemCounter
+                currentValue={tempCartProduct.quantity}
+                onUpdateValue={onUpdateValue}
+                maxValue={product.inStock}
+              />
               {product.capacity && product.capacity.length > 0 && (
                 <>
                   <Typography mt={1} variant="subtitle2">
                     Capacidad
                   </Typography>
                   <ItemSelector
-                    selecteditem={product.capacity[0]}
+                    itemName={'capacity'}
+                    onSelectedSize={onSelectedSize}
+                    selecteditem={tempCartProduct.capacity}
                     items={product.capacity}
                   />
                 </>
@@ -52,7 +99,9 @@ const ProductPage: NextPage<Props> = ({ product }) => {
                     Ram
                   </Typography>
                   <ItemSelector
-                    selecteditem={product.ram[0]}
+                    itemName={'ram'}
+                    onSelectedSize={onSelectedSize}
+                    selecteditem={tempCartProduct.ram}
                     items={product.ram}
                   />
                 </>
@@ -60,11 +109,33 @@ const ProductPage: NextPage<Props> = ({ product }) => {
             </Box>
 
             {/* Agregar al carrito */}
-            <Button color="secondary" className="circular-btn">
-              Agregar al carrito
-            </Button>
-
-            {/* <Chip label="No hay disponibles" color="error" variant='outlined' /> */}
+            {product.inStock > 0 ? (
+              <Button
+                color="secondary"
+                className="circular-btn"
+                onClick={onAddProduct}
+              >
+                {product.ram?.length! > 0
+                  ? product.capacity?.length! > 0
+                    ? tempCartProduct.ram && tempCartProduct.capacity
+                      ? 'Agregar al carrito'
+                      : 'Seleccione las especificaciones'
+                    : tempCartProduct.ram
+                    ? 'Agregar al carrito'
+                    : 'Seleccione las especificaciones'
+                  : product.capacity?.length! > 0
+                  ? tempCartProduct.capacity
+                    ? 'Agregar al carrito'
+                    : 'Seleccione las especificaciones'
+                  : 'Agregar al carrito'}
+              </Button>
+            ) : (
+              <Chip
+                label="No hay disponibles"
+                color="error"
+                variant="outlined"
+              />
+            )}
 
             {/* Descripción */}
             <Box sx={{ mt: 3 }}>
@@ -104,32 +175,6 @@ const ProductPage: NextPage<Props> = ({ product }) => {
   );
 };
 
-//getServerSideProps
-// You should use getServerSideProps when:
-// - Only if you need to pre-render a page whose data must be fetched at request time
-//no user SSR
-// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-//   const { slug = '' } = params as { slug: string };
-//   const product = await dbProducts.getProductBySlug(slug);
-
-//   if (!product) {
-//     return {
-//       redirect: {
-//         destination: '/',
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return {
-//     props: {
-//       product,
-//     },
-//   };
-// };
-
-// You should use getStaticPaths if you’re statically pre-rendering pages that use dynamic routes
-
 export const getStaticPaths: GetStaticPaths = async (ctx) => {
   const productSlugs = await dbProducts.getAllProductSlugs();
 
@@ -142,12 +187,6 @@ export const getStaticPaths: GetStaticPaths = async (ctx) => {
     fallback: 'blocking',
   };
 };
-
-// You should use getStaticProps when:
-//- The data required to render the page is available at build time ahead of a user’s request.
-//- The data comes from a headless CMS.
-//- The data can be publicly cached (not user-specific).
-//- The page must be pre-rendered (for SEO) and be very fast — getStaticProps generates HTML and JSON files, both of which can be cached by a CDN for performance.
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const { slug = '' } = params as { slug: string };

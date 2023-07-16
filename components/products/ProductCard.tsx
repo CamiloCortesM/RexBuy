@@ -9,8 +9,8 @@ import {
   Typography,
   Link,
   CardContent,
-  CardHeader,
   IconButton,
+  Chip,
 } from '@mui/material';
 
 import { IProduct } from '../../interfaces';
@@ -47,26 +47,24 @@ export const ProductCard: FC<Props> = ({ product }) => {
           position: 'relative',
         }}
       >
-        <CardHeader
-          action={
-            isHovered && (
-              <IconButton aria-label="settings">
-                <FavoriteOutlined
-                  sx={{
-                    color: 'red',
-                  }}
-                />
-              </IconButton>
-            )
-          }
-          sx={{
-            position: 'absolute',
-            padding: 0,
-            zIndex: 1,
-            top: 5,
-            left: 5,
-          }}
-        />
+        {isHovered && (
+          <IconButton
+            aria-label="settings"
+            sx={{
+              position: 'absolute',
+              padding: 1,
+              zIndex: 1,
+              top: 5,
+              right: 5,
+            }}
+          >
+            <FavoriteOutlined
+              sx={{
+                color: 'red',
+              }}
+            />
+          </IconButton>
+        )}
         <NextLink
           href={`/product/${product.slug}`}
           passHref
@@ -79,6 +77,18 @@ export const ProductCard: FC<Props> = ({ product }) => {
                 height: { md: 270, xs: 230 },
               }}
             >
+              {product.inStock === 0 && (
+                <Chip
+                  color="primary"
+                  label="no hay disponibles"
+                  sx={{
+                    position: 'absolute',
+                    zIndex: 99,
+                    top: '10px',
+                    left: '10px',
+                  }}
+                />
+              )}
               <CardMedia
                 component="img"
                 className="fadeIn"
