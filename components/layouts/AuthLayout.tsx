@@ -49,8 +49,16 @@ export const AuthLayout: FC<Props> = ({ children, title, headerTitle }) => {
           <Box
             sx={{ width: 500, padding: '45px 60px', backgroundColor: 'white' }}
           >
-            <Grid container spacing={2}>
-              <Grid item xs={12} display="grid" justifyContent="center">
+              {/* Check margin justify content style  */}
+            <Grid container spacing={2} justifyContent='center'>
+              {/* Check margin Bottom style  */}
+              <Grid
+                item
+                xs={12}
+                display="grid"
+                justifyContent="center"
+                sx={{ marginBottom: '10px' }}
+              >
                 <Typography variant="h1" component="h1">
                   {headerTitle}
                 </Typography>
