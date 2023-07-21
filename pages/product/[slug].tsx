@@ -34,8 +34,8 @@ const ProductPage: NextPage<Props> = ({ product }) => {
   });
 
   const onSelectedSize = (value: string, name: string = 'capacity') => {
-    setTempCartProduct((currectProduct) => ({
-      ...currectProduct,
+    setTempCartProduct((currentProduct) => ({
+      ...currentProduct,
       [`${name}`]: value,
     }));
   };
@@ -48,8 +48,8 @@ const ProductPage: NextPage<Props> = ({ product }) => {
   };
 
   const onUpdateValue = (quantity: number) => {
-    setTempCartProduct((currectProduct) => ({
-      ...currectProduct,
+    setTempCartProduct((currentProduct) => ({
+      ...currentProduct,
       quantity,
     }));
   };
