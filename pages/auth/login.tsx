@@ -2,7 +2,16 @@ import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import NextLink from 'next/link';
 
-import { Box, Button, Chip, Grid, Link, TextField } from '@mui/material';
+import {
+  Alert,
+  Box,
+  Button,
+  Chip,
+  Grid,
+  Link,
+  Snackbar,
+  TextField,
+} from '@mui/material';
 import { ErrorOutline } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 
@@ -33,6 +42,7 @@ const LoginPage = () => {
     if (!isValidUser) {
       setShowError(true);
       setTimeout(() => setShowError(false), 4000);
+      return;
     }
 
     router.replace('/');
@@ -40,15 +50,22 @@ const LoginPage = () => {
 
   return (
     <AuthLayout title={'Ingresar'} headerTitle={'Iniciar Sesión'}>
-      <Chip
-        label="No se reconoce el usuario o la contraseña"
-        color="error"
-        icon={<ErrorOutline />}
-        className="fadeIn"
-        sx={{ display: showError ? 'flex' : 'none', marginBottom: '10px' }}
-      />
+      <Snackbar
+        open={showError}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+      >
+        <Alert severity="error" sx={{ width: '100%' }} variant="filled">
+          Usuario o contraseña no coinciden
+        </Alert>
+      </Snackbar>
 
-      <form onSubmit={handleSubmit(onLoginUser)} noValidate>
+      <form
+        style={{
+          width: '100%',
+        }}
+        onSubmit={handleSubmit(onLoginUser)}
+        noValidate
+      >
         {/*Check login style */}
         <Box sx={{ width: 350 }} display="flex" flexDirection="column" gap={2}>
           <Grid item xs={12}>
