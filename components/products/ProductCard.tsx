@@ -35,7 +35,6 @@ export const ProductCard: FC<Props> = ({ product }) => {
       item
       xs={6}
       sm={4}
-      md={3}
       height={400}
       sx={{ mt: 1, mb: 2 }}
       onMouseEnter={() => setIsHovered(true)}
@@ -74,7 +73,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
           <Link>
             <CardActionArea
               sx={{
-                height: { md: 270, xs: 230 },
+                height: { md: 300, xs: 260 },
               }}
             >
               {product.inStock === 0 && (
@@ -100,15 +99,17 @@ export const ProductCard: FC<Props> = ({ product }) => {
                 alt={product.title}
               />
             </CardActionArea>
-            <CardContent sx={{ mt: 0.5 }} className="fadeIn">
-              <Typography variant="h2" fontWeight={500}>
-                {`$${product.price}`}
+            <CardContent
+              className="fadeIn"
+            >
+              <Typography fontWeight={700} variant="h2">
+                {product.title}
               </Typography>
+              <Typography fontWeight={500}>{`$${product.price}`}</Typography>
               <Typography
                 variant="subtitle2"
                 fontWeight={200}
               >{`36x $ 10.99`}</Typography>
-              <Typography fontWeight={700}>{product.title}</Typography>
             </CardContent>
           </Link>
         </NextLink>

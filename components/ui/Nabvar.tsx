@@ -12,6 +12,7 @@ import {
   InputAdornment,
   Link,
   Toolbar,
+  Typography,
 } from '@mui/material';
 
 import {
@@ -39,6 +40,13 @@ export const Navbar = () => {
     <AppBar>
       <Toolbar>
         <NextLink href="/" passHref legacyBehavior>
+          {/* <Link display="flex" alignItems="center">
+            <img
+              src="/logo2.png"
+              alt="logo-rexbuy"
+              height={23}
+            />
+          </Link> */}
           <Link height={'100%'}>
             <img
               src="/logo.png"

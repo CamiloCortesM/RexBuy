@@ -75,12 +75,12 @@ export const lightTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          boxShadow: '0px 5px 5px rgba(0,0,0,0.05)',
-          borderRadius: '10px',
+          boxShadow: '0px 4px 4px rgba(0,0,0,0.05)',
+          borderRadius: '2px',
           border: '2px solid #f6f1e9',
           cursor: 'pointer',
           ':hover': {
-            boxShadow: '0px 6px 6px rgba(0,0,0,0.1)',
+            boxShadow: '0px 5px 5px rgba(0,0,0,0.1)',
           },
         },
       },
