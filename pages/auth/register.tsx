@@ -37,10 +37,9 @@ const RegisterPage = () => {
   } = useForm<formData>();
 
   const onRegisterForm = async ({ email, name, password }: formData) => {
-    setShowError(true);
     const { hasError, message } = await registerUser(email, name, password);
 
-    if (!hasError) {
+    if (hasError) {
       setShowError(true);
       setShowErrorMessage(message!);
       setTimeout(() => setShowError(false), 4000);
@@ -57,7 +56,7 @@ const RegisterPage = () => {
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       >
         <Alert severity="error" sx={{ width: '100%' }} variant="filled">
-          Error al crear cuenta
+          {showErrorMessage}
         </Alert>
       </Snackbar>
 

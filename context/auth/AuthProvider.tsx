@@ -52,7 +52,7 @@ const checkToken=async()=>{
     password: string
   ): Promise<{ hasError: boolean; message?: string }> => {
     try {
-      const { data } = await rexbuyApi.post('/user/login', {
+      const { data } = await rexbuyApi.post('/user/register', {
         name,
         email,
         password,
