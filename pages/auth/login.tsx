@@ -6,13 +6,11 @@ import {
   Alert,
   Box,
   Button,
-  Chip,
   Grid,
   Link,
   Snackbar,
   TextField,
 } from '@mui/material';
-import { ErrorOutline } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 
 import { AuthContext } from '@/context';
@@ -67,7 +65,7 @@ const LoginPage = () => {
         noValidate
       >
         {/*Check login style */}
-        <Box sx={{ width: 350 }} display="flex" flexDirection="column" gap={2}>
+        <Box display="flex" flexDirection="column" gap={2}>
           <Grid item xs={12}>
             <TextField
               type="email"

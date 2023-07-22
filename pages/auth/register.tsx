@@ -6,13 +6,11 @@ import {
   Alert,
   Box,
   Button,
-  Chip,
   Grid,
   Link,
   Snackbar,
   TextField,
 } from '@mui/material';
-import { ErrorOutline } from '@mui/icons-material';
 import { useForm } from 'react-hook-form';
 
 import { AuthContext } from '@/context';
