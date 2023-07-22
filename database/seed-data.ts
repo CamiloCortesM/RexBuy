@@ -1,3 +1,4 @@
+import bcrypt from 'bcryptjs';
 interface SeedProduct {
   description: string;
   images: string[];
@@ -13,6 +14,13 @@ interface SeedProduct {
   type: TechnologyType;
 }
 
+interface SeedUser {
+  name: string;
+  email: string;
+  password: string;
+  role: 'admin' | 'client' | 'employee';
+}
+
 type TechnologyType =
   | 'cellphones'
   | 'computers'
@@ -23,10 +31,44 @@ type TechnologyType =
   | 'monitors';
 
 interface SeedData {
+  users: SeedUser[];
   products: SeedProduct[];
 }
 
 export const initialData: SeedData = {
+  users: [
+    {
+      name: 'Daniel Silva',
+      email: 'daniel@google.com',
+      password: bcrypt.hashSync('123456'),
+      role: 'admin',
+    },
+    {
+      name: 'Camilo Cortes',
+      email: 'camilo@google.com',
+      password: bcrypt.hashSync('123456'),
+      role: 'admin',
+    },
+    {
+      name: 'Santiago Salamanca',
+      email: 'santiago@google.com',
+      password: bcrypt.hashSync('123456'),
+      role: 'employee',
+    },
+    {
+      name: 'Goku',
+      email: 'goku@google.com',
+      password: bcrypt.hashSync('123456'),
+      role: 'employee',
+    },
+    {
+      name: 'Vegeta',
+      email: 'vegeta@google.com',
+      password: bcrypt.hashSync('123456'),
+      role: 'client',
+    },
+  ],
+
   products: [
     {
       title: 'iPhone 12',
