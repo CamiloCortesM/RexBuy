@@ -17,11 +17,24 @@ type FormData = {
   firtsName: string;
   lastName: string;
   address: string;
-  address2: string;
+  address2?: string;
   zip: string;
   city: string;
   country: string;
   phone: string;
+};
+
+const getAddressFromCookies = (): FormData => {
+  return {
+    firtsName: Cookies.get('firtsName') || '',
+    lastName: Cookies.get('lastName') || '',
+    address: Cookies.get('address') || '',
+    address2: Cookies.get('address2') || '',
+    zip: Cookies.get('zip') || '',
+    city: Cookies.get('city') || '',
+    country: Cookies.get('country') || countries[0].code,
+    phone: Cookies.get('phone') || '',
+  };
 };
 
 const AddressPage = () => {
@@ -31,16 +44,7 @@ const AddressPage = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>({
-    defaultValues: {
-      firtsName: '',
-      lastName: '',
-      address: '',
-      address2: '',
-      zip: '',
-      city: '',
-      country: countries[0].code,
-      phone: '',
-    },
+    defaultValues: getAddressFromCookies(),
   });
 
   const onSubmitAddress = (data: FormData) => {
@@ -48,7 +52,7 @@ const AddressPage = () => {
     Cookies.set('firtsName', data.firtsName);
     Cookies.set('lastName', data.lastName);
     Cookies.set('address', data.address);
-    Cookies.set('address2', data.address2);
+    Cookies.set('address2', data.address2 || '');
     Cookies.set('zip', data.zip);
     Cookies.set('city', data.city);
     Cookies.set('country', data.country);

@@ -6,7 +6,6 @@ export async function middleware(req: NextRequest) {
 
   if (previousPage.startsWith('/checkout')) {
     const token = req.cookies.get('token')?.value;
-    console.log(token);
     if (!token) {
       return NextResponse.redirect(
         new URL(`/auth/login?p=${previousPage}`, req.url)
