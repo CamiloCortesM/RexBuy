@@ -12,29 +12,38 @@ export interface AuthState {
 }
 
 const AUTH_INITIAL_STATE: AuthState = {
-  isLoggedIn: true,
+  isLoggedIn: false,
+  user: undefined,
 };
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
-  
   const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
 
-useEffect(() => {
-  checkToken;
-}, []);
+  useEffect(() => {
+    checkToken;
+  }, []);
 
-const checkToken=async()=>{
-  try {
-    const { data } = await rexbuyApi.post('/user/validate-token');
-    const { token, user } = data;
-    Cookies.set('token', token);
-    dispatch({ type: '[Auth] - Login', payload: user });
-  } catch (error) {
-    Cookies.remove('token');
-  }
-}
+  const checkToken = async () => {
+    if (!Cookies.get('token')) {
+      return;
+    }
 
-  const loginUser = async ( email: string, password: string ): Promise<boolean> => {
+    try {
+      const { data } = await rexbuyApi.post('/user/validate-token');
+      const { token, user } = data;
+      console.log('hello');
+      console.log({ data });
+      Cookies.set('token', token);
+      dispatch({ type: '[Auth] - Login', payload: user });
+    } catch (error) {
+      Cookies.remove('token');
+    }
+  };
+
+  const loginUser = async (
+    email: string,
+    password: string
+  ): Promise<boolean> => {
     try {
       const { data } = await rexbuyApi.post('/user/login', { email, password });
       const { token, user } = data;
