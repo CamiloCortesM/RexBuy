@@ -5,6 +5,7 @@ import Cookies from 'js-cookie';
 import axios from 'axios';
 import { IUser } from '@/interfaces';
 import { rexbuyApi } from '@/api';
+import { useRouter } from 'next/router';
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -17,6 +18,8 @@ const AUTH_INITIAL_STATE: AuthState = {
 };
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
+  const router = useRouter();
+
   const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
 
   useEffect(() => {
@@ -88,6 +91,12 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  const logout = () => {
+    Cookies.remove('token');
+    Cookies.remove('cart');
+    router.reload();
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -96,6 +105,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
         //Methods
         loginUser,
         registerUser,
+        logout
       }}
     >
       {children}
