@@ -17,7 +17,7 @@ import { AuthContext } from '@/context';
 import { AuthLayout } from '../../components/layouts';
 import { validations } from '@/utils';
 
-type formData = {
+type FormData = {
   email: string;
   password: string;
 };
@@ -31,9 +31,9 @@ const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<formData>();
+  } = useForm<FormData>();
 
-  const onLoginUser = async ({ email, password }: formData) => {
+  const onLoginUser = async ({ email, password }: FormData) => {
     setShowError(false);
 
     const isValidUser = await loginUser(email, password);
