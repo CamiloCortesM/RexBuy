@@ -144,6 +144,18 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
     dispatch({ type: 'Cart - Remove product in cart', payload: product });
   };
 
+  const updateAddress = (address: ShippingAddress) => {
+    Cookie.set('firtsName', address.firtsName);
+    Cookie.set('lastName', address.lastName);
+    Cookie.set('address', address.address);
+    Cookie.set('address2', address.address2 || '');
+    Cookie.set('zip', address.zip);
+    Cookie.set('city', address.city);
+    Cookie.set('country', address.country);
+    Cookie.set('phone', address.phone);
+    dispatch({ type: 'Cart - Update Address', payload: address });
+  };
+
   return (
     <CartContext.Provider
       value={{
@@ -153,6 +165,7 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
         addProductToCart,
         updateCartQuantity,
         removeCartProduct,
+        updateAddress,
       }}
     >
       {children}
