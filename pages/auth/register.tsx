@@ -16,9 +16,8 @@ import { useForm } from 'react-hook-form';
 import { AuthContext } from '@/context';
 import { AuthLayout } from '../../components/layouts';
 import { validations } from '@/utils';
-import { rexbuyApi } from '@/api';
 
-type formData = {
+type FormData = {
   name: string;
   email: string;
   password: string;
@@ -34,9 +33,9 @@ const RegisterPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<formData>();
+  } = useForm<FormData>();
 
-  const onRegisterForm = async ({ email, name, password }: formData) => {
+  const onRegisterForm = async ({ email, name, password }: FormData) => {
     const { hasError, message } = await registerUser(email, name, password);
 
     if (hasError) {
@@ -46,7 +45,8 @@ const RegisterPage = () => {
       return;
     }
 
-    router.replace('/');
+    const destination = router.query.p?.toString() || '/';
+    router.replace(destination);
   };
 
   return (
@@ -129,7 +129,15 @@ const RegisterPage = () => {
           </Grid>
 
           <Grid item xs={12} display="flex" justifyContent="end">
-            <NextLink href="/auth/login" passHref legacyBehavior>
+            <NextLink
+              href={
+                router.query.p
+                  ? `/auth/login?p=${router.query.p}`
+                  : '/auth/login'
+              }
+              passHref
+              legacyBehavior
+            >
               <Link underline="always">¿Ya tienes cuenta?</Link>
             </NextLink>
           </Grid>

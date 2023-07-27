@@ -17,7 +17,7 @@ import { AuthContext } from '@/context';
 import { AuthLayout } from '../../components/layouts';
 import { validations } from '@/utils';
 
-type formData = {
+type FormData = {
   email: string;
   password: string;
 };
@@ -31,9 +31,9 @@ const LoginPage = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<formData>();
+  } = useForm<FormData>();
 
-  const onLoginUser = async ({ email, password }: formData) => {
+  const onLoginUser = async ({ email, password }: FormData) => {
     setShowError(false);
 
     const isValidUser = await loginUser(email, password);
@@ -42,8 +42,8 @@ const LoginPage = () => {
       setTimeout(() => setShowError(false), 4000);
       return;
     }
-
-    router.replace('/');
+    const destination = router.query.p?.toString() || '/';
+    router.replace(destination);
   };
 
   return (
@@ -108,7 +108,15 @@ const LoginPage = () => {
           </Grid>
 
           <Grid item xs={12} display="flex" justifyContent="end">
-            <NextLink href="/auth/register" passHref legacyBehavior>
+            <NextLink
+              href={
+                router.query.p
+                  ? `/auth/register?p=${router.query.p}`
+                  : '/auth/register'
+              }
+              passHref
+              legacyBehavior
+            >
               <Link underline="always">¿No tienes cuenta?</Link>
             </NextLink>
           </Grid>
