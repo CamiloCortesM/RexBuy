@@ -16,7 +16,7 @@ export interface CartState {
 }
 
 export interface ShippingAddress {
-  firtsName: string;
+  firstName: string;
   lastName: string;
   address: string;
   address2?: string;
@@ -60,9 +60,9 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
   }, [state.cart]);
 
   useEffect(() => {
-    if (Cookie.get('firtsName')) {
+    if (Cookie.get('firstName')) {
       const shippingAddress: ShippingAddress = {
-        firtsName: Cookie.get('firtsName') || '',
+        firstName: Cookie.get('firstName') || '',
         lastName: Cookie.get('lastName') || '',
         address: Cookie.get('address') || '',
         address2: Cookie.get('address2') || '',
@@ -145,7 +145,7 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
   };
 
   const updateAddress = (address: ShippingAddress) => {
-    Cookie.set('firtsName', address.firtsName);
+    Cookie.set('firstName', address.firstName);
     Cookie.set('lastName', address.lastName);
     Cookie.set('address', address.address);
     Cookie.set('address2', address.address2 || '');
