@@ -13,12 +13,14 @@ import {
 import { ItemCounter } from '../ui';
 import { CartContext } from '@/context';
 import { ICartProduct } from '@/interfaces/cart';
+import { IOrderItem } from '@/interfaces';
 
 interface Props {
   editable?: boolean;
+  products?: IOrderItem[];
 }
 
-export const CartList: FC<Props> = ({ editable = false }) => {
+export const CartList: FC<Props> = ({ editable = false, products }) => {
   const { cart, updateCartQuantity, removeCartProduct } =
     useContext(CartContext);
 
@@ -34,9 +36,11 @@ export const CartList: FC<Props> = ({ editable = false }) => {
     removeCartProduct(product);
   };
 
+  const showProducts = products ? products : cart;
+
   return (
     <>
-      {cart.map((product, i) => (
+      {showProducts.map((product, i) => (
         <Grid container spacing={2} key={product.slug + i} sx={{ mb: 2 }}>
           <Grid item xs={3} md={2}>
             {/* TODO: llevar a la página del producto */}
