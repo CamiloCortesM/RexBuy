@@ -26,9 +26,14 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     if (status === 'authenticated') {
+      console.log({ user: data.user });
       dispatch({ type: '[Auth] - Login', payload: data?.user as IUser });
     }
   }, [status, data]);
+
+  // useEffect(() => {
+  //   checkToken;
+  // }, []);
 
   const checkToken = async () => {
     if (!Cookies.get('token')) {
@@ -38,6 +43,8 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     try {
       const { data } = await rexbuyApi.post('/user/validate-token');
       const { token, user } = data;
+      console.log('hello');
+      console.log({ data });
       Cookies.set('token', token);
       dispatch({ type: '[Auth] - Login', payload: user });
     } catch (error) {

@@ -37,7 +37,7 @@ export const ShopLayout: FC<Props> = ({
 
       <main
         style={{
-          margin: '70px auto',
+          margin: '80px auto',
           maxWidth: '1440px',
           padding: '20px 10px',
         }}

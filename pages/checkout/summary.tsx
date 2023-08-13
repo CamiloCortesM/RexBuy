@@ -1,10 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 import NextLink from 'next/link';
 
 import {
-  Alert,
   Link,
   Box,
   Button,
@@ -13,42 +12,22 @@ import {
   Divider,
   Grid,
   Typography,
-  Snackbar,
 } from '@mui/material';
 
 import { ShopLayout } from '../../components/layouts/ShopLayout';
 import { CartList, OrderSummary } from '../../components/cart';
 import { CartContext } from '@/context';
+import { countries } from '@/utils';
 
 const SummaryPage = () => {
   const router = useRouter();
-  const { shippingAddress, numberOfItems, createOrder } =
-    useContext(CartContext);
-
-  const [isPosting, setIsPosting] = useState(false);
-  const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const { shippingAddress, numberOfItems } = useContext(CartContext);
 
   useEffect(() => {
     if (!Cookies.get('firstName')) {
       router.push('/checkout/address');
     }
   }, [router]);
-
-  const onCreateOrder = async () => {
-    setIsPosting(true);
-
-    const { hasError, message } = await createOrder();
-    setShowError(hasError);
-
-    if (hasError) {
-      setIsPosting(false);
-      setErrorMessage(message);
-      return;
-    }
-
-    router.replace(`/orders/${message}`);
-  };
 
   if (!shippingAddress) {
     return <></>;
@@ -106,7 +85,12 @@ const SummaryPage = () => {
               <Typography>
                 {city}, {zip}
               </Typography>
-              <Typography>{country}</Typography>
+              {/* <Typography>
+                {countries.find((c) => c.code === country)?.name}
+              </Typography> */}
+              <Typography>
+                {country}
+              </Typography>
               <Typography>{phone}</Typography>
 
               <Divider sx={{ my: 1 }} />
@@ -120,13 +104,7 @@ const SummaryPage = () => {
               <OrderSummary />
 
               <Box sx={{ mt: 3 }}>
-                <Button
-                  color="secondary"
-                  className="circular-btn"
-                  fullWidth
-                  onClick={onCreateOrder}
-                  disabled={isPosting}
-                >
+                <Button color="secondary" className="circular-btn" fullWidth>
                   Confirmar Orden
                 </Button>
               </Box>
@@ -134,15 +112,6 @@ const SummaryPage = () => {
           </Card>
         </Grid>
       </Grid>
-      <Snackbar
-        open={showError}
-        autoHideDuration={5000}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert severity="error" sx={{ width: '100%' }} variant="filled">
-          {errorMessage}
-        </Alert>
-      </Snackbar>
     </ShopLayout>
   );
 };
