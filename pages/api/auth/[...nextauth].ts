@@ -1,11 +1,20 @@
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
-import { jwt } from '@/utils';
-import { checkUserEmailPassword } from '../../../database/dbUsers';
+
 import { dbUsers } from '@/database';
 
-export const authOptions = {
+declare module 'next-auth' {
+  interface Session {
+    accessToken?: string;
+  }
+  interface User {
+    id?: string;
+    _id: string;
+  }
+}
+
+const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   providers: [
     Credentials({
@@ -23,8 +32,6 @@ export const authOptions = {
         },
       },
       async authorize(credentials) {
-        // console.log({ credentials });
-
         return await dbUsers.checkUserEmailPassword(
           credentials!.email,
           credentials!.password
@@ -52,17 +59,17 @@ export const authOptions = {
     updateAge: 86400, // Each day
   },
 
-  // callbacks
   callbacks: {
     async jwt({ token, account, user }) {
+    
       if (account) {
-        token.accessToken = account.accessToken;
+        token.accessToken = account.access_token;
 
         switch (account.type) {
           case 'oauth':
             token.user = await dbUsers.oAuthToDbUser(
-              user.email || '',
-              user.name || ''
+              user?.email || '',
+              user?.name || ''
             );
             break;
 
@@ -71,13 +78,12 @@ export const authOptions = {
             break;
         }
       }
-
       return token;
     },
 
     async session({ session, token, user }) {
-      // console.log({ session, account, user });
-      session.accessToken = token.accessToken;
+    
+      session.accessToken = token.accessToken as any;
       session.user = token.user as any;
 
       return session;
