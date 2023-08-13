@@ -1,4 +1,6 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
 import NextLink from 'next/link';
 
 import {
@@ -18,14 +20,21 @@ import { CartContext } from '@/context';
 import { countries } from '@/utils';
 
 const SummaryPage = () => {
+  const router = useRouter();
   const { shippingAddress, numberOfItems } = useContext(CartContext);
+
+  useEffect(() => {
+    if (!Cookies.get('firstName')) {
+      router.push('/checkout/address');
+    }
+  }, [router]);
 
   if (!shippingAddress) {
     return <></>;
   }
 
   const {
-    firtsName,
+    firstName,
     lastName,
     address,
     address2 = '',
@@ -67,7 +76,7 @@ const SummaryPage = () => {
               </Box>
 
               <Typography>
-                {firtsName} {lastName}
+                {firstName} {lastName}
               </Typography>
               <Typography>
                 {address}
@@ -76,8 +85,11 @@ const SummaryPage = () => {
               <Typography>
                 {city}, {zip}
               </Typography>
-              <Typography>
+              {/* <Typography>
                 {countries.find((c) => c.code === country)?.name}
+              </Typography> */}
+              <Typography>
+                {country}
               </Typography>
               <Typography>{phone}</Typography>
 

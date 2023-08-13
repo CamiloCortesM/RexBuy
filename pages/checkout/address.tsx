@@ -12,11 +12,11 @@ import { countries } from '@/utils';
 import { useForm } from 'react-hook-form';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { CartContext } from '@/context';
 
 type FormData = {
-  firtsName: string;
+  firstName: string;
   lastName: string;
   address: string;
   address2?: string;
@@ -28,7 +28,7 @@ type FormData = {
 
 const getAddressFromCookies = (): FormData => {
   return {
-    firtsName: Cookies.get('firtsName') || '',
+    firstName: Cookies.get('firstName') || '',
     lastName: Cookies.get('lastName') || '',
     address: Cookies.get('address') || '',
     address2: Cookies.get('address2') || '',
@@ -47,9 +47,23 @@ const AddressPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormData>({
-    defaultValues: getAddressFromCookies(),
+    defaultValues: {
+      firstName: '',
+      lastName: '',
+      address: '',
+      address2: '',
+      zip: '',
+      city: countries[0].code,
+      country: '',
+      phone: '',
+    },
   });
+
+  useEffect(() => {
+    reset(getAddressFromCookies());
+  }, [reset]);
 
   const onSubmitAddress = (data: FormData) => {
     updateAddress(data);
@@ -72,11 +86,11 @@ const AddressPage = () => {
               label="Nombre"
               variant="filled"
               fullWidth
-              {...register('firtsName', {
+              {...register('firstName', {
                 required: 'El nombre es requerido',
               })}
-              error={!!errors.firtsName}
-              helperText={errors.firtsName?.message}
+              error={!!errors.firstName}
+              helperText={errors.firstName?.message}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -139,25 +153,26 @@ const AddressPage = () => {
           </Grid>
 
           <Grid item xs={12} sm={6}>
-            <FormControl fullWidth>
+            {/* <FormControl fullWidth> */}
               <TextField
-                select
+                // select
                 variant="filled"
+                fullWidth
                 label="País"
-                defaultValue={Cookies.get('country') || 'COL'}
+                // defaultValue={Cookies.get('country') || 'COL'}
                 {...register('country', {
                   required: 'El nombre es requerido',
                 })}
                 error={!!errors.country}
                 helperText={errors.country?.message}
               >
-                {countries.map((country) => (
+                {/* {countries.map((country) => (
                   <MenuItem value={country.code} key={country.code}>
                     {country.name}
                   </MenuItem>
-                ))}
+                ))} */}
               </TextField>
-            </FormControl>
+            {/* </FormControl> */}
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
