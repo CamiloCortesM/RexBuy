@@ -52,7 +52,7 @@ export const lightTheme = createTheme({
     MuiButton: {
       defaultProps: {
         variant: 'contained',
-        size: 'small',
+        size: 'large',
         disableElevation: true,
         color: 'info',
       },
