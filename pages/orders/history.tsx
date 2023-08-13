@@ -1,9 +1,13 @@
+import { GetServerSideProps, NextPage } from 'next';
 import NextLink from 'next/link';
+import { getSession } from 'next-auth/react';
 
 import { Typography, Grid, Chip, Link } from '@mui/material';
 import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 
 import { ShopLayout } from '../../components/layouts';
+import { dbOrders } from '@/database';
+import { IOrder } from '@/interfaces';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 100 },
@@ -29,30 +33,27 @@ const columns: GridColDef[] = [
     sortable: false,
     renderCell: (params: GridRenderCellParams) => {
       return (
-        <NextLink href={`/orders/${params.row.id}`} passHref>
+        <NextLink href={`/orders/${params.row.orderId}`} passHref legacyBehavior>
           <Link underline="always">Ver orden</Link>
         </NextLink>
       );
     },
   },
 ];
+interface Props {
+  orders: IOrder[];
+}
 
-const rows = [
-  { id: 1, paid: true, fullname: 'Camilo Cortes' },
-  { id: 2, paid: false, fullname: 'Daniel Santiago' },
-  { id: 3, paid: true, fullname: 'Sofia Vallejo' },
-  { id: 4, paid: false, fullname: 'Astrid Reyes' },
-  { id: 5, paid: false, fullname: 'Sonia Rios' },
-  { id: 6, paid: true, fullname: 'Santiago Salamanca' },
-  { id: 7, paid: true, fullname: 'Santiago Salamanca' },
-  { id: 8, paid: true, fullname: 'Santiago Salamanca' },
-  { id: 9, paid: true, fullname: 'Santiago Salamanca' },
-  { id: 10, paid: true, fullname: 'Santiago Salamanca' },
-  { id: 11, paid: true, fullname: 'Santiago Salamanca' },
-  { id: 12, paid: true, fullname: 'Santiago Salamanca' },
-];
+const HistoryPage: NextPage<Props> = ({ orders }) => {
+  const rows = orders.map((order, index) => {
+    return {
+      id: index + 1,
+      paid: order.isPaid,
+      fullname: `${order.shippingAddress.firstName} ${order.shippingAddress.lastName}`,
+      orderId: order._id,
+    };
+  });
 
-const HistoryPage = () => {
   return (
     <ShopLayout
       title={'Historial de ordenes'}
@@ -62,13 +63,32 @@ const HistoryPage = () => {
         Historial de ordenes
       </Typography>
 
-      <Grid container>
+      <Grid container className='fadeIn'>
         <Grid item xs={12} sx={{ height: 440, width: '100%' }}>
           <DataGrid rows={rows} columns={columns} autoPageSize />
         </Grid>
       </Grid>
     </ShopLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session: any = await getSession({ req });
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/auth/login?p=/orders/history',
+        permanent: false,
+      },
+    };
+  }
+
+  const orders = await dbOrders.getOrdersByUser(session.user._id);
+
+  return {
+    props: { orders },
+  };
 };
 
 export default HistoryPage;
