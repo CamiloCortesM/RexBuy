@@ -55,10 +55,12 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       throw new Error('Total has been modify, check again.');
     }
 
-    const user= await User.findOne({email: session.user.email}).lean();
+    const user = await User.findOne({ email: session.user.email }).lean();
     const userId = user!._id.toString();
 
     const newOrder = new Order({ ...req.body, isPaid: false, user: userId });
+    newOrder.total = Math.round(newOrder.total * 100) / 100;
+
     await newOrder.save();
     await db.disconnect();
 
