@@ -172,7 +172,6 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
 
     try {
       const { data } = await rexbuyApi.post<IOrder>('/orders', body);
-      console.log({data});
       dispatch({type: 'Cart - Order complete'});
 
       return {
