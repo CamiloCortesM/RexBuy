@@ -18,6 +18,7 @@ import { useForm } from 'react-hook-form';
 
 import { AuthLayout } from '../../components/layouts';
 import { validations } from '@/utils';
+import Image from 'next/image';
 
 type FormData = {
   email: string;
@@ -107,20 +108,6 @@ const LoginPage = () => {
             </Button>
           </Grid>
 
-          <Grid item xs={12} display="flex" justifyContent="end">
-            <NextLink
-              href={
-                router.query.p
-                  ? `/auth/register?p=${router.query.p}`
-                  : '/auth/register'
-              }
-              passHref
-              legacyBehavior
-            >
-              <Link underline="always">¿No tienes cuenta?</Link>
-            </NextLink>
-          </Grid>
-
           <Grid
             item
             xs={12}
@@ -140,13 +127,33 @@ const LoginPage = () => {
                   variant="outlined"
                   fullWidth
                   color="primary"
-                  sx={{ mb: 2 }}
+                  sx={{ mb: 2, fontWeight:800 }}
                   onClick={() => signIn(provider.id)}
                 >
+                  <Image
+                    alt={`${provider.id} logo`}
+                    src={`/${provider.id}.svg`}
+                    width={20}
+                    height={20}
+                    style={{marginRight:10}}
+                  />
                   {provider.name}
                 </Button>
               );
             })}
+          </Grid>
+          <Grid item xs={12} display="flex" justifyContent="end">
+            <NextLink
+              href={
+                router.query.p
+                  ? `/auth/register?p=${router.query.p}`
+                  : '/auth/register'
+              }
+              passHref
+              legacyBehavior
+            >
+              <Link underline="always">¿No tienes cuenta?</Link>
+            </NextLink>
           </Grid>
         </Box>
       </form>
