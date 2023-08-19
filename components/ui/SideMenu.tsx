@@ -27,6 +27,7 @@ import {
   TabletAndroidOutlined,
   DesktopWindowsOutlined,
   WatchSharp,
+  DashboardOutlined,
 } from '@mui/icons-material';
 import { useContext, useState } from 'react';
 import { AuthContext, UiContext } from '@/context';
@@ -90,7 +91,7 @@ export const SideMenu = () => {
                 <ListItemText primary={'Perfil'} />
               </ListItemButton>
 
-              <ListItemButton onClick={()=> navigateTo('/orders/history')}>
+              <ListItemButton onClick={() => navigateTo('/orders/history')}>
                 <ListItemIcon>
                   <ConfirmationNumberOutlined />
                 </ListItemIcon>
@@ -184,32 +185,38 @@ export const SideMenu = () => {
           )}
 
           {/* Admin */}
-          {user?.role === 'admin' && isLoggedIn && (
-            <>
-              <Divider />
-              <ListSubheader>Admin Panel</ListSubheader>
+          {(user?.role === 'admin' || user?.role === 'employee') &&
+            isLoggedIn && (
+              <>
+                <Divider />
+                <ListSubheader>Admin Panel</ListSubheader>
+                <ListItemButton onClick={() => navigateTo('/admin')}>
+                  <ListItemIcon>
+                    <DashboardOutlined />
+                  </ListItemIcon>
+                  <ListItemText primary={'Dashboard'} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <CategoryOutlined />
+                  </ListItemIcon>
+                  <ListItemText primary={'Productos'} />
+                </ListItemButton>
+                <ListItemButton>
+                  <ListItemIcon>
+                    <ConfirmationNumberOutlined />
+                  </ListItemIcon>
+                  <ListItemText primary={'Ordenes'} />
+                </ListItemButton>
 
-              <ListItemButton>
-                <ListItemIcon>
-                  <CategoryOutlined />
-                </ListItemIcon>
-                <ListItemText primary={'Productos'} />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemIcon>
-                  <ConfirmationNumberOutlined />
-                </ListItemIcon>
-                <ListItemText primary={'Ordenes'} />
-              </ListItemButton>
-
-              <ListItemButton>
-                <ListItemIcon>
-                  <AdminPanelSettings />
-                </ListItemIcon>
-                <ListItemText primary={'Usuarios'} />
-              </ListItemButton>
-            </>
-          )}
+                <ListItemButton>
+                  <ListItemIcon>
+                    <AdminPanelSettings />
+                  </ListItemIcon>
+                  <ListItemText primary={'Usuarios'} />
+                </ListItemButton>
+              </>
+            )}
         </List>
       </Box>
     </Drawer>
