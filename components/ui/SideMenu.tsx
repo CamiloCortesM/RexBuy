@@ -208,12 +208,6 @@ export const SideMenu = () => {
                 </ListItemIcon>
                 <ListItemText primary={'Usuarios'} />
               </ListItemButton>
-              <ListItemButton>
-                <ListItemIcon>
-                  <AdminPanelSettings />
-                </ListItemIcon>
-                <ListItemText primary={'Empleados'} />
-              </ListItemButton>
             </>
           )}
         </List>
