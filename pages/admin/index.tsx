@@ -1,3 +1,4 @@
+import useSWR from 'swr';
 import { SummaryTile } from '@/components/admin';
 import { AdminLayout } from '@/components/layouts';
 import {
@@ -10,10 +11,49 @@ import {
   GroupOutlined,
   ProductionQuantityLimitsOutlined,
 } from '@mui/icons-material';
-import { Card, CardContent, Grid, Typography } from '@mui/material';
-import React from 'react';
+import { Grid, Typography } from '@mui/material';
+import { DashboardSummaryResponse } from '@/interfaces';
+import { useEffect, useState } from 'react';
 
 const DashboardPage = () => {
+  const { data, error, isLoading } = useSWR<DashboardSummaryResponse>(
+    '/api/admin/dashboard',
+    {
+      refreshInterval: 30 * 1000, // 30 seconds
+    }
+  );
+
+  const [refreshIn, setRefreshIn] = useState(30);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRefreshIn((refreshIn) => (refreshIn > 0 ? refreshIn - 1 : 30));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  if (!error && !data) {
+    return <></>;
+  }
+
+  if (error) {
+    console.log(error);
+    return <Typography>Error al cargar la informacion</Typography>;
+  }
+
+  if (isLoading) return <div>loading...</div>;
+
+  const {
+    numberOfOrders,
+    paidOrders,
+    notPaidOrders,
+    numberOfClients,
+    numberOfProducts,
+    productsWithNoInventory,
+    lowInventory,
+  } = data!;
+
   return (
     <AdminLayout
       title="Dashboard"
@@ -31,7 +71,7 @@ const DashboardPage = () => {
             />
           }
           subTitle="Ordenes totales"
-          title="150"
+          title={numberOfOrders}
         />
         <SummaryTile
           icon={
@@ -43,7 +83,7 @@ const DashboardPage = () => {
             />
           }
           subTitle="Ordenes pagadas"
-          title="50"
+          title={paidOrders}
         />
         <SummaryTile
           icon={
@@ -55,7 +95,7 @@ const DashboardPage = () => {
             />
           }
           subTitle="Ordenes pendientes"
-          title="100"
+          title={notPaidOrders}
         />
         <SummaryTile
           icon={
@@ -67,7 +107,7 @@ const DashboardPage = () => {
             />
           }
           subTitle="Clientes"
-          title="5"
+          title={numberOfClients}
         />
 
         <SummaryTile
@@ -80,7 +120,7 @@ const DashboardPage = () => {
             />
           }
           subTitle="Productos"
-          title="500"
+          title={numberOfProducts}
         />
 
         <SummaryTile
@@ -93,7 +133,7 @@ const DashboardPage = () => {
             />
           }
           subTitle="Sin Existencias"
-          title="5"
+          title={productsWithNoInventory}
         />
 
         <SummaryTile
@@ -106,7 +146,7 @@ const DashboardPage = () => {
             />
           }
           subTitle="Bajo inventario"
-          title="2"
+          title={lowInventory}
         />
 
         <SummaryTile
@@ -119,7 +159,7 @@ const DashboardPage = () => {
             />
           }
           subTitle="Actualizacion en:"
-          title="10"
+          title={refreshIn}
         />
       </Grid>
     </AdminLayout>
