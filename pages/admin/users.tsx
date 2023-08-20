@@ -1,22 +1,39 @@
-import { rexbuyApi } from '@/api';
-import { AdminLayout } from '@/components/layouts';
-import { IUser } from '@/interfaces';
+import { useEffect, useState } from 'react';
+import useSWR from 'swr';
+import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
 import { PeopleOutline } from '@mui/icons-material';
 import { Grid, MenuItem, Select } from '@mui/material';
 
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import useSWR from 'swr';
+import { rexbuyApi } from '@/api';
+import { AdminLayout } from '@/components/layouts';
+import { IUser } from '@/interfaces';
 
 const UsersPage = () => {
   const { data, error, isLoading } = useSWR<IUser[]>('/api/admin/users');
+  const [users, setUsers] = useState<IUser[]>([]);
+
+  useEffect(() => {
+    if (data) {
+      setUsers(data);
+    }
+  }, [data]);
 
   if ((!data && !error) || isLoading) return <></>;
 
   const onRoleUpdated = async (userId: string, newRole: string) => {
+    const previosUsers = users.map((user) => ({ ...user }));
+    const updatedUsers = users.map((user) => ({
+      ...user,
+      role: userId === user._id ? newRole : user.role,
+    }));
+
+    setUsers(updatedUsers);
+
     try {
-      await rexbuyApi.put('/admin/users', { userId, newRole });
+      await rexbuyApi.put('/admin/users', { userId, role: newRole });
     } catch (error) {
       console.log(error);
+      setUsers(previosUsers);
       //TODO: cambiar las alertas
       alert('No se pudo actualizar el role del usuario');
     }
@@ -46,7 +63,7 @@ const UsersPage = () => {
     },
   ];
 
-  const rows = data!.map((user) => ({
+  const rows = users!.map((user) => ({
     id: user._id,
     email: user.email,
     name: user.name,
