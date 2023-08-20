@@ -26,13 +26,13 @@ const getUsers = async (res: NextApiResponse<Data>) => {
 };
 
 const updateUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { userId = '', role = '' } = req.body;
+  const { userId = '', newRole = '' } = req.body;
 
   if (!isValidObjectId(userId))
     return res.status(400).json({ message: 'No user exists for this id' });
 
   const validRoles = ['admin', 'client', 'employee'];
-  if (!validRoles.includes(role)) {
+  if (!validRoles.includes(newRole)) {
     return res
       .status(400)
       .json({ message: 'role not allowed: ' + validRoles.join(', ') });
@@ -45,7 +45,7 @@ const updateUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     return res.status(404).json({ message: 'user not found with that id' });
   }
 
-  user.role = role;
+  user.role = newRole;
   await user.save();
   await db.disconnect();
 
