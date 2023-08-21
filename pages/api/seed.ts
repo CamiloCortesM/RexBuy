@@ -1,9 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-import bcryptjs from 'bcryptjs';
-
 import { db, seedDatabase } from '../../database';
-import { Product, User } from '../../models';
+import { Order, Product, User } from '../../models';
 
 type Data = {
   message: string;
@@ -20,7 +18,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   await User.insertMany(seedDatabase.initialData.users);
 
   await Product.deleteMany();
-  await Product.insertMany( seedDatabase.initialData.products );
+  await Product.insertMany(seedDatabase.initialData.products);
+
+  await Order.deleteMany();
 
   await db.disconnect();
 
