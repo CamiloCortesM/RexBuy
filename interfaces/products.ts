@@ -13,7 +13,6 @@ export interface IProduct {
   ram?: string[];
   type: ITechnologyType;
 
-  // TODO: add createdAt and updatedAt
   createdAt: string;
   updatedAt: string;
 }
