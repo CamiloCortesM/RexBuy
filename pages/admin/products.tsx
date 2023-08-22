@@ -1,7 +1,8 @@
+import NextLink from 'next/link';
 import { AdminLayout } from '@/components/layouts';
 import { IProduct } from '@/interfaces';
 import { CategoryOutlined } from '@mui/icons-material';
-import { CardMedia, Chip, Grid } from '@mui/material';
+import { CardMedia, Chip, Grid, Link } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
@@ -49,6 +50,13 @@ const columns: GridColDef[] = [
     width: 250,
     headerAlign: 'center',
     align: 'center',
+    renderCell: ({ row }: GridRenderCellParams) => {
+      return (
+        <NextLink href={`/admin/products/${row.slug}`} passHref legacyBehavior>
+          <Link underline="always">{row.title}</Link>
+        </NextLink>
+      );
+    },
   },
   {
     field: 'brand',
