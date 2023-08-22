@@ -66,7 +66,6 @@ interface Props {
 }
 
 const ProductAdminPage: FC<Props> = ({ product }) => {
-  console.log({ product });
   const {
     register,
     handleSubmit,
@@ -147,12 +146,16 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
 
             <TextField
               label="Precio"
-              type="number"
+              type="text"
               variant="filled"
               fullWidth
               sx={{ mb: 1 }}
               {...register('price', {
                 required: 'Este campo es requerido',
+                pattern: {
+                  value: /^\d+(\.\d{1,2})?$/, // Expresión regular para validar números con hasta 2 decimales
+                  message: 'Por favor, ingresa un número válido',
+                },
                 min: { value: 0, message: 'Mínimo valor es 0' },
               })}
               error={!!errors.price}
