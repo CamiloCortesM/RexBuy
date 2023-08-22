@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { useForm } from 'react-hook-form';
 
@@ -66,6 +66,8 @@ interface Props {
 }
 
 const ProductAdminPage: FC<Props> = ({ product }) => {
+  const [newTag, setNewTag] = useState('');
+
   const {
     register,
     handleSubmit,
@@ -94,7 +96,23 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
     return () => subscription.unsubscribe();
   }, [watch, setValue]);
 
-  const onDeleteTag = (tag: string) => {};
+  const onDeleteTag = (deleteTag: string) => {
+    const currentTags = getValues('tags');
+    setValue(
+      'tags',
+      currentTags.filter((tag) => tag !== deleteTag),
+      { shouldValidate: true }
+    );
+  };
+
+  const onNewTag = () => {
+    const newTagValue = newTag.trim().toLocaleLowerCase();
+    if (newTagValue.length < 1) return;
+    const currentTags = getValues('tags');
+    if (currentTags.includes(newTagValue)) return;
+    setValue('tags', [...currentTags, newTag], { shouldValidate: true });
+    setNewTag('');
+  };
 
   const onSubmit = (form: FormData) => {
     console.log({ form });
@@ -336,6 +354,11 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
               fullWidth
               sx={{ mb: 1 }}
               helperText="Presiona [spacebar] para agregar"
+              value={newTag}
+              onChange={({ target }) => setNewTag(target.value)}
+              onKeyDown={({ code }) =>
+                code === 'Space' ? onNewTag() : undefined
+              }
             />
 
             <Box
@@ -348,7 +371,7 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
               }}
               component="ul"
             >
-              {product.tags.map((tag) => {
+              {getValues('tags').map((tag) => {
                 return (
                   <Chip
                     key={tag}
