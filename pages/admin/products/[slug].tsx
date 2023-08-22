@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { useForm } from 'react-hook-form';
 
@@ -43,7 +43,7 @@ const validTypes = [
   'monitores',
 ];
 const validCapacity = ['64GB', '128GB', '256GB', '512GB', '1TB', '2TB'];
-const validRam = ['4GB', '8GB', '12GB', '16GB', '32TB', '64TB'];
+const validRam = ['4GB', '8GB', '12GB', '16GB', '32GB', '64GB'];
 
 interface FormData {
   _id: string;
@@ -56,8 +56,8 @@ interface FormData {
   title: string;
   brand: string;
   model: string;
-  capacity?: string[];
-  ram?: string[];
+  capacity: string[];
+  ram: string[];
   type: string;
 }
 
@@ -72,14 +72,48 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
     formState: { errors },
     getValues,
     setValue,
+    watch,
   } = useForm<FormData>({
     defaultValues: product,
   });
+
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      if (name === 'title') {
+        const newSlug =
+          value.title
+            ?.trim()
+            .replaceAll(' ', '-')
+            .replaceAll("'", '')
+            .toLocaleLowerCase() || '';
+
+        setValue('slug', newSlug);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch, setValue]);
 
   const onDeleteTag = (tag: string) => {};
 
   const onSubmit = (form: FormData) => {
     console.log({ form });
+  };
+
+  const onChangeCheck = (option: string, type: string = 'capacity') => {
+    if (!['ram', 'capacity'].includes(type)) return;
+    const currentValues = getValues(type as 'ram' | 'capacity');
+    const setValueForType = (values: string[]) => {
+      setValue(type as 'ram' | 'capacity', values, {
+        shouldValidate: true,
+      });
+    };
+
+    if (currentValues.includes(option)) {
+      setValueForType(currentValues.filter((value) => value !== option));
+      return;
+    }
+    setValueForType([...currentValues, option]);
   };
 
   return (
@@ -204,8 +238,13 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
               {validCapacity.map((option) => (
                 <FormControlLabel
                   key={option}
-                  control={<Checkbox />}
-                  label={capitalize(option)}
+                  control={
+                    <Checkbox
+                      checked={getValues('capacity').includes(option)}
+                    />
+                  }
+                  onChange={() => onChangeCheck(option)}
+                  label={option}
                 />
               ))}
               {/* <RadioGroup
@@ -237,7 +276,10 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
               {validRam.map((option) => (
                 <FormControlLabel
                   key={option}
-                  control={<Checkbox />}
+                  control={
+                    <Checkbox checked={getValues('ram').includes(option)} />
+                  }
+                  onChange={() => onChangeCheck(option, 'ram')}
                   label={option}
                 />
               ))}
