@@ -1,13 +1,12 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { GetServerSideProps } from 'next';
-import { AdminLayout } from '../../../components/layouts';
-import { IProduct } from '../../../interfaces';
+import { useForm } from 'react-hook-form';
+
 import {
   DriveFileRenameOutline,
   SaveOutlined,
   UploadOutlined,
 } from '@mui/icons-material';
-import { dbProducts } from '../../../database';
 import {
   Box,
   Button,
@@ -30,6 +29,10 @@ import {
   TextField,
 } from '@mui/material';
 
+import { AdminLayout } from '../../../components/layouts';
+import { IProduct } from '../../../interfaces';
+import { dbProducts } from '../../../database';
+
 const validTypes = [
   'celulares',
   'computadores',
@@ -42,12 +45,40 @@ const validTypes = [
 const validCapacity = ['64GB', '128GB', '256GB', '512GB', '1TB', '2TB'];
 const validRam = ['4GB', '8GB', '12GB', '16GB', '32TB', '64TB'];
 
+interface FormData {
+  _id: string;
+  description: string;
+  images: string[];
+  inStock: number;
+  price: number;
+  slug: string;
+  tags: string[];
+  title: string;
+  brand: string;
+  model: string;
+  capacity?: string[];
+  ram?: string[];
+  type: string;
+}
+
 interface Props {
   product: IProduct;
 }
 
 const ProductAdminPage: FC<Props> = ({ product }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: product,
+  });
+
   const onDeleteTag = (tag: string) => {};
+
+  const onSubmit = (form: FormData) => {
+    console.log({ form });
+  };
 
   return (
     <AdminLayout
@@ -55,7 +86,7 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
       subTitle={`Editando: ${product.title}`}
       icon={<DriveFileRenameOutline />}
     >
-      <form>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Box display="flex" justifyContent="end" sx={{ mb: 1 }}>
           <Button
             color="secondary"
@@ -75,12 +106,12 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
               variant="filled"
               fullWidth
               sx={{ mb: 1 }}
-              // { ...register('name', {
-              //     required: 'Este campo es requerido',
-              //     minLength: { value: 2, message: 'Mínimo 2 caracteres' }
-              // })}
-              // error={ !!errors.name }
-              // helperText={ errors.name?.message }
+              {...register('title', {
+                required: 'Este campo es requerido',
+                minLength: { value: 2, message: 'Mínimo 2 caracteres' },
+              })}
+              error={!!errors.title}
+              helperText={errors.title?.message}
             />
 
             <TextField
@@ -89,6 +120,12 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
               fullWidth
               multiline
               sx={{ mb: 1 }}
+              {...register('description', {
+                required: 'Este campo es requerido',
+                minLength: { value: 2, message: 'Mínimo 2 caracteres' },
+              })}
+              error={!!errors.description}
+              helperText={errors.description?.message}
             />
 
             <TextField
@@ -97,6 +134,12 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
               variant="filled"
               fullWidth
               sx={{ mb: 1 }}
+              {...register('inStock', {
+                required: 'Este campo es requerido',
+                min: { value: 0, message: 'Mínimo valor es 0' },
+              })}
+              error={!!errors.inStock}
+              helperText={errors.inStock?.message}
             />
 
             <TextField
@@ -105,6 +148,12 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
               variant="filled"
               fullWidth
               sx={{ mb: 1 }}
+              {...register('price', {
+                required: 'Este campo es requerido',
+                min: { value: 0, message: 'Mínimo valor es 0' },
+              })}
+              error={!!errors.price}
+              helperText={errors.price?.message}
             />
 
             <Divider sx={{ my: 1 }} />
@@ -195,12 +244,24 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
                 variant="filled"
                 sx={{ flex: 1, marginRight: '1rem' }}
                 size="medium"
+                {...register('brand', {
+                  required: 'Este campo es requerido',
+                  minLength: { value: 2, message: 'Mínimo 2 caracteres' },
+                })}
+                error={!!errors.brand}
+                helperText={errors.brand?.message}
               />
               <TextField
                 label="Modelo"
                 variant="filled"
                 sx={{ flex: 1 }}
                 size="medium"
+                {...register('model', {
+                  required: 'Este campo es requerido',
+                  minLength: { value: 2, message: 'Mínimo 2 caracteres' },
+                })}
+                error={!!errors.model}
+                helperText={errors.model?.message}
               />
             </Box>
             <TextField
@@ -208,6 +269,15 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
               variant="filled"
               fullWidth
               sx={{ mb: 1 }}
+              {...register('slug', {
+                required: 'Este campo es requerido',
+                validate: (val) =>
+                  val.trim().includes(' ')
+                    ? 'No puede tener espacios en blanco'
+                    : undefined,
+              })}
+              error={!!errors.slug}
+              helperText={errors.slug?.message}
             />
 
             <TextField
