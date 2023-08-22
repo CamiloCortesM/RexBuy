@@ -8,7 +8,7 @@ import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
 
 const VideoGamesPage: NextPage = () => {
   const { isError, isLoading, products } = useProducts(
-    'products?type=videogames'
+    'products?type=videojuegos'
   );
   return (
     <ShopLayout
