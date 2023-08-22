@@ -66,10 +66,13 @@ interface Props {
 }
 
 const ProductAdminPage: FC<Props> = ({ product }) => {
+  console.log({ product });
   const {
     register,
     handleSubmit,
     formState: { errors },
+    getValues,
+    setValue,
   } = useForm<FormData>({
     defaultValues: product,
   });
@@ -162,8 +165,10 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
               <FormLabel>Tipo</FormLabel>
               <RadioGroup
                 row
-                // value={ status }
-                // onChange={ onStatusChanged }
+                value={getValues('type')}
+                onChange={({ target }) =>
+                  setValue('type', target.value, { shouldValidate: true })
+                }
               >
                 {validTypes.map((option) => (
                   <FormControlLabel
