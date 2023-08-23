@@ -32,6 +32,7 @@ import {
 import { AdminLayout } from '../../../components/layouts';
 import { IProduct } from '../../../interfaces';
 import { dbProducts } from '../../../database';
+import { rexbuyApi } from '@/api';
 
 const validTypes = [
   'celulares',
@@ -67,6 +68,7 @@ interface Props {
 
 const ProductAdminPage: FC<Props> = ({ product }) => {
   const [newTag, setNewTag] = useState('');
+  const [isSaving, setIsSaving] = useState(false);
 
   const {
     register,
@@ -110,12 +112,35 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
     if (newTagValue.length < 1) return;
     const currentTags = getValues('tags');
     if (currentTags.includes(newTagValue)) return;
-    setValue('tags', [...currentTags, newTag], { shouldValidate: true });
-    setNewTag('');
+    else {
+      setValue('tags', [...currentTags, newTagValue], { shouldValidate: true });
+      setNewTag('');
+    }
   };
 
-  const onSubmit = (form: FormData) => {
-    console.log({ form });
+  const onSubmit = async (form: FormData) => {
+    if (form.images.length < 2) return alert('Minimo 2 imagenes');
+
+    setIsSaving(true);
+
+    try {
+      const { data } = await rexbuyApi({
+        url: '/admin/products',
+        method: 'PUT',
+        data: form,
+      });
+
+      console.log({ data });
+
+      if (!form._id) {
+        //TODO: reload
+      } else {
+        setIsSaving(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setIsSaving(false);
+    }
   };
 
   const onChangeCheck = (option: string, type: string = 'capacity') => {
@@ -147,6 +172,7 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
             startIcon={<SaveOutlined />}
             sx={{ width: '150px' }}
             type="submit"
+            disabled={isSaving}
           >
             Guardar
           </Button>
