@@ -1,8 +1,8 @@
 import NextLink from 'next/link';
 import { AdminLayout } from '@/components/layouts';
 import { IProduct } from '@/interfaces';
-import { CategoryOutlined } from '@mui/icons-material';
-import { CardMedia, Chip, Grid, Link } from '@mui/material';
+import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
+import { Box, Button, CardMedia, Chip, Grid, Link } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
@@ -127,6 +127,16 @@ const ProductsPage = () => {
       subTitle={'Mantenimiento de Productos'}
       icon={<CategoryOutlined />}
     >
+      <Box display="flex" justifyContent="end" sx={{ mb: 2 }}>
+        <Button
+          startIcon={<AddOutlined />}
+          color="secondary"
+          className="circular-btn"
+          href="/admin/products/new"
+        >
+          Crear Producto
+        </Button>
+      </Box>
       <Grid container className="fadeIn">
         <Grid item xs={12} sx={{ height: 500 }}>
           <DataGrid
