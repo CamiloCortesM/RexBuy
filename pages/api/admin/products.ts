@@ -4,6 +4,9 @@ import { Product } from '@/models';
 import { isValidObjectId } from 'mongoose';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
+import { v2 as cloudinary } from 'cloudinary';
+cloudinary.config(process.env.CLOUDINARY_URL || '');
+
 type Data = { message: string } | IProduct[] | IProduct;
 
 export default function handler(
@@ -28,9 +31,16 @@ const getProducts = async (res: NextApiResponse<Data>) => {
   await db.disconnect();
 
   //TODO:
-  //update images
+  const updatedProducts = products.map((product) => {
+    product.images = product.images.map((image) => {
+      return image.includes('http')
+        ? image
+        : `${process.env.HOST_NAME}/products/${image}`;
+    });
+    return product;
+  });
 
-  res.status(200).json(products);
+  res.status(200).json(updatedProducts);
 };
 const updatedProduct = async (
   req: NextApiRequest,
@@ -51,7 +61,6 @@ const updatedProduct = async (
   }
 
   //TODO: posiblemente tendremos un localhost:3000/products/asdasd.jpg
-
   try {
     await db.connect();
     const product = await Product.findById(_id);
@@ -62,6 +71,17 @@ const updatedProduct = async (
     }
 
     //TODO: delete pictures in CLoudinary
+    // https://res.cloudinary.com/dnba3kkh6/image/upload/v1693102571/paualm7d4zo7u8dwuykn.jpg
+    product.images.forEach(async (image) => {
+      if (!images.includes(image)) {
+        //delete cloudinary
+        const [fileId, extension] = image
+          .substring(image.lastIndexOf('/') + 1)
+          .split('.');
+
+        await cloudinary.uploader.destroy(fileId);
+      }
+    });
 
     await product.updateOne(req.body);
     await db.disconnect();
