@@ -156,7 +156,7 @@ const ProductPage: NextPage<Props> = ({ product }) => {
           {product.images.map((image, i) => (
             <img
               key={i}
-              src={`/products/${image}`}
+              src={image}
               alt={product.title}
               style={{
                 width: '25%',

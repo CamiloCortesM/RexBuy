@@ -26,8 +26,8 @@ export const ProductCard: FC<Props> = ({ product }) => {
 
   const productImage = useMemo(() => {
     return isHovered && product.images.length > 1
-      ? `/products/${product.images[1]}`
-      : `/products/${product.images[0]}`;
+      ? product.images[1]
+      : product.images[0];
   }, [isHovered, product.images]);
 
   return (
@@ -99,9 +99,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
                 alt={product.title}
               />
             </CardActionArea>
-            <CardContent
-              className="fadeIn"
-            >
+            <CardContent className="fadeIn">
               <Typography fontWeight={700} variant="h2">
                 {product.title}
               </Typography>

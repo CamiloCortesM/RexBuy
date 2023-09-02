@@ -3,13 +3,13 @@ import { IProduct } from '../interfaces/products';
 
 const productSchema = new Schema(
   {
-    description: { type: String, required: true },
+    description: { type: String, required: true, default: '' },
     images: [{ type: String }],
     inStock: { type: Number, required: true, default: 0 },
     price: { type: Number, required: true, default: 0 },
     slug: { type: String, required: true, unique: true },
     tags: [{ type: String }],
-    title: { type: String },
+    title: { type: String, default: '' },
     brand: { type: String, required: true },
     model: { type: String, required: true },
     capacity: [{ type: String }],
@@ -18,15 +18,16 @@ const productSchema = new Schema(
       type: String,
       enum: {
         values: [
-          'cellphones',
-          'computers',
-          'videogames',
-          'accessories',
-          'tablets',
+          'celulares',
+          'computadores',
+          'videojuegos',
+          'accesorios',
+          'tabletas',
           'smartwatch',
-          'monitors',
+          'monitores',
         ],
         message: '{VALUE} category is not valid',
+        default: 'celulares',
       },
     },
   },
