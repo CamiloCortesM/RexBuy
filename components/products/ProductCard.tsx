@@ -102,7 +102,24 @@ export const ProductCard: FC<Props> = ({ product }) => {
               />
             </CardActionArea>
             <CardContent className="fadeIn">
-              <Rating name="read-only" value={1.0} readOnly />
+              <Box
+                display="flex"
+                gap={0.5}
+                justifyContent="flex-start"
+                alignItems="center"
+                marginBottom={.5}
+              >
+                <Rating
+                  name="read-only"
+                  size="small"
+                  value={3.6}
+                  precision={0.5}
+                  readOnly
+                />
+                <Typography color={'gray'} variant="caption">
+                  3.6
+                </Typography>
+              </Box>
               <Typography fontWeight={700} variant="h2">
                 {product.title}
               </Typography>
