@@ -101,7 +101,7 @@ export const SideMenu = () => {
           )}
 
           <ListItemButton
-            sx={{ display: { xs: '', md: 'none' } }}
+            sx={{ display: { xs: '', lg: 'none' } }}
             onClick={() => navigateTo('/category/cellphones')}
           >
             <ListItemIcon>
@@ -111,7 +111,7 @@ export const SideMenu = () => {
           </ListItemButton>
 
           <ListItemButton
-            sx={{ display: { xs: '', md: 'none' } }}
+            sx={{ display: { xs: '', lg: 'none' } }}
             onClick={() => navigateTo('/category/computers')}
           >
             <ListItemIcon>
@@ -121,7 +121,7 @@ export const SideMenu = () => {
           </ListItemButton>
 
           <ListItemButton
-            sx={{ display: { xs: '', md: 'none' } }}
+            sx={{ display: { xs: '', lg: 'none' } }}
             onClick={() => navigateTo('/category/videogames')}
           >
             <ListItemIcon>
@@ -130,7 +130,7 @@ export const SideMenu = () => {
             <ListItemText primary={'videojuegos'} />
           </ListItemButton>
           <ListItemButton
-            sx={{ display: { xs: '', md: 'none' } }}
+            sx={{ display: { xs: '', lg: 'none' } }}
             onClick={() => navigateTo('/category/accessories')}
           >
             <ListItemIcon>
@@ -139,7 +139,7 @@ export const SideMenu = () => {
             <ListItemText primary={'accesorios'} />
           </ListItemButton>
           <ListItemButton
-            sx={{ display: { xs: '', md: 'none' } }}
+            sx={{ display: { xs: '', lg: 'none' } }}
             onClick={() => navigateTo('/category/tablets')}
           >
             <ListItemIcon>
@@ -148,7 +148,7 @@ export const SideMenu = () => {
             <ListItemText primary={'tabletas'} />
           </ListItemButton>
           <ListItemButton
-            sx={{ display: { xs: '', md: 'none' } }}
+            sx={{ display: { xs: '', lg: 'none' } }}
             onClick={() => navigateTo('/category/monitors')}
           >
             <ListItemIcon>
@@ -157,7 +157,7 @@ export const SideMenu = () => {
             <ListItemText primary={'monitores'} />
           </ListItemButton>
           <ListItemButton
-            sx={{ display: { xs: '', md: 'none' } }}
+            sx={{ display: { xs: '', lg: 'none' } }}
             onClick={() => navigateTo('/category/smartwatch')}
           >
             <ListItemIcon>
