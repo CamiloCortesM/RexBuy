@@ -1,31 +1,38 @@
 import { FC } from 'react';
 
 import { IconButton, Input, InputAdornment } from '@mui/material';
-import { ClearOutlined } from '@mui/icons-material';
+import { ClearOutlined, SearchOutlined } from '@mui/icons-material';
+
+import { SearchableComponents } from '@/constants/navbarConstants';
 
 type props = {
   handleSearchTerm: () => void;
   setSearchTerm: (arg: string) => void;
   searchTerm: string;
   toggleSearch: () => void;
+  component?: string;
 };
 export const SearchButton: FC<props> = ({
   handleSearchTerm,
   searchTerm,
   setSearchTerm,
   toggleSearch,
+  component = SearchableComponents.Navbar,
 }) => {
   return (
     <Input
-      className="fadeIn"
       autoFocus
+      className="fadeIn"
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}
       onKeyUp={(e) => (e.key === 'Enter' ? handleSearchTerm() : null)}
       type="text"
       placeholder="Buscar..."
       sx={{
-        display: { xs: 'none', md: 'flex' },
+        display:
+          component === SearchableComponents.Navbar
+            ? { xs: 'none', md: 'flex' }
+            : 'flex',
       }}
       endAdornment={
         <InputAdornment position="end">
@@ -33,7 +40,11 @@ export const SearchButton: FC<props> = ({
             aria-label="toggle password visibility"
             onClick={toggleSearch}
           >
-            <ClearOutlined />
+            {component === SearchableComponents.Navbar ? (
+              <ClearOutlined />
+            ) : (
+              <SearchOutlined />
+            )}
           </IconButton>
         </InputAdornment>
       }
