@@ -1,5 +1,4 @@
 import { FC, PropsWithChildren, useEffect, useReducer } from 'react';
-import { useRouter } from 'next/router';
 import { useSession, signOut } from 'next-auth/react';
 
 import { AuthContext, authReducer } from './';
@@ -22,7 +21,6 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const { data, status } = useSession();
 
   const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
-  const router = useRouter();
 
   useEffect(() => {
     if (status === 'authenticated') {
@@ -30,32 +28,15 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   }, [status, data]);
 
-  const checkToken = async () => {
-    if (!Cookies.get('token')) {
-      return;
-    }
-
-    try {
-      const { data } = await rexbuyApi.post('/user/validate-token');
-      const { token, user } = data;
-      Cookies.set('token', token);
-      dispatch({ type: '[Auth] - Login', payload: user });
-    } catch (error) {
-      Cookies.remove('token');
-    }
-  };
-
   const loginUser = async (
     email: string,
     password: string
   ): Promise<boolean> => {
     try {
-      const { data } = await rexbuyApi.post('/user/login', { email, password });
-      const { token, user } = data;
-      Cookies.set('token', token);
-      dispatch({ type: '[Auth] - Login', payload: user });
+      await rexbuyApi.post('/user/login', { email, password });
       return true;
     } catch (error) {
+      console.log(error);
       return false;
     }
   };
@@ -66,15 +47,11 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     password: string
   ): Promise<{ hasError: boolean; message?: string }> => {
     try {
-      const { data } = await rexbuyApi.post('/user/register', {
+      await rexbuyApi.post('/user/register', {
         name,
         email,
         password,
       });
-      const { token, user } = data;
-      Cookies.set('token', token);
-      dispatch({ type: '[Auth] - Login', payload: user });
-
       return {
         hasError: false,
       };

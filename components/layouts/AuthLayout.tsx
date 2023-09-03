@@ -1,6 +1,7 @@
 import { FC, ReactNode } from 'react';
 import Head from 'next/head';
 import { Box, Grid, Typography } from '@mui/material';
+import { AuthLogo } from '../auth/AuthLogo';
 
 interface Props {
   children: ReactNode;
@@ -22,42 +23,17 @@ export const AuthLayout: FC<Props> = ({ children, title, headerTitle }) => {
           alignItems="center"
           height="100vh"
         >
+          <AuthLogo />
           <Box
-            height={'50%'}
-            width={'100%'}
-            position="absolute"
-            sx={{
-              top: 0,
-              backgroundColor: '#f6f1e9',
-              boxShadow: '0px 3px 5px rgba(0,0,0,0.3)',
-              zIndex: -1,
-            }}
+            sx={{ width: 500, padding: '50px 60px', backgroundColor: 'white' }}
           >
-            <img
-              src="/logo.png"
-              alt="logo"
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: '50%',
-                transform: 'translatex(-50%)',
-                width: '8%',
-                minWidth: 120,
-              }}
-            />
-          </Box>
-          <Box
-            sx={{ width: 500, padding: '45px 60px', backgroundColor: 'white' }}
-          >
-              {/* Check margin justify content style  */}
-            <Grid container spacing={2} justifyContent='center'>
-              {/* Check margin Bottom style  */}
+            <Grid container justifyContent="center">
               <Grid
                 item
                 xs={12}
                 display="grid"
                 justifyContent="center"
-                sx={{ marginBottom: '10px' }}
+                sx={{ marginBottom: '20px' }}
               >
                 <Typography variant="h1" component="h1">
                   {headerTitle}

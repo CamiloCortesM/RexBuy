@@ -44,8 +44,6 @@ export const ShopLayout: FC<Props> = ({
       >
         {children}
       </main>
-
-      {/* Footer */}
       <footer>{/* TODO: mi custom footer */}</footer>
     </>
   );
