@@ -11,6 +11,8 @@ import {
   CardContent,
   IconButton,
   Chip,
+  Rating,
+  Box,
 } from '@mui/material';
 
 import { IProduct } from '../../interfaces';
@@ -35,8 +37,8 @@ export const ProductCard: FC<Props> = ({ product }) => {
       item
       xs={6}
       sm={4}
+      md={3}
       height={400}
-      sx={{ mt: 1, mb: 2 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -73,7 +75,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
           <Link>
             <CardActionArea
               sx={{
-                height: { md: 300, xs: 260 },
+                height: { md: 280, sm: 270, xs: 260 },
               }}
             >
               {product.inStock === 0 && (
@@ -100,14 +102,30 @@ export const ProductCard: FC<Props> = ({ product }) => {
               />
             </CardActionArea>
             <CardContent className="fadeIn">
+              <Rating name="read-only" value={1.0} readOnly />
               <Typography fontWeight={700} variant="h2">
                 {product.title}
               </Typography>
-              <Typography fontWeight={500}>{`$${product.price}`}</Typography>
-              <Typography
-                variant="subtitle2"
-                fontWeight={200}
-              >{`36x $ 10.99`}</Typography>
+              <Box
+                display="flex"
+                gap={1}
+                justifyContent="flex-start"
+                alignItems="center"
+              >
+                <Typography
+                  sx={{
+                    color: '#f8596b',
+                  }}
+                  fontWeight={500}
+                >{`$${product.price}`}</Typography>
+                <Typography
+                  sx={{
+                    opacity: '.7',
+                  }}
+                  variant="subtitle2"
+                  fontWeight={400}
+                >{`36x $ 10.99`}</Typography>
+              </Box>
             </CardContent>
           </Link>
         </NextLink>

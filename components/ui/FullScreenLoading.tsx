@@ -10,7 +10,7 @@ export const FullScreenLoading = () => {
   }
 
   return (
-    <Grid container spacing={2}>
+    <Grid container spacing={0.5}>
       {cardLoadings}
     </Grid>
   );

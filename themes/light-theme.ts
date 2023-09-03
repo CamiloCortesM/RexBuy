@@ -8,7 +8,6 @@ export const lightTheme = createTheme({
     },
     secondary: {
       main: '#fcb891',
-      // main: '#f6f1e9',
     },
     info: {
       main: '#fff',
@@ -75,21 +74,18 @@ export const lightTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          boxShadow: '0px 4px 4px rgba(0,0,0,0.05)',
-          borderRadius: '2px',
-          border: '2px solid #f6f1e9',
+          borderRadius: '0px',
+          padding: '1px',
+          border: '2px solid #eaeaea',
           cursor: 'pointer',
-          ':hover': {
-            boxShadow: '0px 5px 5px rgba(0,0,0,0.1)',
+          transition: 'transform 0.2s, box-shadow 0.2s', // Agregar transiciones suaves
+          position: 'relative', // Añadir posición relativa
+          zIndex: 1, // Establecer z-index para que esté por encima del contenido
+          '&:hover': {
+            transform: 'scale(1.05)',
+            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
+            zIndex: 2, // Aumentar el z-index en el estado hover
           },
-        },
-      },
-    },
-
-    MuiCardActionArea: {
-      styleOverrides: {
-        root: {
-          borderBottom: '1px solid rgb(0,0,0,0.1)',
         },
       },
     },
