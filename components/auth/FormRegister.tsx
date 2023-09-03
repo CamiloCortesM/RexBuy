@@ -1,49 +1,51 @@
-import { FC, useEffect, useState } from 'react';
+import { FC } from 'react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 
-import { Box, Button, Divider, Grid, Link, TextField } from '@mui/material';
-import { getProviders, signIn } from 'next-auth/react';
+import { signIn } from 'next-auth/react';
+import { Box, Grid, TextField, Button, Link } from '@mui/material';
 
 import { validations } from '@/utils';
 import { useAuthForm } from '@/hooks';
-import { ButtonProvider } from './ButtonProvider';
 
 type FormData = {
+  name    : string;
   email   : string;
   password: string;
 };
 
 type props = {
-  setShowError: (arg0: boolean) => void;
+  setShowError: (isThereError: boolean) => void;
+  setShowErrorMessage: (message: string) => void;
 };
 
-export const FormLogin: FC<props> = ({ setShowError }) => {
+export const FormRegister: FC<props> = ({
+  setShowError,
+  setShowErrorMessage,
+}) => {
   const router = useRouter();
-
-  const [providers, setProviders] = useState<any>({});
-
-  useEffect(() => {
-    getProviders().then((prov) => {
-      setProviders(prov);
-    });
-  }, []);
 
   const {
     formState: { errors },
-    handleSubmit,
-    loginUser,
     register,
+    registerUser,
+    handleSubmit,
   } = useAuthForm<FormData>();
 
-  const onLoginUser = async ({ email, password }: FormData) => {
-    setShowError(false);
-    const isValidUser = await loginUser(email, password);
-    if (!isValidUser) {
+  const onRegisterForm = async ({
+    email,
+    name,
+    password,
+  }: FormData) => {
+    const { hasError, message } = await registerUser(email, name, password);
+
+    if (hasError) {
       setShowError(true);
+      setShowErrorMessage(message!);
       setTimeout(() => setShowError(false), 4000);
       return;
     }
+
     await signIn('credentials', { email, password });
   };
 
@@ -52,10 +54,26 @@ export const FormLogin: FC<props> = ({ setShowError }) => {
       style={{
         width: '100%',
       }}
-      onSubmit={handleSubmit(onLoginUser)}
+      onSubmit={handleSubmit(onRegisterForm)}
       noValidate
     >
       <Box display="flex" flexDirection="column" gap={2}>
+        <Grid item xs={12}>
+          <TextField
+            label="Nombre completo"
+            variant="filled"
+            fullWidth
+            {...register('name', {
+              required: 'El nombre es requerido',
+              minLength: {
+                value: 3,
+                message: 'Nombre debe tener al menos 3 caracteres',
+              },
+            })}
+            error={!!errors.name}
+            helperText={errors.name?.message}
+          />
+        </Grid>
         <Grid item xs={12}>
           <TextField
             type="email"
@@ -78,7 +96,10 @@ export const FormLogin: FC<props> = ({ setShowError }) => {
             fullWidth
             {...register('password', {
               required: 'La contraseña es requerida',
-              minLength: { value: 6, message: 'Mínimo 6 caracteres' },
+              minLength: {
+                value: 6,
+                message: 'Contraseña debe tener al menos 6 caracteres',
+              },
             })}
             error={!!errors.password}
             helperText={errors.password?.message}
@@ -97,33 +118,15 @@ export const FormLogin: FC<props> = ({ setShowError }) => {
           </Button>
         </Grid>
 
-        <Grid
-          item
-          xs={12}
-          display="flex"
-          flexDirection="column"
-          justifyContent="end"
-        >
-          <Divider sx={{ width: '100%', mb: 2 }} />
-          {Object.values(providers).map((provider: any) => {
-            if (provider.id === 'credentials') {
-              return <div key="credentials"></div>;
-            }
-
-            return <ButtonProvider key={provider.id} provider={provider} />;
-          })}
-        </Grid>
         <Grid item xs={12} display="flex" justifyContent="end">
           <NextLink
             href={
-              router.query.p
-                ? `/auth/register?p=${router.query.p}`
-                : '/auth/register'
+              router.query.p ? `/auth/login?p=${router.query.p}` : '/auth/login'
             }
             passHref
             legacyBehavior
           >
-            <Link underline="always">¿No tienes cuenta?</Link>
+            <Link underline="always">¿Ya tienes cuenta?</Link>
           </NextLink>
         </Grid>
       </Box>

@@ -1,30 +1,22 @@
-import { useState, useContext, useEffect } from 'react';
-import { getProviders } from 'next-auth/react';
-import { useForm } from 'react-hook-form';
+import { useContext } from 'react';
+import { UseFormReturn, useForm } from 'react-hook-form';
 import { AuthContext } from '@/context';
 
-type FormData = {
-  name?: string;
-  email: string;
-  password: string;
-};
+export const useAuthForm = <T extends {}>(): UseFormReturn<T> & {
+  loginUser: (email: string, password: string) => Promise<boolean>;
+  registerUser: (
+    email: string,
+    name: string,
+    password: string
+  ) => Promise<{ hasError: boolean; message?: string }>;
+} => {
+  const { loginUser, registerUser } = useContext(AuthContext);
 
-export const useAuthForm = () => {
-  const [providers, setProviders] = useState<any>({});
+  const formMethods = useForm<T>();
 
-  const { loginUser } = useContext(AuthContext);
-
-  useEffect(() => {
-    getProviders().then((prov) => {
-      setProviders(prov);
-    });
-  }, []);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
-
-  return { providers, loginUser, register, handleSubmit, errors };
+  return {
+    ...formMethods,
+    loginUser,
+    registerUser,
+  };
 };

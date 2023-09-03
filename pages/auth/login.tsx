@@ -2,24 +2,18 @@ import { useState } from 'react';
 import { GetServerSideProps } from 'next';
 import { getSession } from 'next-auth/react';
 
-import { Alert, Snackbar } from '@mui/material';
-
 import { AuthLayout } from '../../components/layouts';
-import { FormLogin } from '@/components/auth/FormLogin';
+import { FormLogin, AlertErrorMessage } from '@/components/auth/';
 
 const LoginPage = () => {
   const [showError, setShowError] = useState(false);
 
   return (
     <AuthLayout title={'Ingresar'} headerTitle={'Iniciar Sesión'}>
-      <Snackbar
-        open={showError}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <Alert severity="error" sx={{ width: '100%' }} variant="filled">
-          Usuario o contraseña no coinciden
-        </Alert>
-      </Snackbar>
+      <AlertErrorMessage
+        showError={showError}
+        errorMessage="Usuario o contraseña no coinciden"
+      />
       <FormLogin setShowError={setShowError} />
     </AuthLayout>
   );
