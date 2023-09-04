@@ -46,6 +46,14 @@ export const ProductCard: FC<Props> = ({ product }) => {
         sx={{
           height: 400,
           position: 'relative',
+          cursor: 'pointer',
+          transition: 'transform 0.2s, box-shadow 0.2s',
+          zIndex: 1,
+          ':hover': {
+            transform: 'scale(1.05)',
+            boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)',
+            zIndex: 2,
+          },
         }}
       >
         {isHovered && (
@@ -107,7 +115,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
                 gap={0.5}
                 justifyContent="flex-start"
                 alignItems="center"
-                marginBottom={.5}
+                marginBottom={0.5}
               >
                 <Rating
                   name="read-only"
