@@ -3,11 +3,11 @@ import Head from 'next/head';
 
 import { Navbar,SideMenu } from '../ui';
 
-interface Props {
-  children: ReactNode;
-  title: string;
+type Props = {
+  children       : ReactNode;
+  title          : string;
   pageDescription: string;
-  imageFullUrl?: string;
+  imageFullUrl?  : string;
 }
 
 export const ShopLayout: FC<Props> = ({

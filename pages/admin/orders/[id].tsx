@@ -20,7 +20,7 @@ import { IOrder } from '@/interfaces';
 import { CartList, OrderSummary } from '@/components/cart';
 import { AdminLayout } from '@/components/layouts';
 
-interface Props {
+type Props = {
   order: IOrder;
 }
 

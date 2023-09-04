@@ -77,7 +77,6 @@ export const lightTheme = createTheme({
           borderRadius: '0px',
           padding: '1px',
           border: '2px solid #eaeaea',
-          
         },
       },
     },

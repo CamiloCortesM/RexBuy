@@ -1,11 +1,12 @@
 import { FC, ReactNode } from 'react';
+
 import Head from 'next/head';
 import { Box, Grid, Typography } from '@mui/material';
 import { AuthLogo } from '../auth/AuthLogo';
 
-interface Props {
-  children: ReactNode;
-  title: string;
+type Props = {
+  children   : ReactNode;
+  title      : string;
   headerTitle: string;
 }
 

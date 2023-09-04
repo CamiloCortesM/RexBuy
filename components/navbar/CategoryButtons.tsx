@@ -5,11 +5,11 @@ import { Box } from '@mui/material';
 import { CategoryItem } from './';
 import { Categories } from '@/constants/navbarConstants';
 
-type props = {
+type Props = {
   isSearchVisible: boolean;
 };
 
-export const CategoryButtons: FC<props> = ({ isSearchVisible }) => {
+export const CategoryButtons: FC<Props> = ({ isSearchVisible }) => {
   return (
     <Box
       sx={{

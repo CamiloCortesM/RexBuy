@@ -17,13 +17,13 @@ import { CartContext } from '@/context';
 
 type FormData = {
   firstName: string;
-  lastName: string;
-  address: string;
+  lastName : string;
+  address  : string;
   address2?: string;
-  zip: string;
-  city: string;
-  country: string;
-  phone: string;
+  zip      : string;
+  city     : string;
+  country  : string;
+  phone    : string;
 };
 
 const getAddressFromCookies = (): FormData => {

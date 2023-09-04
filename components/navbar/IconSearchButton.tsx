@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { IconButton } from '@mui/material';
 import { SearchOutlined } from '@mui/icons-material';
 
-type props = {
+type Props = {
   onClick: () => void;
   style: {
     display: {
@@ -13,7 +13,7 @@ type props = {
   };
 };
 
-export const IconSearchButton: FC<props> = ({ onClick, style }) => {
+export const IconSearchButton: FC<Props> = ({ onClick, style }) => {
   return (
     <IconButton sx={style} className="fadeIn" onClick={onClick}>
       <SearchOutlined />

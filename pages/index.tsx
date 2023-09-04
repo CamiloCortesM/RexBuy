@@ -7,12 +7,13 @@ import { useProducts } from '@/hooks';
 import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
 
 const Home: NextPage = () => {
-  const { isError, isLoading, products } = useProducts('products');
+  const { isLoading, products } = useProducts('products');
   return (
     <ShopLayout
       title={'RexBuy - Home'}
       pageDescription={'Encuentra los mejores productos de tecnologia aquí'}
     >
+      {/* TODO: header section,announcements */}
       <Typography variant="h1" component="h1" color="primary">
         Tienda
       </Typography>

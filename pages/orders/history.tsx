@@ -40,7 +40,7 @@ const columns: GridColDef[] = [
     },
   },
 ];
-interface Props {
+type Props = {
   orders: IOrder[];
 }
 

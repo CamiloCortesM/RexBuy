@@ -5,14 +5,14 @@ import { ClearOutlined, SearchOutlined } from '@mui/icons-material';
 
 import { SearchableComponents } from '@/constants/navbarConstants';
 
-type props = {
+type Props = {
   handleSearchTerm: () => void;
   setSearchTerm: (arg: string) => void;
   searchTerm: string;
   toggleSearch: () => void;
   component?: string;
 };
-export const SearchButton: FC<props> = ({
+export const SearchButton: FC<Props> = ({
   handleSearchTerm,
   searchTerm,
   setSearchTerm,

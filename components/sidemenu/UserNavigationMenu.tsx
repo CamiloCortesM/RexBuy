@@ -8,11 +8,11 @@ import { AuthContext, UiContext } from '@/context';
 import { UserMenuItem } from './UserMenuItem';
 import { CategoriesMenu, UserMenuItems } from '@/constants/sidebarConstants';
 
-type props = {
+type Props = {
   isLoggedIn: boolean;
 };
 
-export const UserNavigationMenu: FC<props> = ({ isLoggedIn }) => {
+export const UserNavigationMenu: FC<Props> = ({ isLoggedIn }) => {
 
   const { toggleSideMenu } = useContext(UiContext);
   const { logout } = useContext(AuthContext);

@@ -12,7 +12,7 @@ import { dbProducts } from '@/database';
 import { ICartProduct } from '@/interfaces/cart';
 import { CartContext } from '@/context';
 
-interface Props {
+type Props = {
   product: IProduct;
 }
 

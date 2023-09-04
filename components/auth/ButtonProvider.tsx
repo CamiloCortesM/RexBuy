@@ -4,11 +4,11 @@ import Image from 'next/image';
 import { Button } from '@mui/material';
 import { signIn } from 'next-auth/react';
 
-type props = {
+type Props = {
   provider: { id: string; name: string };
 };
 
-export const ButtonProvider: FC<props> = ({ provider }) => {
+export const ButtonProvider: FC<Props> = ({ provider }) => {
   return (
     <Button
       variant="outlined"

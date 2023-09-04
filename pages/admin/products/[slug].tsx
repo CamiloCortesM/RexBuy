@@ -64,7 +64,7 @@ interface FormData {
   type: string;
 }
 
-interface Props {
+type Props = {
   product: IProduct;
 }
 

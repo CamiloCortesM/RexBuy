@@ -1,12 +1,12 @@
 import { FC } from 'react';
 import { Alert, Snackbar } from '@mui/material';
 
-type props = {
+type Props = {
   showError   : boolean;
   errorMessage: string;
 };
 
-export const AlertErrorMessage:FC<props> = ({errorMessage,showError}) => {
+export const AlertErrorMessage: FC<Props> = ({ errorMessage, showError }) => {
   return (
     <Snackbar
       open={showError}

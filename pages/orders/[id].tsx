@@ -38,7 +38,7 @@ export type OrderResponseBody = {
     | 'CREATED';
 };
 
-interface Props {
+type Props = {
   order: IOrder;
 }
 

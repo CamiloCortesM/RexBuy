@@ -3,7 +3,7 @@ import { Box, Button } from '@mui/material';
 
 import styles from './ItemSelector.module.css';
 
-interface Props {
+type Props = {
   selecteditem?: string | string[];
   items: string[];
   onSelectedSize: (value: string, name: string) => void;

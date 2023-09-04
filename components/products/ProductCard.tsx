@@ -19,9 +19,9 @@ import { IProduct } from '../../interfaces';
 
 import { FavoriteBorderOutlined, FavoriteOutlined } from '@mui/icons-material';
 
-interface Props {
+type Props = {
   product: IProduct;
-}
+};
 
 export const ProductCard: FC<Props> = ({ product }) => {
   const [isHovered, setIsHovered] = useState(false);

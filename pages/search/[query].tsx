@@ -7,11 +7,11 @@ import { ProductList } from '@/components/products';
 import { dbProducts } from '@/database';
 import { IProduct } from '@/interfaces';
 
-interface Props {
+type Props = {
   products: IProduct[];
   foundProducts: boolean;
   query: string;
-}
+};
 const SearchPage: NextPage<Props> = ({ products, foundProducts, query }) => {
   return (
     <ShopLayout
@@ -50,8 +50,6 @@ const SearchPage: NextPage<Props> = ({ products, foundProducts, query }) => {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   const { query = '' } = params as { query: string };
 
-  console.log(query);
-
   if (query.length === 0) {
     return {
       redirect: {
@@ -68,7 +66,6 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     // products = await dbProducts.getAllProducts();
     products = await dbProducts.getPorductsByTerm('laptop');
   }
-  //TODO: return another products if there isn't products
 
   return {
     props: { products, foundProducts, query },

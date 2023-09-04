@@ -14,11 +14,11 @@ type FormData = {
   password: string;
 };
 
-type props = {
+type Props = {
   setShowError: (arg0: boolean) => void;
 };
 
-export const FormLogin: FC<props> = ({ setShowError }) => {
+export const FormLogin: FC<Props> = ({ setShowError }) => {
   const router = useRouter();
 
   const [providers, setProviders] = useState<any>({});

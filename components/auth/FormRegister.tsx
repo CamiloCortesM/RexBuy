@@ -14,12 +14,12 @@ type FormData = {
   password: string;
 };
 
-type props = {
+type Props = {
   setShowError: (isThereError: boolean) => void;
   setShowErrorMessage: (message: string) => void;
 };
 
-export const FormRegister: FC<props> = ({
+export const FormRegister: FC<Props> = ({
   setShowError,
   setShowErrorMessage,
 }) => {

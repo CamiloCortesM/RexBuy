@@ -1,4 +1,5 @@
 import { Box, Typography } from '@mui/material';
+
 import { ShopLayout } from '../components/layouts';
 
 const Custom404 = () => {
@@ -20,7 +21,7 @@ const Custom404 = () => {
           style={{
             width: '100%',
             maxWidth: 400,
-            opacity:.6
+            opacity: 0.6,
           }}
         />
 

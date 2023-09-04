@@ -15,7 +15,7 @@ import { CartContext } from '@/context';
 import { ICartProduct } from '@/interfaces/cart';
 import { IOrderItem } from '@/interfaces';
 
-interface Props {
+type Props = {
   editable?: boolean;
   products?: IOrderItem[];
 }
