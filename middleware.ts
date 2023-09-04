@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
+import { PERMISSION_ROLES } from './constants';
 
 const createUnauthorizedResponse = () => {
   return new Response(JSON.stringify({ message: 'Not authorized' }), {
@@ -10,9 +11,13 @@ const createUnauthorizedResponse = () => {
   });
 };
 
+const redirectTo = (url: string, req: NextRequest) => {
+  const finalUrl = new URL(url, req.nextUrl.origin);
+  return NextResponse.redirect(finalUrl);
+};
+
 export async function middleware(req: NextRequest) {
   const previousPage = req.nextUrl.pathname;
-  const validRoles = ['admin', 'employee'];
 
   const session: any = await getToken({
     req,
@@ -22,20 +27,17 @@ export async function middleware(req: NextRequest) {
   if (!session) {
     if (previousPage.startsWith('/api/admin'))
       return createUnauthorizedResponse();
-    const url = new URL('/auth/login', req.nextUrl.origin);
-    url.search = `p=${previousPage}`;
-    return NextResponse.redirect(url);
+    return redirectTo('/auth/login?p=' + previousPage, req);
   }
 
   if (
     (previousPage.startsWith('/admin') ||
       previousPage.startsWith('/api/admin')) &&
-    !validRoles.includes(session.user.role)
+    !PERMISSION_ROLES.includes(session.user.role)
   ) {
     if (previousPage.startsWith('/api/admin'))
       return createUnauthorizedResponse();
-    const url = new URL('/', req.nextUrl.origin);
-    return NextResponse.redirect(url);
+    return redirectTo('/', req);
   }
 
   return NextResponse.next();
