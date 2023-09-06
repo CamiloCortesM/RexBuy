@@ -10,6 +10,7 @@ export const AlertErrorMessage: FC<Props> = ({ errorMessage, showError }) => {
   return (
     <Snackbar
       open={showError}
+      autoHideDuration={5000}
       anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
     >
       <Alert severity="error" sx={{ width: '100%' }} variant="filled">
