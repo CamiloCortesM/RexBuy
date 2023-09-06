@@ -8,9 +8,9 @@ import { dbProducts } from '@/database';
 import { IProduct } from '@/interfaces';
 
 type Props = {
-  products: IProduct[];
+  products     : IProduct[];
   foundProducts: boolean;
-  query: string;
+  query        : string;
 };
 const SearchPage: NextPage<Props> = ({ products, foundProducts, query }) => {
   return (

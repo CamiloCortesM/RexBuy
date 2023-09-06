@@ -1,9 +1,9 @@
 import { NextPage } from 'next';
 import { Typography } from '@mui/material';
 
+import { useProducts } from '@/hooks';
 import { ShopLayout } from '@/components/layouts/ShopLayout';
 import { ProductList } from '../components/products';
-import { useProducts } from '@/hooks';
 import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
 
 const Home: NextPage = () => {

@@ -19,7 +19,6 @@ const AUTH_INITIAL_STATE: AuthState = {
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const { data, status } = useSession();
-  console.log(data, status);
 
   const [state, dispatch] = useReducer(authReducer, AUTH_INITIAL_STATE);
 
