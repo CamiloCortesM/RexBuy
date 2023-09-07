@@ -15,6 +15,7 @@ const RegisterPage = () => {
       <AlertErrorMessage
         errorMessage={showErrorMessage}
         showError={showError}
+        setOpen={setShowError}
       />
       <FormRegister
         setShowError={setShowError}

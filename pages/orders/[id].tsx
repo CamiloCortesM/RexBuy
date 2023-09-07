@@ -78,6 +78,7 @@ const OrderPage: NextPage<Props> = ({ order }) => {
       <AlertErrorMessage
         errorMessage="No hay Pago en Paypal"
         showError={isCompleted}
+        setOpen={setIsCompleted}
       />
     </ShopLayout>
   );

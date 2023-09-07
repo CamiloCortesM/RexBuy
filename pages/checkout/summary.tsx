@@ -39,7 +39,7 @@ const SummaryPage = () => {
           setShowError={setShowError}
         />
       </Grid>
-      <AlertErrorMessage errorMessage={errorMessage} showError={showError} />
+      <AlertErrorMessage errorMessage={errorMessage} showError={showError} setOpen={setShowError} />
     </ShopLayout>
   );
 };

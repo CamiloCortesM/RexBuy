@@ -13,6 +13,7 @@ const LoginPage = () => {
       <AlertErrorMessage
         showError={showError}
         errorMessage="Usuario o contraseña no coinciden"
+        setOpen={setShowError}
       />
       <FormLogin setShowError={setShowError} />
     </AuthLayout>
