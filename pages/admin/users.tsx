@@ -71,10 +71,10 @@ const UsersPage = () => {
   ];
 
   const rows = users!.map((user) => ({
-    id: user._id,
+    id   : user._id,
     email: user.email,
-    name: user.name,
-    role: user.role,
+    name : user.name,
+    role : user.role,
   }));
 
   return (

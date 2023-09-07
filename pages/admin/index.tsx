@@ -1,6 +1,6 @@
+import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { SummaryTile } from '@/components/admin';
-import { AdminLayout } from '@/components/layouts';
+import { Grid, Typography } from '@mui/material';
 import {
   AccessTimeOutlined,
   AttachMoneyOutlined,
@@ -11,9 +11,10 @@ import {
   GroupOutlined,
   ProductionQuantityLimitsOutlined,
 } from '@mui/icons-material';
-import { Grid, Typography } from '@mui/material';
+
+import { SummaryTile } from '@/components/admin';
+import { AdminLayout } from '@/components/layouts';
 import { DashboardSummaryResponse } from '@/interfaces';
-import { useEffect, useState } from 'react';
 
 const DashboardPage = () => {
   const { data, error, isLoading } = useSWR<DashboardSummaryResponse>(
@@ -33,6 +34,8 @@ const DashboardPage = () => {
     return () => clearInterval(interval);
   }, []);
 
+  if (isLoading) return <div>loading...</div>; // TODO change loading
+
   if (!error && !data) {
     return <></>;
   }
@@ -42,7 +45,6 @@ const DashboardPage = () => {
     return <Typography>Error al cargar la informacion</Typography>;
   }
 
-  if (isLoading) return <div>loading...</div>;
 
   const {
     numberOfOrders,
