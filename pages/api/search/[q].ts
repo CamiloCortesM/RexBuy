@@ -10,7 +10,6 @@ const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
   switch (req.method) {
     case 'GET':
       return searchProducts(req, res);
-
     default:
       return res.status(400).json({
         message: 'Bad Request',

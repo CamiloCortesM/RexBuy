@@ -1,8 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { Product } from '../../../models';
-import { SHOP_CONSTANTS, db } from '../../../database';
+import { db } from '../../../database';
 import { IProduct } from '../../../interfaces';
+import { SHOP_CONSTANTS } from '@/constants';
 
 type Data = { message: string } | IProduct[];
 
@@ -10,7 +11,6 @@ const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
   switch (req.method) {
     case 'GET':
       return getProducts(req, res);
-
     default:
       return res.status(400).json({
         message: 'Bad Request',

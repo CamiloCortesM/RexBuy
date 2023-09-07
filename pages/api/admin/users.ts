@@ -3,6 +3,7 @@ import { isValidObjectId } from 'mongoose';
 import { db } from '@/database';
 import { IUser } from '@/interfaces';
 import { User } from '@/models';
+import { VALID_ROLES } from '@/constants';
 
 type Data = { message: string } | IUser[];
 
@@ -31,11 +32,10 @@ const updateUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   if (!isValidObjectId(userId))
     return res.status(400).json({ message: 'No user exists for this id' });
 
-  const validRoles = ['admin', 'client', 'employee'];
-  if (!validRoles.includes(role)) {
+  if (!VALID_ROLES.includes(role)) {
     return res
       .status(400)
-      .json({ message: 'role not allowed: ' + validRoles.join(', ') });
+      .json({ message: 'role not allowed: ' + VALID_ROLES.join(', ') });
   }
 
   await db.connect();

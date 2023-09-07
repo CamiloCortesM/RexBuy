@@ -10,7 +10,6 @@ const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
   switch (req.method) {
     case 'GET':
       return getProductBySlug(req, res);
-
     default:
       return res.status(400).json({
         message: 'Bad Request',
@@ -22,8 +21,8 @@ const getProductBySlug = async (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) => {
-  await db.connect();
   const { slug } = req.query;
+  await db.connect();
   const product = await Product.findOne({ slug }).lean();
   await db.disconnect();
 

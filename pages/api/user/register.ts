@@ -10,8 +10,8 @@ type Data =
   | {
       user: {
         email: string;
-        role: string;
-        name: string;
+        role : string;
+        name : string;
       };
     };
 

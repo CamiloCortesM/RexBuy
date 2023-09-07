@@ -1,23 +1,21 @@
-import { IOrder, IProduct, IUser } from '@/interfaces';
-import { Order, Product, User } from '@/models';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { connect } from '../../../database/db';
+import { Order, Product, User } from '@/models';
 import { db } from '@/database';
 
 type Data = {
-  numberOfOrders: number;
-  paidOrders: number;
-  notPaidOrders: number;
-  numberOfClients: number;
-  numberOfProducts: number;
+  numberOfOrders         : number;
+  paidOrders             : number;
+  notPaidOrders          : number;
+  numberOfClients        : number;
+  numberOfProducts       : number;
   productsWithNoInventory: number;
-  lowInventory: number;
+  lowInventory           : number;
 };
 
-export default async function (
+const handler = async(
   req: NextApiRequest,
   res: NextApiResponse<Data>
-) {
+) => {
   await db.connect();
   const [
     numberOfOrders,
@@ -47,3 +45,6 @@ export default async function (
     lowInventory,
   });
 }
+
+
+export default handler;
