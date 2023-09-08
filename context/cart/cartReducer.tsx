@@ -12,7 +12,7 @@ type CartActionType =
   | { type: 'Cart - Update Address'; payload: ShippingAddress }
   | { type: 'Cart - Order complete' }
   | {
-      type: 'Cart - Update order sumary';
+      type: 'Cart - Update order summary';
       payload: {
         numberOfItems: number;
         subTotal     : number;
@@ -61,7 +61,7 @@ export const cartReducer = (
         ),
       };
 
-    case 'Cart - Update order sumary':
+    case 'Cart - Update order summary':
       return {
         ...state,
         ...action.payload,

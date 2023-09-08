@@ -72,7 +72,6 @@ const updatedProduct = async (
 
     product.images.forEach(async (image) => {
       if (!images.includes(image)) {
-        //delete cloudinary
         const [fileId, extension] = image
           .substring(image.lastIndexOf('/') + 1)
           .split('.');

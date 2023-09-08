@@ -16,7 +16,7 @@ import { ShopLayout } from '../../components/layouts';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 100 },
-  { field: 'fullname', headerName: 'Nombre Completo', width: 300 },
+  { field: 'fullName', headerName: 'Nombre Completo', width: 300 },
 
   {
     field: 'paid',
@@ -58,7 +58,7 @@ const HistoryPage: NextPage<Props> = ({ orders }) => {
     return {
       id: index + 1,
       paid: order.isPaid,
-      fullname: `${order.shippingAddress.firstName} ${order.shippingAddress.lastName}`,
+      fullName: `${order.shippingAddress.firstName} ${order.shippingAddress.lastName}`,
       orderId: order._id,
     };
   });

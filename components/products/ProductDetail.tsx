@@ -72,7 +72,7 @@ export const ProductDetail: FC<Props> = ({ product }) => {
             <ItemSelector
               itemName={'capacity'}
               onSelectedSize={onSelectedSize}
-              selecteditem={tempCartProduct.capacity}
+              selectedItem={tempCartProduct.capacity}
               items={product.capacity}
             />
           </>
@@ -85,7 +85,7 @@ export const ProductDetail: FC<Props> = ({ product }) => {
             <ItemSelector
               itemName={'ram'}
               onSelectedSize={onSelectedSize}
-              selecteditem={tempCartProduct.ram}
+              selectedItem={tempCartProduct.ram}
               items={product.ram}
             />
           </>
