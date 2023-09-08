@@ -1,6 +1,6 @@
 import { Product } from '@/models';
-import { db } from '.';
 import { IProduct } from '@/interfaces';
+import { db } from '.';
 
 export const getProductBySlug = async (
   slug: string
@@ -13,7 +13,6 @@ export const getProductBySlug = async (
     return null;
   }
 
-  //TODO: remove function when updating the test products link
   product.images = product.images.map((image) => {
     return image.includes('http')
       ? image

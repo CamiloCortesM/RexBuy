@@ -25,7 +25,6 @@ export const checkUserEmailPassword = async (
   };
 };
 
-// Create o verify the oauth user
 export const oAuthToDbUser = async (oAuthEmail: string, oAutName: string) => {
   await db.connect();
   const user = await User.findOne({ email: oAuthEmail });
