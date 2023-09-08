@@ -28,16 +28,16 @@ export type OrderResponseBody = {
 };
 
 type Props = {
+  setIsCompleted: (arg0: boolean) => void;
   _id            : string | undefined;
   shippingAddress: ShippingAddress;
+  isPaid         : boolean;
   orderSummary: {
     numberOfItems: number;
     subTotal     : number;
     tax          : number;
     total        : number;
   };
-  isPaid: boolean;
-  setIsCompleted: (arg0: boolean) => void;
 };
 
 export const OrderDetail: FC<Props> = ({

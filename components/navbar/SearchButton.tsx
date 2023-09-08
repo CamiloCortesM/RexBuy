@@ -8,8 +8,8 @@ import { SearchableComponents } from '@/constants/navbarConstants';
 type Props = {
   handleSearchTerm: () => void;
   setSearchTerm: (arg: string) => void;
-  searchTerm: string;
   toggleSearch: () => void;
+  searchTerm: string;
   component?: string;
 };
 export const SearchButton: FC<Props> = ({

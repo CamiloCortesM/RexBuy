@@ -1,3 +1,6 @@
+import { FC, useContext, useState } from 'react';
+import { useRouter } from 'next/router';
+import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -8,11 +11,9 @@ import {
   Link,
   Typography,
 } from '@mui/material';
-import NextLink from 'next/link';
+
 import { OrderSummary } from '../cart';
-import { FC, useContext, useState } from 'react';
 import { CartContext } from '@/context';
-import { useRouter } from 'next/router';
 
 type Props = {
   setShowError: (arg0: boolean) => void;

@@ -4,10 +4,10 @@ import { Box, Button } from '@mui/material';
 import styles from './ItemSelector.module.css';
 
 type Props = {
-  selecteditem?: string | string[];
-  items: string[];
   onSelectedSize: (value: string, name: string) => void;
-  itemName: string;
+  selecteditem? : string | string[];
+  items         : string[];
+  itemName      : string;
 }
 
 export const ItemSelector: FC<Props> = ({

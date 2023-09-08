@@ -3,9 +3,9 @@ import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 
 type Props = {
   navigateTo: (link: string) => void;
-  title   : string;
-  link    : string;
-  iconMenu: ReactNode;
+  title     : string;
+  link      : string;
+  iconMenu  : ReactNode;
 };
 
 export const UserMenuItem: FC<Props> = ({

@@ -2,9 +2,9 @@ import { FC } from 'react';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 
 type Props = {
-  title: string | number;
+  title   : string | number;
   subTitle: string;
-  icon: JSX.Element;
+  icon    : JSX.Element;
 };
 
 export const SummaryTile: FC<Props> = ({ title, subTitle, icon }) => {

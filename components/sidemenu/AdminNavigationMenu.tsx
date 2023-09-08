@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { useRouter } from 'next/router';
 import { AdminMenuItems } from '@/constants';
 import { UiContext } from '@/context';
 import {
@@ -7,8 +9,6 @@ import {
   ListItemText,
   ListSubheader,
 } from '@mui/material';
-import { useRouter } from 'next/router';
-import { useContext } from 'react';
 
 export const AdminNavigationMenu = () => {
   const { toggleSideMenu } = useContext(UiContext);

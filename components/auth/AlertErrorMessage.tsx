@@ -2,9 +2,9 @@ import { FC, SyntheticEvent } from 'react';
 import { Alert, Snackbar } from '@mui/material';
 
 type Props = {
+  setOpen     : (arg0: boolean)=>void;
   showError   : boolean;
   errorMessage: string;
-  setOpen     : (arg0: boolean)=>void;
 };
 
 export const AlertErrorMessage: FC<Props> = ({ errorMessage, showError, setOpen}) => {
