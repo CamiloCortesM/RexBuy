@@ -22,7 +22,7 @@ export const AdminLayout: FC<Props> = ({ children, title, subTitle, icon }) => {
 
       <main
         style={{
-          margin: '70px auto',
+          margin: '70px auto 20px',
           maxWidth: '1440px',
           padding: '20px 10px',
         }}

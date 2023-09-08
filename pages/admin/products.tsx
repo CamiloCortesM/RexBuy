@@ -138,7 +138,7 @@ const ProductsPage = () => {
         </Button>
       </Box>
       <Grid container className="fadeIn">
-        <Grid item xs={12} sx={{ height: 500 }}>
+        <Grid item xs={12} sx={{ height: 440 }}>
           <DataGrid
             rows={rows}
             columns={columns}
