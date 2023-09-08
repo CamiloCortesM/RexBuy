@@ -103,6 +103,7 @@ const UsersPage = () => {
             slots={{
               toolbar: GridToolbar,
             }}
+            checkboxSelection
           />
         </Grid>
       </Grid>

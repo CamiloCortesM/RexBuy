@@ -78,6 +78,7 @@ const OrdersPage = () => {
             slots={{
               toolbar: GridToolbar,
             }}
+            checkboxSelection
           />
         </Grid>
       </Grid>

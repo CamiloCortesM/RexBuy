@@ -152,6 +152,8 @@ const ProductsPage = () => {
             slots={{
               toolbar: GridToolbar,
             }}
+            checkboxSelection
+            disableRowSelectionOnClick
           />
         </Grid>
       </Grid>
