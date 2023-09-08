@@ -1,7 +1,7 @@
-import { ICartProduct } from '@/interfaces/cart';
-import { CartState } from './';
-import { ShippingAddress } from '@/interfaces';
 import Cookies from 'js-cookie';
+import { ICartProduct } from '@/interfaces/cart';
+import { ShippingAddress } from '@/interfaces';
+import { CartState } from './';
 
 type CartActionType =
   | { type: 'Cart - LoadCart from cookies | storage'; payload: ICartProduct[] }
@@ -12,12 +12,12 @@ type CartActionType =
   | { type: 'Cart - Update Address'; payload: ShippingAddress }
   | { type: 'Cart - Order complete' }
   | {
-      type: 'Cart - Update order sumary';
+      type: 'Cart - Update order summary';
       payload: {
         numberOfItems: number;
-        subTotal: number;
-        tax: number;
-        total: number;
+        subTotal     : number;
+        tax          : number;
+        total        : number;
       };
     };
 
@@ -40,13 +40,13 @@ export const cartReducer = (
     case 'Cart - Change cart quantity':
       return {
         ...state,
-        cart: state.cart.map((product) => {
-          if (product._id != action.payload._id) return product;
-          if (product.capacity != action.payload.capacity) return product;
-          if (product.ram != action.payload.ram) return product;
-
-          return action.payload;
-        }),
+        cart: state.cart.map((product) =>
+          product._id === action.payload._id &&
+          product.capacity === action.payload.capacity &&
+          product.ram === action.payload.ram
+            ? action.payload
+            : product
+        ),
       };
     case 'Cart - Remove product in cart':
       return {
@@ -61,7 +61,7 @@ export const cartReducer = (
         ),
       };
 
-    case 'Cart - Update order sumary':
+    case 'Cart - Update order summary':
       return {
         ...state,
         ...action.payload,
@@ -75,7 +75,7 @@ export const cartReducer = (
       };
 
     case 'Cart - Order complete':
-      Cookies.set("cart", JSON.stringify([]));
+      Cookies.set('cart', JSON.stringify([]));
       return {
         ...state,
         cart: [],

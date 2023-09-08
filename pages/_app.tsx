@@ -6,7 +6,7 @@ import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { SWRConfig } from 'swr';
 
-import { lightTheme, darkTheme } from '../themes';
+import { lightTheme } from '../themes';
 import { AuthProvider, CartProvider, UiProvider } from '@/context';
 
 export default function App({ Component, pageProps }: AppProps) {

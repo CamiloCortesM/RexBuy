@@ -5,7 +5,7 @@ import styles from './ProductSlideshow.module.css';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css';
 
-interface Props {
+type Props = {
   images: string[];
 }
 

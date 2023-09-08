@@ -7,7 +7,7 @@ import { ProductList } from '@/components/products';
 import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
 
 const SmartWatchPage: NextPage = () => {
-  const { isError, isLoading, products } = useProducts(
+  const { isLoading, products } = useProducts(
     'products?type=smartwatch'
   );
   return (

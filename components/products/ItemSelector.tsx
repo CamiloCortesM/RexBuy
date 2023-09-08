@@ -3,15 +3,15 @@ import { Box, Button } from '@mui/material';
 
 import styles from './ItemSelector.module.css';
 
-interface Props {
-  selecteditem?: string | string[];
-  items: string[];
+type Props = {
   onSelectedSize: (value: string, name: string) => void;
-  itemName: string;
+  selectedItem? : string | string[];
+  items         : string[];
+  itemName      : string;
 }
 
 export const ItemSelector: FC<Props> = ({
-  selecteditem,
+  selectedItem,
   items,
   onSelectedSize,
   itemName,
@@ -22,8 +22,8 @@ export const ItemSelector: FC<Props> = ({
         <Button
           key={item}
           size="small"
-          color={selecteditem === item ? 'primary' : 'info'}
-          className={selecteditem === item ? styles['btn-item-selected'] : ''}
+          color={selectedItem === item ? 'primary' : 'info'}
+          className={selectedItem === item ? styles['btn-item-selected'] : ''}
           onClick={() => onSelectedSize(item, itemName)}
         >
           {item}

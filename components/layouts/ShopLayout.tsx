@@ -3,11 +3,11 @@ import Head from 'next/head';
 
 import { Navbar,SideMenu } from '../ui';
 
-interface Props {
-  children: ReactNode;
-  title: string;
+type Props = {
+  children       : ReactNode;
+  title          : string;
   pageDescription: string;
-  imageFullUrl?: string;
+  imageFullUrl?  : string;
 }
 
 export const ShopLayout: FC<Props> = ({
@@ -37,15 +37,13 @@ export const ShopLayout: FC<Props> = ({
 
       <main
         style={{
-          margin: '70px auto',
+          margin: '70px auto 20px',
           maxWidth: '1440px',
           padding: '20px 10px',
         }}
       >
         {children}
       </main>
-
-      {/* Footer */}
       <footer>{/* TODO: mi custom footer */}</footer>
     </>
   );

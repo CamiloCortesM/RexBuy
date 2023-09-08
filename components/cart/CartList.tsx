@@ -15,7 +15,7 @@ import { CartContext } from '@/context';
 import { ICartProduct } from '@/interfaces/cart';
 import { IOrderItem } from '@/interfaces';
 
-interface Props {
+type Props = {
   editable?: boolean;
   products?: IOrderItem[];
 }
@@ -43,7 +43,6 @@ export const CartList: FC<Props> = ({ editable = false, products }) => {
       {showProducts.map((product, i) => (
         <Grid container spacing={2} key={product.slug + i} sx={{ mb: 2 }}>
           <Grid item xs={3} md={2}>
-            {/* TODO: llevar a la página del producto */}
             <NextLink href={`/product/${product.slug}`} passHref legacyBehavior>
               <Link>
                 <CardActionArea>
@@ -79,7 +78,7 @@ export const CartList: FC<Props> = ({ editable = false, products }) => {
                   onUpdateValue={(value) =>
                     onNewCartQuantityValue(product, value)
                   }
-                  maxValue={10}
+                  maxValue={1000}
                 />
               ) : (
                 <Typography variant="h5">

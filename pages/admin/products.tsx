@@ -59,7 +59,7 @@ const columns: GridColDef[] = [
     },
   },
   {
-    field: 'brand',
+    field : 'brand',
     headerName: 'Marca',
     headerAlign: 'center',
     align: 'center',
@@ -108,15 +108,15 @@ const ProductsPage = () => {
   if ((!data && !error) || isLoading) return <></>;
 
   const rows = data!.map((product) => ({
-    id: product._id,
-    img: product.images[0],
-    title: product.title,
-    brand: product.brand,
-    type: product.type,
+    id     : product._id,
+    img    : product.images[0],
+    title  : product.title,
+    brand  : product.brand,
+    type   : product.type,
     inStock: product.inStock,
-    price: product.price,
-    model: product.model,
-    slug: product.slug,
+    price  : product.price,
+    model  : product.model,
+    slug   : product.slug,
     capacity:
       product.capacity!.length > 0 ? product.capacity!.join(', ') : 'No aplica',
     ram: product.ram!.length > 0 ? product.ram!.join(', ') : 'No aplica',
@@ -138,7 +138,7 @@ const ProductsPage = () => {
         </Button>
       </Box>
       <Grid container className="fadeIn">
-        <Grid item xs={12} sx={{ height: 500 }}>
+        <Grid item xs={12} sx={{ height: 440 }}>
           <DataGrid
             rows={rows}
             columns={columns}

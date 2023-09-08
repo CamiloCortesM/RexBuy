@@ -15,7 +15,6 @@ declare module 'next-auth' {
 }
 
 const authOptions: NextAuthOptions = {
-  // Configure one or more authentication providers
   providers: [
     Credentials({
       name: 'Custom Login',
@@ -47,7 +46,6 @@ const authOptions: NextAuthOptions = {
     // ...add more providers here
   ],
 
-  // Custom Pages
   pages: {
     signIn: '/auth/login',
     newUser: '/auth/register',

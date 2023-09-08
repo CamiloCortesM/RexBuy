@@ -3,16 +3,14 @@ import bcryptjs from 'bcryptjs';
 
 import { db } from '@/database';
 import { User } from '@/models';
-import { jwt } from '@/utils';
 
 type Data =
   | { message: string }
   | {
-      token: string;
       user: {
         email: string;
-        role: string;
-        name: string;
+        role : string;
+        name : string;
       };
     };
 
@@ -50,12 +48,9 @@ const loginUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     });
   }
 
-  const { role, name, _id } = user;
-
-  const token = jwt.signJWT(_id, email);
+  const { role, name } = user;
 
   res.status(200).json({
-    token,
     user: {
       email,
       role,

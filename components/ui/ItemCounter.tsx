@@ -2,10 +2,10 @@ import { FC } from 'react';
 import { Box, IconButton, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 
-interface Props {
+type Props = {
   currentValue: number;
+  maxValue    : number;
   onUpdateValue: (newValue: number) => void;
-  maxValue: number;
 }
 
 export const ItemCounter: FC<Props> = ({

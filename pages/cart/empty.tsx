@@ -18,7 +18,7 @@ const EmptyPage = () => {
       >
         <img
           src={'/emptycart.png'}
-          alt="emptycart"
+          alt="empty cart"
           style={{
             width: '100%',
             maxWidth: 400,

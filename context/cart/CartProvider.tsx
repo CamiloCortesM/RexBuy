@@ -1,34 +1,33 @@
 import { FC, PropsWithChildren, useEffect, useReducer } from 'react';
 import Cookie from 'js-cookie';
+import axios from 'axios';
 
 import { CartContext, cartReducer } from './';
 import { rexbuyApi } from '@/api';
 import {
   ICartProduct,
   IOrder,
-  IOrderItem,
   ShippingAddress,
 } from '@/interfaces';
-import axios from 'axios';
 
 export interface CartState {
-  isLoaded: boolean;
-  cart: ICartProduct[];
-  numberOfItems: number;
-  subTotal: number;
-  tax: number;
-  total: number;
+  isLoaded        : boolean;
+  cart            : ICartProduct[];
+  numberOfItems   : number;
+  subTotal        : number;
+  tax             : number;
+  total           : number;
 
   shippingAddress?: ShippingAddress;
 }
 
 const CART_INITIAL_STATE: CartState = {
-  isLoaded: false,
-  cart: [],
-  numberOfItems: 0,
-  subTotal: 0,
-  tax: 0,
-  total: 0,
+  isLoaded       : false,
+  cart           : [],
+  numberOfItems  : 0,
+  subTotal       : 0,
+  tax            : 0,
+  total          : 0,
   shippingAddress: undefined,
 };
 
@@ -59,13 +58,13 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
     if (Cookie.get('firstName')) {
       const shippingAddress: ShippingAddress = {
         firstName: Cookie.get('firstName') || '',
-        lastName: Cookie.get('lastName') || '',
-        address: Cookie.get('address') || '',
-        address2: Cookie.get('address2') || '',
-        zip: Cookie.get('zip') || '',
-        city: Cookie.get('city') || '',
-        country: Cookie.get('country') || 'COL',
-        phone: Cookie.get('phone') || '',
+        lastName : Cookie.get('lastName') || '',
+        address  : Cookie.get('address') || '',
+        address2 : Cookie.get('address2') || '',
+        zip      : Cookie.get('zip') || '',
+        city     : Cookie.get('city') || '',
+        country  : Cookie.get('country') || 'COL',
+        phone    : Cookie.get('phone') || '',
       };
 
       dispatch({
@@ -94,7 +93,7 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
       total: subTotal * (taxRate + 1),
     };
 
-    dispatch({ type: 'Cart - Update order sumary', payload: orderSummary });
+    dispatch({ type: 'Cart - Update order summary', payload: orderSummary });
   }, [state.cart]);
 
   const addProductToCart = (product: ICartProduct) => {
@@ -105,14 +104,14 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
         payload: [...state.cart, product],
       });
 
-    const productInCartButDifferentEspecification = state.cart.some(
+    const productInCartButDifferentSpecification = state.cart.some(
       (p) =>
         p._id === product._id &&
         p.capacity === product.capacity &&
         p.ram === product.ram
     );
 
-    if (!productInCartButDifferentEspecification)
+    if (!productInCartButDifferentSpecification)
       return dispatch({
         type: 'Cart - Update products in cart',
         payload: [...state.cart, product],
@@ -161,13 +160,13 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
     }
 
     const body: IOrder = {
-      orderItems: state.cart,
+      orderItems     : state.cart,
       shippingAddress: state.shippingAddress,
-      numberOfItems: state.numberOfItems,
-      subTotal: state.subTotal,
-      tax: state.tax,
-      total: state.total,
-      isPaid: false,
+      numberOfItems  : state.numberOfItems,
+      subTotal       : state.subTotal,
+      tax            : state.tax,
+      total          : state.total,
+      isPaid         : false,
     };
 
     try {

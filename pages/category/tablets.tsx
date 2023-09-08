@@ -7,7 +7,7 @@ import { ProductList } from '@/components/products';
 import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
 
 const TabletsPage: NextPage = () => {
-  const { isError, isLoading, products } = useProducts('products?type=tabletas');
+  const { isLoading, products } = useProducts('products?type=tabletas');
   return (
     <ShopLayout
       title={'RexBuy - Tablets'}

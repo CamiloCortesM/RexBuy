@@ -19,8 +19,9 @@ import { dbOrders } from '@/database';
 import { IOrder } from '@/interfaces';
 import { CartList, OrderSummary } from '@/components/cart';
 import { AdminLayout } from '@/components/layouts';
+import { AddressInfo } from '@/components/orders';
 
-interface Props {
+type Props = {
   order: IOrder;
 }
 
@@ -81,21 +82,7 @@ const AdminOrderPage: NextPage<Props> = ({ order }) => {
                 </Typography>
               </Box>
 
-              <Typography>
-                {shippingAddress.firstName} {shippingAddress.lastName}
-              </Typography>
-              <Typography>
-                {shippingAddress.address}{' '}
-                {shippingAddress.address2
-                  ? `, ${shippingAddress.address2}`
-                  : ''}
-              </Typography>
-              <Typography>
-                {shippingAddress.city}, {shippingAddress.zip}
-              </Typography>
-              <Typography>{shippingAddress.country}</Typography>
-              <Typography>{shippingAddress.phone}</Typography>
-
+              <AddressInfo shippingAddress={shippingAddress} />
               <Divider sx={{ my: 1 }} />
 
               <OrderSummary orderSummary={orderSummary} />

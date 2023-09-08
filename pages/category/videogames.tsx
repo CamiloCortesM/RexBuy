@@ -7,7 +7,7 @@ import { ProductList } from '@/components/products';
 import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
 
 const VideoGamesPage: NextPage = () => {
-  const { isError, isLoading, products } = useProducts(
+  const { isLoading, products } = useProducts(
     'products?type=videojuegos'
   );
   return (

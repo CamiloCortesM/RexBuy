@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { Card, CardContent, Grid, Typography } from '@mui/material';
 
-interface Props {
-  title: string | number;
+type Props = {
+  title   : string | number;
   subTitle: string;
-  icon: JSX.Element;
-}
+  icon    : JSX.Element;
+};
 
 export const SummaryTile: FC<Props> = ({ title, subTitle, icon }) => {
   return (

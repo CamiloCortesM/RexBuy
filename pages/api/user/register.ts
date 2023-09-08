@@ -3,16 +3,15 @@ import bcryptjs from 'bcryptjs';
 
 import { db } from '@/database';
 import { User } from '@/models';
-import { jwt, validations } from '@/utils';
+import { validations } from '@/utils';
 
 type Data =
   | { message: string }
   | {
-      token: string;
       user: {
         email: string;
-        role: string;
-        name: string;
+        role : string;
+        name : string;
       };
     };
 
@@ -73,7 +72,7 @@ const registerUser = async (
     role: 'client',
   });
 
-  const { role, _id } = newUser;
+  const { role } = newUser;
 
   try {
     await newUser.save({ validateBeforeSave: true });
@@ -84,10 +83,7 @@ const registerUser = async (
     });
   }
 
-  const token = jwt.signJWT(_id, email);
-
   res.status(200).json({
-    token,
     user: {
       email,
       role,

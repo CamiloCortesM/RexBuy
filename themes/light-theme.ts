@@ -8,7 +8,6 @@ export const lightTheme = createTheme({
     },
     secondary: {
       main: '#fcb891',
-      // main: '#f6f1e9',
     },
     info: {
       main: '#fff',
@@ -75,21 +74,9 @@ export const lightTheme = createTheme({
       },
       styleOverrides: {
         root: {
-          boxShadow: '0px 4px 4px rgba(0,0,0,0.05)',
-          borderRadius: '2px',
-          border: '2px solid #f6f1e9',
-          cursor: 'pointer',
-          ':hover': {
-            boxShadow: '0px 5px 5px rgba(0,0,0,0.1)',
-          },
-        },
-      },
-    },
-
-    MuiCardActionArea: {
-      styleOverrides: {
-        root: {
-          borderBottom: '1px solid rgb(0,0,0,0.1)',
+          borderRadius: '0px',
+          padding: '1px',
+          border: '2px solid #eaeaea',
         },
       },
     },

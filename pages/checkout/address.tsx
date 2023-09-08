@@ -1,29 +1,28 @@
+import { useContext, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import {
   Box,
   Button,
-  FormControl,
   Grid,
-  MenuItem,
   TextField,
   Typography,
 } from '@mui/material';
+import Cookies from 'js-cookie';
+import { useForm } from 'react-hook-form';
+
 import { ShopLayout } from '../../components/layouts';
 import { countries } from '@/utils';
-import { useForm } from 'react-hook-form';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/router';
-import { useContext, useEffect } from 'react';
 import { CartContext } from '@/context';
 
 type FormData = {
   firstName: string;
-  lastName: string;
-  address: string;
+  lastName : string;
+  address  : string;
   address2?: string;
-  zip: string;
-  city: string;
-  country: string;
-  phone: string;
+  zip      : string;
+  city     : string;
+  country  : string;
+  phone    : string;
 };
 
 const getAddressFromCookies = (): FormData => {
@@ -99,7 +98,7 @@ const AddressPage = () => {
               variant="filled"
               fullWidth
               {...register('lastName', {
-                required: 'El nombre es requerido',
+                required: 'El apellido es requerido',
               })}
               error={!!errors.lastName}
               helperText={errors.lastName?.message}
@@ -112,7 +111,7 @@ const AddressPage = () => {
               variant="filled"
               fullWidth
               {...register('address', {
-                required: 'El nombre es requerido',
+                required: 'La direccion es requerida',
               })}
               error={!!errors.address}
               helperText={errors.address?.message}
@@ -133,7 +132,7 @@ const AddressPage = () => {
               variant="filled"
               fullWidth
               {...register('zip', {
-                required: 'El nombre es requerido',
+                required: 'El codigo postal es requerido',
               })}
               error={!!errors.zip}
               helperText={errors.zip?.message}
@@ -145,7 +144,7 @@ const AddressPage = () => {
               variant="filled"
               fullWidth
               {...register('city', {
-                required: 'El nombre es requerido',
+                required: 'La ciudad es requerida',
               })}
               error={!!errors.city}
               helperText={errors.city?.message}
@@ -158,7 +157,7 @@ const AddressPage = () => {
               fullWidth
               label="País"
               {...register('country', {
-                required: 'El nombre es requerido',
+                required: 'El pais es requerido',
               })}
               error={!!errors.country}
               helperText={errors.country?.message}
@@ -170,7 +169,7 @@ const AddressPage = () => {
               variant="filled"
               fullWidth
               {...register('phone', {
-                required: 'El nombre es requerido',
+                required: 'El numero de celular es requerido',
               })}
               error={!!errors.phone}
               helperText={errors.phone?.message}

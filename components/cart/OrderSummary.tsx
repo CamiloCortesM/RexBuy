@@ -5,18 +5,17 @@ import { Grid, Typography } from '@mui/material';
 import { CartContext } from '@/context';
 import { currency } from '@/utils';
 
-interface Props {
+type Props = {
   orderSummary?: {
     numberOfItems: number;
-    subTotal: number;
-    tax: number;
-    total: number;
+    subTotal     : number;
+    tax          : number;
+    total        : number;
   };
 }
 
 export const OrderSummary: FC<Props> = ({ orderSummary }) => {
   
-  //? Checkout in Building
   const contextValues = useContext(CartContext);
   const { numberOfItems, total, subTotal, tax } = orderSummary
     ? orderSummary

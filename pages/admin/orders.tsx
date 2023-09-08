@@ -1,9 +1,9 @@
+import useSWR from 'swr';
+import { Chip, Grid } from '@mui/material';
+import { ConfirmationNumberOutlined } from '@mui/icons-material';
+import { DataGrid, GridColDef, GridRenderCellParams, GridToolbar } from '@mui/x-data-grid';
 import { AdminLayout } from '@/components/layouts';
 import { IOrder, IUser } from '@/interfaces';
-import { ConfirmationNumberOutlined } from '@mui/icons-material';
-import { Chip, Grid } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
-import useSWR from 'swr';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'Orden ID', width: 250 },
@@ -49,13 +49,13 @@ const OrdersPage = () => {
   if ((!data && !error) || isLoading) return <></>;
 
   const rows = data!.map((order) => ({
-    id: order._id,
-    email: (order.user as IUser).email,
-    name: (order.user as IUser).name,
-    total: order.total,
-    isPaid: order.isPaid,
+    id        : order._id,
+    email     : (order.user as IUser).email,
+    name      : (order.user as IUser).name,
+    total     : order.total,
+    isPaid    : order.isPaid,
     noProducts: order.numberOfItems,
-    createdAt: order.createdAt,
+    createdAt : order.createdAt,
   }));
   return (
     <AdminLayout
@@ -65,7 +65,20 @@ const OrdersPage = () => {
     >
       <Grid container className="fadeIn">
         <Grid item xs={12} sx={{ height: 440, width: '100%' }}>
-          <DataGrid rows={rows} columns={columns} autoPageSize />
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            localeText={{
+              toolbarDensity: 'Size',
+              toolbarDensityLabel: 'Size',
+              toolbarDensityCompact: 'Small',
+              toolbarDensityStandard: 'Medium',
+              toolbarDensityComfortable: 'Large',
+            }}
+            slots={{
+              toolbar: GridToolbar,
+            }}
+          />
         </Grid>
       </Grid>
     </AdminLayout>

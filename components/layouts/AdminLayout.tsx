@@ -1,14 +1,14 @@
 import { FC, ReactNode } from 'react';
 
+import { Box, Typography } from '@mui/material';
 import { SideMenu } from '../ui';
 import { AdminNavbar } from '../admin';
-import { Box, Typography } from '@mui/material';
 
-interface Props {
+type Props = {
   children: ReactNode;
-  title: string;
+  title   : string;
   subTitle: string;
-  icon?: JSX.Element;
+  icon?   : JSX.Element;
 }
 
 export const AdminLayout: FC<Props> = ({ children, title, subTitle, icon }) => {
@@ -22,7 +22,7 @@ export const AdminLayout: FC<Props> = ({ children, title, subTitle, icon }) => {
 
       <main
         style={{
-          margin: '70px auto',
+          margin: '70px auto 20px',
           maxWidth: '1440px',
           padding: '20px 10px',
         }}

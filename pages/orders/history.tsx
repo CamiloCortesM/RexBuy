@@ -3,15 +3,20 @@ import NextLink from 'next/link';
 import { getSession } from 'next-auth/react';
 
 import { Typography, Grid, Chip, Link } from '@mui/material';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridColDef,
+  GridRenderCellParams,
+  GridToolbar,
+} from '@mui/x-data-grid';
 
-import { ShopLayout } from '../../components/layouts';
 import { dbOrders } from '@/database';
 import { IOrder } from '@/interfaces';
+import { ShopLayout } from '../../components/layouts';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 100 },
-  { field: 'fullname', headerName: 'Nombre Completo', width: 300 },
+  { field: 'fullName', headerName: 'Nombre Completo', width: 300 },
 
   {
     field: 'paid',
@@ -33,23 +38,27 @@ const columns: GridColDef[] = [
     sortable: false,
     renderCell: (params: GridRenderCellParams) => {
       return (
-        <NextLink href={`/orders/${params.row.orderId}`} passHref legacyBehavior>
+        <NextLink
+          href={`/orders/${params.row.orderId}`}
+          passHref
+          legacyBehavior
+        >
           <Link underline="always">Ver orden</Link>
         </NextLink>
       );
     },
   },
 ];
-interface Props {
+type Props = {
   orders: IOrder[];
-}
+};
 
 const HistoryPage: NextPage<Props> = ({ orders }) => {
   const rows = orders.map((order, index) => {
     return {
       id: index + 1,
       paid: order.isPaid,
-      fullname: `${order.shippingAddress.firstName} ${order.shippingAddress.lastName}`,
+      fullName: `${order.shippingAddress.firstName} ${order.shippingAddress.lastName}`,
       orderId: order._id,
     };
   });
@@ -63,9 +72,22 @@ const HistoryPage: NextPage<Props> = ({ orders }) => {
         Historial de ordenes
       </Typography>
 
-      <Grid container className='fadeIn'>
-        <Grid item xs={12} sx={{ height: 440, width: '100%' }}>
-          <DataGrid rows={rows} columns={columns} autoPageSize />
+      <Grid container className="fadeIn">
+        <Grid item xs={12} sx={{ height: 460, width: '100%' }}>
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            localeText={{
+              toolbarDensity: 'Size',
+              toolbarDensityLabel: 'Size',
+              toolbarDensityCompact: 'Small',
+              toolbarDensityStandard: 'Medium',
+              toolbarDensityComfortable: 'Large',
+            }}
+            slots={{
+              toolbar: GridToolbar,
+            }}
+          />
         </Grid>
       </Grid>
     </ShopLayout>

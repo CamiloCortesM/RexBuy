@@ -3,13 +3,13 @@ import { Grid } from '@mui/material';
 import { IProduct } from '../../interfaces';
 import { ProductCard } from '.';
 
-interface Props {
+type Props = {
   products: IProduct[];
 }
 
 export const ProductList: FC<Props> = ({ products }) => {
   return (
-    <Grid container spacing={2}>
+    <Grid container>
       {products.map((product) => (
         <ProductCard key={product.slug} product={product} />
       ))}

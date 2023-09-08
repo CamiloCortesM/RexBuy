@@ -1,24 +1,25 @@
 import bcrypt from 'bcryptjs';
+
 interface SeedProduct {
   description: string;
-  images: string[];
-  inStock: number;
-  price: number;
-  slug: string;
-  tags: string[];
-  title: string;
-  brand: string;
-  model: string;
-  capacity?: string[];
-  ram?: string[];
-  type: TechnologyType;
+  images     : string[];
+  inStock    : number;
+  price      : number;
+  slug       : string;
+  tags       : string[];
+  title      : string;
+  brand      : string;
+  model      : string;
+  capacity?  : string[];
+  ram?       : string[];
+  type       : TechnologyType;
 }
 
 interface SeedUser {
-  name: string;
-  email: string;
+  name    : string;
+  email   : string;
   password: string;
-  role: 'admin' | 'client' | 'employee';
+  role    : 'admin' | 'client' | 'employee';
 }
 
 type TechnologyType =
@@ -31,7 +32,7 @@ type TechnologyType =
   | 'monitores';
 
 interface SeedData {
-  users: SeedUser[];
+  users   : SeedUser[];
   products: SeedProduct[];
 }
 

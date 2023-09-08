@@ -1,16 +1,23 @@
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { DataGrid, GridColDef, GridRenderCellParams } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridColDef,
+  GridRenderCellParams,
+  GridToolbar,
+} from '@mui/x-data-grid';
 import { PeopleOutline } from '@mui/icons-material';
 import { Grid, MenuItem, Select } from '@mui/material';
 
 import { rexbuyApi } from '@/api';
 import { AdminLayout } from '@/components/layouts';
 import { IUser } from '@/interfaces';
+import { AlertErrorMessage } from '@/components/auth';
 
 const UsersPage = () => {
   const { data, error, isLoading } = useSWR<IUser[]>('/api/admin/users');
   const [users, setUsers] = useState<IUser[]>([]);
+  const [showError, setShowError] = useState(false);
 
   useEffect(() => {
     if (data) {
@@ -21,7 +28,7 @@ const UsersPage = () => {
   if ((!data && !error) || isLoading) return <></>;
 
   const onRoleUpdated = async (userId: string, newRole: string) => {
-    const previosUsers = users.map((user) => ({ ...user }));
+    const previousUsers = users.map((user) => ({ ...user }));
     const updatedUsers = users.map((user) => ({
       ...user,
       role: userId === user._id ? newRole : user.role,
@@ -33,9 +40,9 @@ const UsersPage = () => {
       await rexbuyApi.put('/admin/users', { userId, role: newRole });
     } catch (error) {
       console.log(error);
-      setUsers(previosUsers);
-      //TODO: cambiar las alertas
-      alert('No se pudo actualizar el role del usuario');
+      setUsers(previousUsers);
+      setShowError(true);
+      setTimeout(() => setShowError(false), 4000);
     }
   };
 
@@ -64,10 +71,10 @@ const UsersPage = () => {
   ];
 
   const rows = users!.map((user) => ({
-    id: user._id,
+    id   : user._id,
     email: user.email,
-    name: user.name,
-    role: user.role,
+    name : user.name,
+    role : user.role,
   }));
 
   return (
@@ -76,9 +83,27 @@ const UsersPage = () => {
       subTitle={'Mantenimiento de usuarios'}
       icon={<PeopleOutline />}
     >
+      <AlertErrorMessage
+        errorMessage="No se pudo actualizar el role del usuario"
+        showError={showError}
+        setOpen={setShowError}
+      />
       <Grid container className="fadeIn">
         <Grid item xs={12} sx={{ height: 440, width: '100%' }}>
-          <DataGrid rows={rows} columns={columns} autoPageSize />
+          <DataGrid
+            rows={rows}
+            columns={columns}
+            localeText={{
+              toolbarDensity: 'Size',
+              toolbarDensityLabel: 'Size',
+              toolbarDensityCompact: 'Small',
+              toolbarDensityStandard: 'Medium',
+              toolbarDensityComfortable: 'Large',
+            }}
+            slots={{
+              toolbar: GridToolbar,
+            }}
+          />
         </Grid>
       </Grid>
     </AdminLayout>

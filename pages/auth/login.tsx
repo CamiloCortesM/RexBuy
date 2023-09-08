@@ -1,162 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { GetServerSideProps } from 'next';
-import { useRouter } from 'next/router';
-import NextLink from 'next/link';
-import { getProviders, getSession, signIn } from 'next-auth/react';
-
-import {
-  Alert,
-  Box,
-  Button,
-  Divider,
-  Grid,
-  Link,
-  Snackbar,
-  TextField,
-} from '@mui/material';
-import { useForm } from 'react-hook-form';
+import { getSession } from 'next-auth/react';
 
 import { AuthLayout } from '../../components/layouts';
-import { validations } from '@/utils';
-import Image from 'next/image';
-
-type FormData = {
-  email: string;
-  password: string;
-};
+import { FormLogin, AlertErrorMessage } from '@/components/auth/';
 
 const LoginPage = () => {
   const [showError, setShowError] = useState(false);
-  const router = useRouter();
-  const [providers, setProviders] = useState<any>({});
-
-  useEffect(() => {
-    getProviders().then((prov) => {
-      setProviders(prov);
-    });
-  }, []);
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<FormData>();
-
-  const onLoginUser = async ({ email, password }: FormData) => {
-    setShowError(false);
-
-    await signIn('credentials', { email, password });
-  };
 
   return (
     <AuthLayout title={'Ingresar'} headerTitle={'Iniciar Sesión'}>
-      <Snackbar
-        open={showError}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      >
-        <Alert severity="error" sx={{ width: '100%' }} variant="filled">
-          Usuario o contraseña no coinciden
-        </Alert>
-      </Snackbar>
-
-      <form
-        style={{
-          width: '100%',
-        }}
-        onSubmit={handleSubmit(onLoginUser)}
-        noValidate
-      >
-        <Box display="flex" flexDirection="column" gap={2}>
-          <Grid item xs={12}>
-            <TextField
-              type="email"
-              label="Correo"
-              variant="filled"
-              fullWidth
-              {...register('email', {
-                required: 'El correo es requerido',
-                validate: validations.isEmail,
-              })}
-              error={!!errors.email}
-              helperText={errors.email?.message}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <TextField
-              label="Contraseña"
-              type="password"
-              variant="filled"
-              fullWidth
-              {...register('password', {
-                required: 'La contraseña es requerida',
-                minLength: { value: 6, message: 'Mínimo 6 caracteres' },
-              })}
-              error={!!errors.password}
-              helperText={errors.password?.message}
-            />
-          </Grid>
-
-          <Grid item xs={12}>
-            <Button
-              type="submit"
-              color="secondary"
-              className="circular-btn"
-              size="large"
-              fullWidth
-            >
-              Ingresar
-            </Button>
-          </Grid>
-
-          <Grid
-            item
-            xs={12}
-            display="flex"
-            flexDirection="column"
-            justifyContent="end"
-          >
-            <Divider sx={{ width: '100%', mb: 2 }} />
-            {Object.values(providers).map((provider: any) => {
-              if (provider.id === 'credentials') {
-                return <div key="credentials"></div>;
-              }
-
-              return (
-                <Button
-                  key={provider.id}
-                  variant="outlined"
-                  fullWidth
-                  color="primary"
-                  sx={{ mb: 2, fontWeight:800 }}
-                  onClick={() => signIn(provider.id)}
-                >
-                  <Image
-                    alt={`${provider.id} logo`}
-                    src={`/${provider.id}.svg`}
-                    width={20}
-                    height={20}
-                    style={{marginRight:10}}
-                  />
-                  {provider.name}
-                </Button>
-              );
-            })}
-          </Grid>
-          <Grid item xs={12} display="flex" justifyContent="end">
-            <NextLink
-              href={
-                router.query.p
-                  ? `/auth/register?p=${router.query.p}`
-                  : '/auth/register'
-              }
-              passHref
-              legacyBehavior
-            >
-              <Link underline="always">¿No tienes cuenta?</Link>
-            </NextLink>
-          </Grid>
-        </Box>
-      </form>
+      <AlertErrorMessage
+        showError={showError}
+        errorMessage="Usuario o contraseña no coinciden"
+        setOpen={setShowError}
+      />
+      <FormLogin setShowError={setShowError} />
     </AuthLayout>
   );
 };

@@ -1,10 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
+import authOptions from '@/pages/api/auth/[...nextauth]';
 import { IOrder } from '@/interfaces';
 import { db } from '@/database';
 import { Order, Product, User } from '@/models';
-import authOptions from '@/pages/api/auth/[...nextauth]';
-import { getSession } from 'next-auth/react';
 
 type Data = { message: string } | IOrder;
 
@@ -12,7 +11,6 @@ const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
   switch (req.method) {
     case 'POST':
       return createOrder(req, res);
-
     default:
       return res.status(400).json({ message: 'Bad request' });
   }
@@ -21,7 +19,6 @@ const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
 const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   const { orderItems, total } = req.body as IOrder;
 
-  // Verify user session
   const session: any = await getServerSession(req, res, authOptions);
 
   if (!session) {
@@ -30,7 +27,6 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       .json({ message: 'You must be logged in to purchase' });
   }
 
-  // Create array with products
   const productsIds = orderItems.map((product) => product._id);
 
   await db.connect();
@@ -70,8 +66,6 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     console.log(error);
     res.status(400).json({ message: error.message || 'Check server logs' });
   }
-
-  // return res.status(201).json(req.body);
 };
 
 export default handler;
