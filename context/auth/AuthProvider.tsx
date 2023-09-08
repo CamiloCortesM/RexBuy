@@ -1,20 +1,20 @@
 import { FC, PropsWithChildren, useEffect, useReducer } from 'react';
 import { useSession, signOut } from 'next-auth/react';
-
-import { AuthContext, authReducer } from './';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+
+import { AuthContext, authReducer } from './';
 import { IUser } from '@/interfaces';
 import { rexbuyApi } from '@/api';
 
 export interface AuthState {
   isLoggedIn: boolean;
-  user?: IUser;
+  user?     : IUser;
 }
 
 const AUTH_INITIAL_STATE: AuthState = {
   isLoggedIn: false,
-  user: undefined,
+  user      : undefined,
 };
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -82,9 +82,6 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     Cookies.remove('phone');
 
     signOut();
-
-    // router.reload();
-    // Cookies.remove('token');
   };
 
   return (
