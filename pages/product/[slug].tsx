@@ -12,6 +12,7 @@ type Props = {
 };
 
 const ProductPage: NextPage<Props> = ({ product }) => {
+  console.log(product)
   return (
     <ShopLayout title={product.title} pageDescription={product.description}>
       <Grid container spacing={4}>
@@ -25,7 +26,6 @@ const ProductPage: NextPage<Props> = ({ product }) => {
         <Grid
           item
           sm={6}
-          spacing={2}
           sx={{
             display: { xs: 'none', sm: 'block' },
             margin: '10px',

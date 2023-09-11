@@ -62,7 +62,7 @@ export const ProductDetail: FC<Props> = ({ product }) => {
         <ItemCounter
           currentValue={tempCartProduct.quantity}
           onUpdateValue={onUpdateValue}
-          maxValue={product.inStock}
+          idProduct={product._id}
         />
         {product.capacity && product.capacity.length > 0 && (
           <>

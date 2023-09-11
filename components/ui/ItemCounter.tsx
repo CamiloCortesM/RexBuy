@@ -1,18 +1,21 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { Box, IconButton, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 
 type Props = {
   currentValue: number;
-  maxValue    : number;
+  idProduct   : string;
   onUpdateValue: (newValue: number) => void;
 }
 
 export const ItemCounter: FC<Props> = ({
   currentValue,
   onUpdateValue,
-  maxValue,
+  idProduct,
 }) => {
+
+  const [maxValue, setMaxValue] = useState(currentValue)
+
   const addOrRemove = (value: number) => {
     if (value === -1) {
       if (currentValue === 1) return;
