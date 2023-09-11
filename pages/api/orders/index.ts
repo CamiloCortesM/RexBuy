@@ -17,22 +17,22 @@ const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
 };
 
 const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
-  const { orderItems, total } = req.body as IOrder;
-
-  const session: any = await getServerSession(req, res, authOptions);
-
-  if (!session) {
-    return res
-      .status(401)
-      .json({ message: 'You must be logged in to purchase' });
-  }
-
-  const productsIds = orderItems.map((product) => product._id);
-
-  await db.connect();
-  const dbProducts = await Product.find({ _id: { $in: productsIds } });
-
   try {
+    const { orderItems, total } = req.body as IOrder;
+
+    const session: any = await getServerSession(req, res, authOptions);
+
+    if (!session) {
+      return res
+        .status(401)
+        .json({ message: 'You must be logged in to purchase' });
+    }
+
+    const productsIds = orderItems.map((product) => product._id);
+
+    await db.connect();
+    const dbProducts = await Product.find({ _id: { $in: productsIds } });
+
     const subTotal = orderItems.reduce((prev, current) => {
       const product = dbProducts.find((prod) => prod.id === current._id);
       const capacity = current.capacity || '';
@@ -43,9 +43,11 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       } else {
         currentPrice = product?.price;
       }
+
       if (!currentPrice) {
         throw new Error('Verify the cart');
       }
+
       return current.quantity * currentPrice + prev;
     }, 0);
 
@@ -53,11 +55,10 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const backendTotal = subTotal * (taxRate + 1);
 
     if (total !== backendTotal) {
-      throw new Error('Total has been modify, check again.');
+      throw new Error('Total has been modified, check again.');
     }
 
-    console.log({ orderItems, dbProducts });
-    orderItems.forEach(async (item) => {
+    for (const item of orderItems) {
       const product = dbProducts.find((p) => p.id === item._id);
 
       if (product) {
@@ -78,10 +79,10 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
         try {
           await product.save();
         } catch (error) {
-          console.log(error);
+          console.error(error);
         }
       }
-    });
+    }
 
     const user = await User.findOne({ email: session.user.email }).lean();
     const userId = user!._id.toString();
@@ -94,8 +95,8 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     return res.status(201).json(newOrder);
   } catch (error: any) {
+    console.error(error);
     await db.disconnect();
-    console.log(error);
     res.status(400).json({ message: error.message || 'Check server logs' });
   }
 };

@@ -27,7 +27,7 @@ const getStockById = async (
   const { id } = req.query;
 
   if (!isValidObjectId(id)) {
-    res.status(400).json({
+    return res.status(400).json({
       message: 'the id is not valid',
     });
   }
@@ -35,7 +35,7 @@ const getStockById = async (
   db.connect();
   const product = await Product.findById(id);
   db.disconnect();
-  
+
   if (!product) {
     return res
       .status(400)
@@ -44,12 +44,10 @@ const getStockById = async (
 
   if (product.priceAndStockVariations?.length === 0) {
     const inStockValue = product.inStock;
-    res.status(200).json({ inStockValue });
+    return res.status(200).json({ inStockValue });
   }
 
   const { capacity = '', ram = '' } = req.query;
-
-  console.log({ capacity, ram });
   const inStockValue = product.getStockForVariation(capacity, ram);
 
   res.status(200).json({ inStockValue });

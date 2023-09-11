@@ -35,8 +35,10 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
       const cookieCart: ICartProduct[] = JSON.parse(Cookie.get('cart') || '[]');
       cookieCart.forEach(async (product) => {
         try {
+          const capacity = product.capacity || '';
+          const ram = product.ram || '';
           const { data } = await rexbuyApi.get(
-            `/products/stock/${product._id}?capacity=${product.capacity}&ram=${product.ram}`
+            `/products/stock/${product._id}?capacity=${capacity}&ram=${ram}`
           );
           const { inStockValue } = data;
           if (product.quantity > inStockValue) {
