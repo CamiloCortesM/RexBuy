@@ -56,6 +56,33 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       throw new Error('Total has been modify, check again.');
     }
 
+    console.log({ orderItems, dbProducts });
+    orderItems.forEach(async (item) => {
+      const product = dbProducts.find((p) => p.id === item._id);
+
+      if (product) {
+        product.inStock -= item.quantity;
+
+        if (product.priceAndStockVariations!.length > 0) {
+          product.priceAndStockVariations?.forEach((variation) => {
+            if (
+              (variation.capacity === item.capacity ||
+                (!variation.capacity && !item.capacity)) &&
+              (variation.ram === item.ram || (!variation.ram && !item.ram))
+            ) {
+              variation.stock -= item.quantity;
+            }
+          });
+        }
+
+        try {
+          await product.save();
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    });
+
     const user = await User.findOne({ email: session.user.email }).lean();
     const userId = user!._id.toString();
 
