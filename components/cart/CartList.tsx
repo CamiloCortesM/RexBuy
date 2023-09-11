@@ -36,6 +36,8 @@ export const CartList: FC<Props> = ({ editable = false, products }) => {
     removeCartProduct(product);
   };
 
+  const isValidProductSelection = () => true;
+
   const showProducts = products ? products : cart;
 
   return (
@@ -79,6 +81,9 @@ export const CartList: FC<Props> = ({ editable = false, products }) => {
                     onNewCartQuantityValue(product, value)
                   }
                   idProduct={product._id}
+                  isValidProductSelection={isValidProductSelection}
+                  capacity={product.capacity}
+                  ram={product.ram}
                 />
               ) : (
                 <Typography variant="h5">

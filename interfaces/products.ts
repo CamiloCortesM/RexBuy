@@ -1,17 +1,17 @@
 export interface IProduct {
-  _id: string;
-  description: string;
-  images: string[];
-  inStock: number;
-  price: number;
-  slug: string;
-  tags: string[];
-  title: string;
-  brand: string;
-  model: string;
-  capacity?: string[];
-  ram?: string[];
-  type: ITechnologyType;
+  _id                     : string;
+  description             : string;
+  images                  : string[];
+  inStock                 : number;
+  price                   : number;
+  slug                    : string;
+  tags                    : string[];
+  title                   : string;
+  brand                   : string;
+  model                   : string;
+  capacity?               : string[];
+  ram?                    : string[];
+  type                    : ITechnologyType;
   priceAndStockVariations?: PriceAndStockVariations[];
 
   createdAt: string;
@@ -19,15 +19,15 @@ export interface IProduct {
 
   getStockForVariation(
     capacity?: string | string[],
-    ram?: string | string[]
+    ram?     : string | string[]
   ): number;
 }
 
 export interface PriceAndStockVariations {
-  capacity: String;
-  ram: String;
-  stock: Number;
-  price: Number;
+  capacity: string;
+  ram     : string;
+  stock   : number;
+  price   : number;
 }
 
 type ITechnologyType =

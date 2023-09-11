@@ -2,26 +2,26 @@ import { PriceAndStockVariations } from '@/interfaces';
 import bcrypt from 'bcryptjs';
 
 interface SeedProduct {
-  description: string;
-  images: string[];
-  inStock: number;
-  price: number;
-  slug: string;
-  tags: string[];
-  title: string;
-  brand: string;
-  model: string;
-  capacity?: string[];
-  ram?: string[];
-  type: TechnologyType;
+  description             : string;
+  images                  : string[];
+  inStock                 : number;
+  price                   : number;
+  slug                    : string;
+  tags                    : string[];
+  title                   : string;
+  brand                   : string;
+  model                   : string;
+  capacity?               : string[];
+  ram?                    : string[];
+  type                    : TechnologyType;
   priceAndStockVariations?: PriceAndStockVariations[];
 }
 
 interface SeedUser {
-  name: string;
-  email: string;
+  name    : string;
+  email   : string;
   password: string;
-  role: 'admin' | 'client' | 'employee';
+  role    : 'admin' | 'client' | 'employee';
 }
 
 type TechnologyType =
@@ -34,7 +34,7 @@ type TechnologyType =
   | 'monitores';
 
 interface SeedData {
-  users: SeedUser[];
+  users   : SeedUser[];
   products: SeedProduct[];
 }
 
@@ -205,10 +205,25 @@ export const initialData: SeedData = {
       inStock: 10,
       price: 1999.99,
       slug: 'macbook-pro',
+      ram: ['4GB', '8GB'],
       tags: ['laptop', 'Apple', 'macOS'],
       brand: 'Apple',
       model: 'MacBook Pro',
       type: 'computadores',
+      priceAndStockVariations: [
+        {
+          capacity: '',
+          ram: '4GB',
+          stock: 10,
+          price: 1499.99,
+        },
+        {
+          capacity: '',
+          ram: '8GB',
+          stock: 5,
+          price: 1599.99,
+        },
+      ],
     },
     {
       title: 'Samsung Galaxy S20',

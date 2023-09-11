@@ -1,4 +1,4 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Button, Chip, Typography } from '@mui/material';
 import { ICartProduct, IProduct } from '@/interfaces';
@@ -27,6 +27,39 @@ export const ProductDetail: FC<Props> = ({ product }) => {
     quantity: 1,
   });
 
+  useEffect(() => {
+    if (
+      product.priceAndStockVariations?.length === 0 ||
+      !isValidProductSelection
+    )
+      return;
+
+    const matchingVariation = product.priceAndStockVariations?.find(
+      (PriceAndStock) => {
+        return (
+          (PriceAndStock.capacity === tempCartProduct.capacity ||
+            (PriceAndStock.capacity === '' &&
+              tempCartProduct.capacity === undefined)) &&
+          (PriceAndStock.ram === tempCartProduct.ram ||
+            (PriceAndStock.ram === '' && tempCartProduct.ram === undefined))
+        );
+      }
+    );
+
+    if (matchingVariation) {
+      setTempCartProduct((currentProduct) => ({
+        ...currentProduct,
+        price: matchingVariation.price,
+      }));
+    }
+  }, [tempCartProduct.capacity, tempCartProduct.ram]);
+
+  const isValidProductSelection = () => {
+    if (product.capacity!.length > 0 && !tempCartProduct.capacity) return false;
+    if (product.ram!.length > 0 && !tempCartProduct.ram) return false;
+    return true;
+  };
+
   const onSelectedSize = (value: string, name: string = 'capacity') => {
     setTempCartProduct((currentProduct) => ({
       ...currentProduct,
@@ -35,8 +68,7 @@ export const ProductDetail: FC<Props> = ({ product }) => {
   };
 
   const onAddProduct = () => {
-    if (product.capacity!.length > 0 && !tempCartProduct.capacity) return;
-    if (product.ram!.length > 0 && !tempCartProduct.ram) return;
+    if (!isValidProductSelection) return;
     addProductToCart(tempCartProduct);
     router.push('/cart');
   };
@@ -56,13 +88,16 @@ export const ProductDetail: FC<Props> = ({ product }) => {
       <Typography
         variant="subtitle1"
         component="h2"
-      >{`$${product.price}`}</Typography>
+      >{`$${tempCartProduct.price}`}</Typography>
       <Box sx={{ my: 2 }}>
         <Typography variant="subtitle2">Cantidad</Typography>
         <ItemCounter
           currentValue={tempCartProduct.quantity}
           onUpdateValue={onUpdateValue}
           idProduct={product._id}
+          isValidProductSelection={isValidProductSelection}
+          capacity={tempCartProduct.capacity}
+          ram={tempCartProduct.ram}
         />
         {product.capacity && product.capacity.length > 0 && (
           <>
