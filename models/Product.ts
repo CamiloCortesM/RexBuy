@@ -1,17 +1,17 @@
 import mongoose, { Schema, model, Model } from 'mongoose';
-import { IProduct } from '../interfaces/products';
+import { IProduct, PriceAndStockVariations } from '../interfaces/products';
 
 const productSchema = new Schema(
   {
     description: { type: String, required: true, default: '' },
     images: [{ type: String }],
-    inStock: { type: Number, required: true, default: 0 },
     price: { type: Number, required: true, default: 0 },
     slug: { type: String, required: true, unique: true },
     tags: [{ type: String }],
     title: { type: String, default: '' },
     brand: { type: String, required: true },
     model: { type: String, required: true },
+    inStock: { type: Number, required: true, default: 0 },
     capacity: [{ type: String }],
     ram: [{ type: String }],
     type: {
@@ -30,11 +30,34 @@ const productSchema = new Schema(
         default: 'celulares',
       },
     },
+    priceAndStockVariations: [
+      {
+        capacity: String,
+        ram: String,
+        stock: Number,
+        price: Number,
+      },
+    ],
   },
   { timestamps: true }
 );
 
 productSchema.index({ title: 'text', tags: 'text' });
+
+productSchema.methods.getStockForVariation = function (
+  capacity: string = '',
+  ram: string = ''
+) {
+  const variation: PriceAndStockVariations = this.priceAndStockVariations.find(
+    (v: PriceAndStockVariations) => v.capacity === capacity && v.ram === ram
+  );
+
+  if (variation) {
+    return variation.stock;
+  } else {
+    return 0;
+  }
+};
 
 const Product: Model<IProduct> =
   mongoose.models.Product || model('Product', productSchema);

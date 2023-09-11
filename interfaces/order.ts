@@ -27,7 +27,7 @@ export interface IOrderItem {
   slug     : string;
   image    : string;
   price    : number;
-  ram?     : string[];
+  ram?     : string;
   brand    : string;
 }
 
