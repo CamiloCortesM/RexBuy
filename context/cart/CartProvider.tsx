@@ -33,19 +33,25 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
   useEffect(() => {
     try {
       const cookieCart: ICartProduct[] = JSON.parse(Cookie.get('cart') || '[]');
-      cookieCart.filter(async (product) => {
+      cookieCart.forEach(async (product) => {
         try {
           const { data } = await rexbuyApi.get(
-            `/products/stock/${product._id}`
+            `/products/stock/${product._id}?capacity=${product.capacity}&ram=${product.ram}`
           );
-
           const { inStockValue } = data;
           if (product.quantity > inStockValue) {
-            product.quantity = inStockValue;
+            dispatch({
+              type: 'Cart - LoadCart from cookies | storage',
+              payload: [],
+            });
           }
           return product;
         } catch (error) {
           console.error('Error obtaining API data', error);
+          dispatch({
+            type: 'Cart - LoadCart from cookies | storage',
+            payload: [],
+          });
         }
       });
       dispatch({

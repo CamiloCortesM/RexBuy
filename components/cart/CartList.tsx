@@ -23,6 +23,7 @@ type Props = {
 export const CartList: FC<Props> = ({ editable = false, products }) => {
   const { cart, updateCartQuantity, removeCartProduct } =
     useContext(CartContext);
+  console.log(cart)
 
   const onNewCartQuantityValue = (
     product: ICartProduct,
