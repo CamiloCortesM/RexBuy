@@ -59,6 +59,21 @@ productSchema.methods.getStockForVariation = function (
   }
 };
 
+productSchema.methods.getPriceForVariation = function (
+  capacity: string = '',
+  ram: string = ''
+) {
+  const variation: PriceAndStockVariations = this.priceAndStockVariations.find(
+    (v: PriceAndStockVariations) => v.capacity === capacity && v.ram === ram
+  );
+
+  if (variation) {
+    return variation.price;
+  } else {
+    return 0;
+  }
+};
+
 const Product: Model<IProduct> =
   mongoose.models.Product || model('Product', productSchema);
 

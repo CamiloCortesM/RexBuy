@@ -21,6 +21,11 @@ export interface IProduct {
     capacity?: string | string[],
     ram?     : string | string[]
   ): number;
+
+  getPriceForVariation(
+    capacity?: string | string[],
+    ram?     : string | string[]
+  ): number;
 }
 
 export interface PriceAndStockVariations {

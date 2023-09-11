@@ -34,13 +34,18 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   try {
     const subTotal = orderItems.reduce((prev, current) => {
-      const currentPrice = dbProducts.find(
-        (prod) => prod.id === current._id
-      )?.price;
+      const product = dbProducts.find((prod) => prod.id === current._id);
+      const capacity = current.capacity || '';
+      const ram = current.ram || '';
+      let currentPrice;
+      if (product?.priceAndStockVariations?.length! > 0) {
+        currentPrice = product?.getPriceForVariation(capacity, ram);
+      } else {
+        currentPrice = product?.price;
+      }
       if (!currentPrice) {
         throw new Error('Verify the cart');
       }
-
       return current.quantity * currentPrice + prev;
     }, 0);
 
