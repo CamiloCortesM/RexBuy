@@ -12,7 +12,6 @@ type Props = {
 };
 
 const ProductPage: NextPage<Props> = ({ product }) => {
-  console.log(product)
   return (
     <ShopLayout title={product.title} pageDescription={product.description}>
       <Grid container spacing={4}>

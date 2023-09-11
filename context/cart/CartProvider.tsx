@@ -4,30 +4,26 @@ import axios from 'axios';
 
 import { CartContext, cartReducer } from './';
 import { rexbuyApi } from '@/api';
-import {
-  ICartProduct,
-  IOrder,
-  ShippingAddress,
-} from '@/interfaces';
+import { ICartProduct, IOrder, ShippingAddress } from '@/interfaces';
 
 export interface CartState {
-  isLoaded        : boolean;
-  cart            : ICartProduct[];
-  numberOfItems   : number;
-  subTotal        : number;
-  tax             : number;
-  total           : number;
+  isLoaded: boolean;
+  cart: ICartProduct[];
+  numberOfItems: number;
+  subTotal: number;
+  tax: number;
+  total: number;
 
   shippingAddress?: ShippingAddress;
 }
 
 const CART_INITIAL_STATE: CartState = {
-  isLoaded       : false,
-  cart           : [],
-  numberOfItems  : 0,
-  subTotal       : 0,
-  tax            : 0,
-  total          : 0,
+  isLoaded: false,
+  cart: [],
+  numberOfItems: 0,
+  subTotal: 0,
+  tax: 0,
+  total: 0,
   shippingAddress: undefined,
 };
 
@@ -36,7 +32,22 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     try {
-      const cookieCart = JSON.parse(Cookie.get('cart') || '[]');
+      const cookieCart: ICartProduct[] = JSON.parse(Cookie.get('cart') || '[]');
+      cookieCart.filter(async (product) => {
+        try {
+          const { data } = await rexbuyApi.get(
+            `/products/stock/${product._id}`
+          );
+
+          const { inStockValue } = data;
+          if (product.quantity > inStockValue) {
+            product.quantity = inStockValue;
+          }
+          return product;
+        } catch (error) {
+          console.error('Error obtaining API data', error);
+        }
+      });
       dispatch({
         type: 'Cart - LoadCart from cookies | storage',
         payload: cookieCart,
@@ -58,13 +69,13 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
     if (Cookie.get('firstName')) {
       const shippingAddress: ShippingAddress = {
         firstName: Cookie.get('firstName') || '',
-        lastName : Cookie.get('lastName') || '',
-        address  : Cookie.get('address') || '',
-        address2 : Cookie.get('address2') || '',
-        zip      : Cookie.get('zip') || '',
-        city     : Cookie.get('city') || '',
-        country  : Cookie.get('country') || 'COL',
-        phone    : Cookie.get('phone') || '',
+        lastName: Cookie.get('lastName') || '',
+        address: Cookie.get('address') || '',
+        address2: Cookie.get('address2') || '',
+        zip: Cookie.get('zip') || '',
+        city: Cookie.get('city') || '',
+        country: Cookie.get('country') || 'COL',
+        phone: Cookie.get('phone') || '',
       };
 
       dispatch({
@@ -160,18 +171,18 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
     }
 
     const body: IOrder = {
-      orderItems     : state.cart,
+      orderItems: state.cart,
       shippingAddress: state.shippingAddress,
-      numberOfItems  : state.numberOfItems,
-      subTotal       : state.subTotal,
-      tax            : state.tax,
-      total          : state.total,
-      isPaid         : false,
+      numberOfItems: state.numberOfItems,
+      subTotal: state.subTotal,
+      tax: state.tax,
+      total: state.total,
+      isPaid: false,
     };
 
     try {
       const { data } = await rexbuyApi.post<IOrder>('/orders', body);
-      dispatch({type: 'Cart - Order complete'});
+      dispatch({ type: 'Cart - Order complete' });
 
       return {
         hasError: false,

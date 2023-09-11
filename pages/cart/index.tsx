@@ -18,7 +18,6 @@ const CartPage = () => {
   const { isLoaded, cart } = useContext(CartContext);
   const router = useRouter();
 
-  console.log(cart)
   useEffect(() => {
     if (isLoaded && cart.length === 0) {
       router.replace('/cart/empty');

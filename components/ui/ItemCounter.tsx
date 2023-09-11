@@ -1,20 +1,35 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Box, IconButton, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
+import { rexbuyApi } from '@/api';
 
 type Props = {
   currentValue: number;
-  idProduct   : string;
+  idProduct: string;
   onUpdateValue: (newValue: number) => void;
-}
+};
 
 export const ItemCounter: FC<Props> = ({
   currentValue,
   onUpdateValue,
   idProduct,
 }) => {
+  const [maxValue, setMaxValue] = useState(currentValue);
 
-  const [maxValue, setMaxValue] = useState(currentValue)
+  useEffect(() => {
+    getMaxStock();
+  }, []);
+
+  const getMaxStock = async () => {
+    try {
+      const { data } = await rexbuyApi.get(`/products/stock/${idProduct}`);
+
+      const { inStockValue } = data;
+      setMaxValue(inStockValue);
+    } catch (error) {
+      console.error('Error obtaining API data', error);
+    }
+  };
 
   const addOrRemove = (value: number) => {
     if (value === -1) {
