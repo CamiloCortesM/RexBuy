@@ -1,6 +1,5 @@
 import { useContext } from 'react';
 import { useRouter } from 'next/router';
-import { AdminMenuItems } from '@/constants';
 import { UiContext } from '@/context';
 import {
   Divider,
@@ -9,6 +8,12 @@ import {
   ListItemText,
   ListSubheader,
 } from '@mui/material';
+import {
+  AdminPanelSettings,
+  CategoryOutlined,
+  ConfirmationNumberOutlined,
+  DashboardOutlined,
+} from '@mui/icons-material';
 
 export const AdminNavigationMenu = () => {
   const { toggleSideMenu } = useContext(UiContext);
@@ -23,14 +28,34 @@ export const AdminNavigationMenu = () => {
     <>
       <Divider />
       <ListSubheader>Admin Panel</ListSubheader>
-      {AdminMenuItems.map((item) => (
-        <ListItemButton key={item.link} onClick={() => navigateTo(item.link)}>
-          <ListItemIcon>
-            <item.icon />
-          </ListItemIcon>
-          <ListItemText primary={item.text} />
-        </ListItemButton>
-      ))}
+
+      <ListItemButton onClick={() => navigateTo('/admin')}>
+        <ListItemIcon>
+          <DashboardOutlined />
+        </ListItemIcon>
+        <ListItemText primary={'Dashboard'} />
+      </ListItemButton>
+
+      <ListItemButton onClick={() => navigateTo('/admin/products')}>
+        <ListItemIcon>
+          <CategoryOutlined />
+        </ListItemIcon>
+        <ListItemText primary={'Productos'} />
+      </ListItemButton>
+
+      <ListItemButton onClick={() => navigateTo('/admin/orders')}>
+        <ListItemIcon>
+          <ConfirmationNumberOutlined />
+        </ListItemIcon>
+        <ListItemText primary={'Ordenes'} />
+      </ListItemButton>
+
+      <ListItemButton onClick={() => navigateTo('/admin/users')}>
+        <ListItemIcon>
+          <AdminPanelSettings />
+        </ListItemIcon>
+        <ListItemText primary={'Usuarios'} />
+      </ListItemButton>
     </>
   );
 };

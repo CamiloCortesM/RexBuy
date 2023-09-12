@@ -7,23 +7,23 @@ import { rexbuyApi } from '@/api';
 import { ICartProduct, IOrder, ShippingAddress } from '@/interfaces';
 
 export interface CartState {
-  isLoaded: boolean;
-  cart: ICartProduct[];
+  isLoaded     : boolean;
+  cart         : ICartProduct[];
   numberOfItems: number;
-  subTotal: number;
-  tax: number;
-  total: number;
+  subTotal     : number;
+  tax          : number;
+  total        : number;
 
   shippingAddress?: ShippingAddress;
 }
 
 const CART_INITIAL_STATE: CartState = {
-  isLoaded: false,
-  cart: [],
-  numberOfItems: 0,
-  subTotal: 0,
-  tax: 0,
-  total: 0,
+  isLoaded       : false,
+  cart           : [],
+  numberOfItems  : 0,
+  subTotal       : 0,
+  tax            : 0,
+  total          : 0,
   shippingAddress: undefined,
 };
 
@@ -31,41 +31,11 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, CART_INITIAL_STATE);
 
   useEffect(() => {
-    try {
-      const cookieCart: ICartProduct[] = JSON.parse(Cookie.get('cart') || '[]');
-      cookieCart.forEach(async (product) => {
-        try {
-          const capacity = product.capacity || '';
-          const ram = product.ram || '';
-          const { data } = await rexbuyApi.get(
-            `/products/stock/${product._id}?capacity=${capacity}&ram=${ram}`
-          );
-          const { inStockValue } = data;
-          if (product.quantity > inStockValue) {
-            dispatch({
-              type: 'Cart - LoadCart from cookies | storage',
-              payload: [],
-            });
-          }
-          return product;
-        } catch (error) {
-          console.error('Error obtaining API data', error);
-          dispatch({
-            type: 'Cart - LoadCart from cookies | storage',
-            payload: [],
-          });
-        }
-      });
-      dispatch({
-        type: 'Cart - LoadCart from cookies | storage',
-        payload: cookieCart,
-      });
-    } catch (error) {
-      dispatch({
-        type: 'Cart - LoadCart from cookies | storage',
-        payload: [],
-      });
-    }
+    const cookieCart: ICartProduct[] = JSON.parse(Cookie.get('cart') || '[]');
+    dispatch({
+      type: 'Cart - LoadCart from cookies | storage',
+      payload: cookieCart,
+    });
   }, []);
 
   useEffect(() => {
@@ -77,13 +47,13 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
     if (Cookie.get('firstName')) {
       const shippingAddress: ShippingAddress = {
         firstName: Cookie.get('firstName') || '',
-        lastName: Cookie.get('lastName') || '',
-        address: Cookie.get('address') || '',
-        address2: Cookie.get('address2') || '',
-        zip: Cookie.get('zip') || '',
-        city: Cookie.get('city') || '',
-        country: Cookie.get('country') || 'COL',
-        phone: Cookie.get('phone') || '',
+        lastName : Cookie.get('lastName') || '',
+        address  : Cookie.get('address') || '',
+        address2 : Cookie.get('address2') || '',
+        zip      : Cookie.get('zip') || '',
+        city     : Cookie.get('city') || '',
+        country  : Cookie.get('country') || 'COL',
+        phone    : Cookie.get('phone') || '',
       };
 
       dispatch({
@@ -179,13 +149,13 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
     }
 
     const body: IOrder = {
-      orderItems: state.cart,
+      orderItems     : state.cart,
       shippingAddress: state.shippingAddress,
-      numberOfItems: state.numberOfItems,
-      subTotal: state.subTotal,
-      tax: state.tax,
-      total: state.total,
-      isPaid: false,
+      numberOfItems  : state.numberOfItems,
+      subTotal       : state.subTotal,
+      tax            : state.tax,
+      total          : state.total,
+      isPaid         : false,
     };
 
     try {

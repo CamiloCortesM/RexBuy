@@ -7,40 +7,34 @@ import mongoose from 'mongoose';
  * 3 = disconnecting
  */
 const mongoConnection = {
-    isConnected: 0
-}
+  isConnected: 0,
+};
 
-export const connect = async() => {
+export const connect = async () => {
+  if (mongoConnection.isConnected) {
+    console.log('We were already connected');
+    return;
+  }
 
-    if ( mongoConnection.isConnected ) {
-        console.log('We were already connected');
-        return;
+  if (mongoose.connections.length > 0) {
+    mongoConnection.isConnected = mongoose.connections[0].readyState;
+
+    if (mongoConnection.isConnected === 1) {
+      console.log('Using previous connection');
+      return;
     }
+  }
 
-    if ( mongoose.connections.length > 0 ) {
-        mongoConnection.isConnected = mongoose.connections[0].readyState;
+  await mongoose.connect(process.env.MONGO_URL || '');
+  mongoConnection.isConnected = 1;
+  console.log('Connected to MongoDB:', process.env.MONGO_URL);
+};
 
-        if ( mongoConnection.isConnected === 1 ) {
-            console.log('Using previous connection');
-            return;
-        }
+export const disconnect = async () => {
+  if (mongoConnection.isConnected === 0) return;
 
-        await mongoose.disconnect();
-    }
+  await mongoose.disconnect();
+  mongoConnection.isConnected = 0;
 
-    await mongoose.connect( process.env.MONGO_URL || '');
-    mongoConnection.isConnected = 1;
-    console.log('Connected to MongoDB:', process.env.MONGO_URL );
-}
-
-export const disconnect = async() => {
-    
-    if ( process.env.NODE_ENV === 'development' ) return;
-
-    if ( mongoConnection.isConnected === 0 ) return;
-
-    await mongoose.disconnect();
-    mongoConnection.isConnected = 0;
-
-    console.log('Disconnected from MongoDB');
-}
+  console.log('Disconnected from MongoDB');
+};

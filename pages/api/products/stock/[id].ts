@@ -16,41 +16,43 @@ const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
     default:
       res.status(400).json({ message: 'Bad request' });
   }
-
-  res.status(200).json({ message: 'Example' });
 };
 
 const getStockById = async (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) => {
-  const { id } = req.query;
+  try {
+    const { id } = req.query;
 
-  if (!isValidObjectId(id)) {
-    return res.status(400).json({
-      message: 'the id is not valid',
-    });
-  }
+    if (!isValidObjectId(id)) {
+      return res.status(400).json({
+        message: 'the id is not valid',
+      });
+    }
+    await db.connect();
+    const product = await Product.findById(id);
+    if (!product) {
+      await db.disconnect();
+      return res
+        .status(400)
+        .json({ message: 'the product does not exist for this id' });
+    }
 
-  db.connect();
-  const product = await Product.findById(id);
-  db.disconnect();
+    if (product.priceAndStockVariations?.length === 0) {
+      const inStockValue = product.inStock;
+      return res.status(200).json({ inStockValue });
+    }
 
-  if (!product) {
-    return res
-      .status(400)
-      .json({ message: 'the product does not exist for this id' });
-  }
+    const { capacity = '', ram = '' } = req.query;
+    const inStockValue = product.getStockForVariation(capacity, ram);
 
-  if (product.priceAndStockVariations?.length === 0) {
-    const inStockValue = product.inStock;
     return res.status(200).json({ inStockValue });
+  } catch (error) {
+    console.log(error);
+    await db.disconnect();
+    res.status(500).json({ message: 'Contact with admin' });
   }
-
-  const { capacity = '', ram = '' } = req.query;
-  const inStockValue = product.getStockForVariation(capacity, ram);
-
-  res.status(200).json({ inStockValue });
 };
 
 export default handler;

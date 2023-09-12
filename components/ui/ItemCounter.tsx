@@ -31,22 +31,23 @@ export const ItemCounter: FC<Props> = ({
       ? `/products/stock/${idProduct}?ram=${ram}`
       : `/products/stock/${idProduct}`;
 
-  useEffect(() => {
-    getMaxStock();
-  }, [capacity, ram]);
-
   const getMaxStock = async () => {
     try {
       const { data } = await rexbuyApi.get(url);
+      console.log(data);
 
       const { inStockValue } = data;
       setMaxValue(inStockValue);
       if (currentValue > inStockValue && inStockValue !== 0)
         onUpdateValue(inStockValue);
     } catch (error) {
-      console.error('Error obtaining API data', error);
+      console.error('Error obtaining API data itemCounter', error);
     }
   };
+
+  useEffect(() => {
+    getMaxStock();
+  }, [ram,capacity]);
 
   const addOrRemove = (value: number) => {
     if (!isValidProductSelection()) return;
