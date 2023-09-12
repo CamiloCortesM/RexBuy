@@ -16,7 +16,21 @@ Rename the __.env.template__ file to __.env__.
 ```
 MONGO_URL=mongodb://localhost:27018/rexbuydb
 ```
-
+* Secret seed next:
+```
+NEXTAUTH_SECRET=yoursecretseed
+```
+* Github provide:
+Set up your secret key and your [github](https://github.com/settings/apps) provider id
+```
+GITHUB_SECRET=
+GITHUB_ID=
+```
+* Product taxes :
+Configure the taxes for the invoice of the products
+```
+NEXT_PUBLIC_TAX_RATE=0.15
+```
 First, run the development server:
 
 ```bash
