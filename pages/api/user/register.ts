@@ -15,7 +15,8 @@ type Data =
       };
     };
 
-const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const handler = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
+  await db.connect();
   switch (req.method) {
     case 'POST':
       return registerUser(req, res);
@@ -55,11 +56,9 @@ const registerUser = async (
     });
   }
 
-  await db.connect();
   const user = await User.findOne({ email });
 
   if (user) {
-    await db.disconnect();
     return res.status(400).json({
       message: 'Email in use',
     });

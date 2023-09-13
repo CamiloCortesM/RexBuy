@@ -6,7 +6,8 @@ import { IProduct } from '../../../interfaces';
 
 type Data = { message: string } | IProduct;
 
-const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const handler = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
+  await db.connect();
   switch (req.method) {
     case 'GET':
       return getProductBySlug(req, res);
@@ -22,9 +23,7 @@ const getProductBySlug = async (
   res: NextApiResponse<Data>
 ) => {
   const { slug } = req.query;
-  await db.connect();
   const product = await Product.findOne({ slug }).lean();
-  await db.disconnect();
 
   if (!product) {
     return res.status(404).json({

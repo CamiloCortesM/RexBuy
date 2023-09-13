@@ -9,7 +9,8 @@ type Data =
     }
   | { inStockValue: number };
 
-const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const handler = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
+  await db.connect();
   switch (req.method) {
     case 'GET':
       return getStockById(req, res);
@@ -30,10 +31,8 @@ const getStockById = async (
         message: 'the id is not valid',
       });
     }
-    await db.connect();
     const product = await Product.findById(id);
     if (!product) {
-      await db.disconnect();
       return res
         .status(400)
         .json({ message: 'the product does not exist for this id' });
@@ -50,7 +49,6 @@ const getStockById = async (
     return res.status(200).json({ inStockValue });
   } catch (error) {
     console.log(error);
-    await db.disconnect();
     res.status(500).json({ message: 'Contact with admin' });
   }
 };

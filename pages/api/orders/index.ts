@@ -7,7 +7,8 @@ import { Order, Product, User } from '@/models';
 
 type Data = { message: string } | IOrder;
 
-const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const handler = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
+  await db.connect();
   switch (req.method) {
     case 'POST':
       return createOrder(req, res);
@@ -30,7 +31,6 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
     const productsIds = orderItems.map((product) => product._id);
 
-    await db.connect();
     const dbProducts = await Product.find({ _id: { $in: productsIds } });
 
     const subTotal = orderItems.reduce((prev, current) => {
@@ -62,6 +62,11 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       const product = dbProducts.find((p) => p.id === item._id);
 
       if (product) {
+        if (product.inStock < item.quantity) {
+          return res.status(400).json({
+            message: 'Not enough stock for the product',
+          });
+        }
         product.inStock -= item.quantity;
 
         if (product.priceAndStockVariations!.length > 0) {
@@ -71,6 +76,11 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
                 (!variation.capacity && !item.capacity)) &&
               (variation.ram === item.ram || (!variation.ram && !item.ram))
             ) {
+              if (variation.stock < item.quantity) {
+                return res.status(400).json({
+                  message: 'Not enough stock for the product',
+                });
+              }
               variation.stock -= item.quantity;
             }
           });
@@ -91,12 +101,10 @@ const createOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     newOrder.total = Math.round(newOrder.total * 100) / 100;
 
     await newOrder.save();
-    await db.disconnect();
 
     return res.status(201).json(newOrder);
   } catch (error: any) {
     console.error(error);
-    await db.disconnect();
     res.status(400).json({ message: error.message || 'Check server logs' });
   }
 };

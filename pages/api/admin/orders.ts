@@ -19,7 +19,6 @@ const getOrders = async (res: NextApiResponse<Data>) => {
     .sort({ createdAt: 'desc' })
     .populate('user', 'name email')
     .lean();
-  await db.disconnect();
   return res.status(200).json(orders);
 };
 
