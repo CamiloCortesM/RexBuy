@@ -5,6 +5,7 @@ import { ICartProduct, IProduct } from '@/interfaces';
 import { ItemCounter } from '../ui';
 import { ItemSelector } from './ItemSelector';
 import { CartContext } from '@/context';
+import { AlertErrorMessage } from '../auth';
 
 type Props = {
   product: IProduct;
@@ -13,17 +14,21 @@ type Props = {
 export const ProductDetail: FC<Props> = ({ product }) => {
   const { addProductToCart } = useContext(CartContext);
 
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [canAddToCart, setCanAddToCart] = useState(false);
+
   const router = useRouter();
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
-    _id     : product._id,
-    image   : product.images[0],
-    price   : product.price,
-    slug    : product.slug,
-    title   : product.title,
-    brand   : product.brand,
-    model   : product.model,
+    _id: product._id,
+    image: product.images[0],
+    price: product.price,
+    slug: product.slug,
+    title: product.title,
+    brand: product.brand,
+    model: product.model,
     capacity: undefined,
-    ram     : undefined,
+    ram: undefined,
     quantity: 1,
   });
 
@@ -67,8 +72,20 @@ export const ProductDetail: FC<Props> = ({ product }) => {
     }));
   };
 
+  const printErrorMessage = (errorMessage: string) => {
+    setErrorMessage(errorMessage);
+    setShowError(true);
+  };
+
   const onAddProduct = () => {
-    if (!isValidProductSelection) return;
+    if (!isValidProductSelection()) {
+      printErrorMessage('Especificaciones incorrectas');
+      return;
+    }
+    if (!canAddToCart) {
+      printErrorMessage('Producto sin stock');
+      return;
+    }
     addProductToCart(tempCartProduct);
     router.push('/cart');
   };
@@ -80,8 +97,17 @@ export const ProductDetail: FC<Props> = ({ product }) => {
     }));
   };
 
+  const setOpen = (isOpen: boolean) => {
+    setShowError(isOpen);
+  };
+
   return (
     <Box display="flex" flexDirection="column">
+      <AlertErrorMessage
+        setOpen={setOpen}
+        showError={showError}
+        errorMessage={errorMessage}
+      />
       <Typography variant="h1" component="h1">
         {product.title}
       </Typography>
@@ -98,6 +124,7 @@ export const ProductDetail: FC<Props> = ({ product }) => {
           isValidProductSelection={isValidProductSelection}
           capacity={tempCartProduct.capacity}
           ram={tempCartProduct.ram}
+          setCanAddToCart={setCanAddToCart}
         />
         {product.capacity && product.capacity.length > 0 && (
           <>
