@@ -24,7 +24,7 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
       subTitle={`Editando: ${product.title}`}
       icon={<DriveFileRenameOutline />}
     >
-      <FormProduct product={product} />t
+      <FormProduct product={product} />
     </AdminLayout>
   );
 };

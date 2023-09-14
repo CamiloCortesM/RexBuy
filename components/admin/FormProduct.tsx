@@ -1,28 +1,48 @@
-import { ChangeEvent, FC, useEffect, useRef, useState } from "react";
-import { useRouter } from "next/router";
-import { useForm } from "react-hook-form";
-import { SaveOutlined, UploadOutlined } from "@mui/icons-material";
-import { Box, Button, Card, CardActions, CardMedia, Checkbox, Chip, Divider, FormControl, FormControlLabel, FormGroup, FormLabel, Grid, Radio, RadioGroup, TextField, capitalize } from "@mui/material";
+import { ChangeEvent, FC, useEffect, useRef, useState } from 'react';
+import { useRouter } from 'next/router';
+import { useForm } from 'react-hook-form';
+import { SaveOutlined, UploadOutlined } from '@mui/icons-material';
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardMedia,
+  Checkbox,
+  Chip,
+  Divider,
+  FormControl,
+  FormControlLabel,
+  FormGroup,
+  FormLabel,
+  Grid,
+  Radio,
+  RadioGroup,
+  TextField,
+  Typography,
+  capitalize,
+} from '@mui/material';
 
-import { rexbuyApi } from "@/api";
-import { SHOP_CONSTANTS } from "@/constants";
-import { IProduct } from "@/interfaces";
-
+import { rexbuyApi } from '@/api';
+import { SHOP_CONSTANTS } from '@/constants';
+import { IProduct, PriceAndStockVariations } from '@/interfaces';
 
 interface FormData {
-  _id        : string;
+  _id: string;
   description: string;
-  images     : string[];
-  inStock    : number;
-  price      : number;
-  slug       : string;
-  tags       : string[];
-  title      : string;
-  brand      : string;
-  model      : string;
-  capacity   : string[];
-  ram        : string[];
-  type       : string;
+  images: string[];
+  inStock: number;
+  price: number;
+  slug: string;
+  tags: string[];
+  title: string;
+  brand: string;
+  model: string;
+  capacity: string[];
+  ram: string[];
+  type: string;
+
+  priceAndStockVariations: PriceAndStockVariations[] | [];
 }
 
 type Props = {
@@ -48,15 +68,197 @@ export const FormProduct: FC<Props> = ({ product }) => {
 
   useEffect(() => {
     const subscription = watch((value, { name, type }) => {
-      if (name === 'title') {
+      const currentCapacity = value.capacity;
+      const currentRam = value.ram;
+
+      const handleTitleChange = () => {
         const newSlug =
           value.title
             ?.trim()
             .replaceAll(' ', '-')
             .replaceAll("'", '')
             .toLocaleLowerCase() || '';
-
         setValue('slug', newSlug);
+      };
+
+      const handleFieldChange = (
+        fieldName: 'ram' | 'capacity',
+        currentValue: string[],
+        otherValue: string[],
+        propertyName: 'ram' | 'capacity'
+      ) => {
+        if (currentValue?.length === 0) {
+          if (otherValue?.length === 0) {
+            setValue('priceAndStockVariations', []);
+            return;
+          }
+          const newPriceAndStockVariations = value.priceAndStockVariations!.map(
+            (item) => {
+              item![propertyName] = '';
+              return item as PriceAndStockVariations;
+            }
+          );
+          setValue('priceAndStockVariations', newPriceAndStockVariations!);
+          return;
+        }
+        if (otherValue!.length > 0) {
+          if (
+            currentValue!.length * otherValue!.length >=
+            value.priceAndStockVariations!.length
+          ) {
+            //add field
+            if (currentValue?.length === 1) {
+              const newValues = value.priceAndStockVariations!.map((item) => {
+                item![propertyName] = currentValue[0];
+                item!.price = 0;
+                item!.stock = 0;
+                return item as PriceAndStockVariations;
+              });
+              setValue('priceAndStockVariations', newValues);
+              return;
+            }
+            const previousValues: PriceAndStockVariations[] = getValues(
+              'priceAndStockVariations'
+            );
+            const filteredCurrentValue = currentValue!.filter((value) => {
+              return !previousValues.some(
+                (item) => item[propertyName] === value
+              );
+            })[0];
+
+            const newValues: PriceAndStockVariations[] = otherValue!.map(
+              (value) => {
+                return {
+                  stock: 0,
+                  price: 0,
+                  capacity: '',
+                  ram: '',
+                  [propertyName]: filteredCurrentValue,
+                  [fieldName]: value,
+                };
+              }
+            );
+
+            setValue('priceAndStockVariations', [
+              ...previousValues,
+              ...newValues,
+            ]);
+
+            return;
+          } else {
+            //delete field
+            const previousValues: PriceAndStockVariations[] = getValues(
+              'priceAndStockVariations'
+            );
+            const currentValues: PriceAndStockVariations[] =
+              previousValues!.filter((item) => {
+                return currentValue!.some(
+                  (value) => value === item[propertyName]
+                );
+              });
+            setValue('priceAndStockVariations', currentValues);
+            return;
+          }
+        } else {
+          if (currentValue!.length > value.priceAndStockVariations!.length) {
+            //add field
+            const previousValues: PriceAndStockVariations[] = getValues(
+              'priceAndStockVariations'
+            );
+            const filteredCurrentValue = currentValue!.filter((value) => {
+              return !previousValues.some(
+                (item) => item[propertyName] === value
+              );
+            })[0];
+
+            setValue('priceAndStockVariations', [
+              ...previousValues,
+              {
+                capacity: '',
+                ram: '',
+                price: 0,
+                stock: 0,
+                [propertyName]: filteredCurrentValue!,
+              },
+            ]);
+            return;
+          } else {
+            //delete field
+            const previousValues: PriceAndStockVariations[] = getValues(
+              'priceAndStockVariations'
+            );
+            const currentValues: PriceAndStockVariations[] =
+              previousValues!.filter((item) => {
+                return currentValue!.some(
+                  (value) => value === item[propertyName]
+                );
+              });
+            setValue('priceAndStockVariations', currentValues);
+            return;
+          }
+        }
+      };
+
+      const handleCapacityChange = () => {
+        handleFieldChange(
+          'ram',
+          currentCapacity as string[],
+          currentRam as string[],
+          'capacity'
+        );
+      };
+
+      const handleRamChange = () => {
+        handleFieldChange(
+          'capacity',
+          currentRam as string[],
+          currentCapacity as string[],
+          'ram'
+        );
+      };
+      switch (name) {
+        case 'title':
+          handleTitleChange();
+          break;
+        case 'capacity':
+          handleCapacityChange();
+          break;
+        case 'ram':
+          handleRamChange();
+          break;
+        default:
+        //management of other cases
+      }
+
+      const priceAndStockVariations: PriceAndStockVariations[] = getValues(
+        'priceAndStockVariations'
+      );
+
+      if (
+        name?.startsWith('priceAndStockVariations') &&
+        name.endsWith('price')
+      ) {
+        const currentPrice = priceAndStockVariations.reduce<number>(
+          (prev, current) => {
+            const PriceValue = 1 * current.price;
+            if (PriceValue < prev) return PriceValue;
+            return prev;
+          },
+          Infinity
+        );
+        setValue('price', currentPrice);
+      } else if (
+        name?.startsWith('priceAndStockVariations') &&
+        name.endsWith('stock')
+      ) {
+        const currentStock = priceAndStockVariations.reduce<number>(
+          (prev, current) => {
+            const stockValue = 1 * current.stock;
+            return prev + stockValue;
+          },
+          0
+        );
+        setValue('inStock', currentStock);
       }
     });
 
@@ -105,6 +307,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
   };
 
   const onSubmit = async (form: FormData) => {
+    console.log({ form });
     if (form.images.length < 2) return alert('Minimo 2 imagenes');
 
     setIsSaving(true);
@@ -199,6 +402,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
             label="Inventario"
             type="number"
             variant="filled"
+            disabled={getValues('priceAndStockVariations').length > 0}
             fullWidth
             sx={{ mb: 1 }}
             {...register('inStock', {
@@ -213,6 +417,7 @@ export const FormProduct: FC<Props> = ({ product }) => {
             label="Precio"
             type="text"
             variant="filled"
+            disabled={getValues('priceAndStockVariations').length > 0}
             fullWidth
             sx={{ mb: 1 }}
             {...register('price', {
@@ -306,6 +511,60 @@ export const FormProduct: FC<Props> = ({ product }) => {
               />
             ))}
           </FormGroup>
+          <Grid mt={2} container spacing={1}>
+            {getValues('priceAndStockVariations').map((item, i) => (
+              <Grid item xs={12} sm={6} md={4} lg={3} key={i}>
+                <Box
+                  display="flex"
+                  flexDirection="column"
+                  alignItems="center"
+                  sx={{
+                    border: 'solid 1px gray',
+                  }}
+                >
+                  <Typography
+                    variant="subtitle2"
+                    sx={{
+                      fontSize: { sm: '.75rem', md: '.7rem', lg: '.8rem' },
+                    }}
+                  >
+                    {item.capacity !== '' ? `${item.capacity} SSD` : ''}
+                    {item.capacity !== '' && item.ram !== '' && ' + '}
+                    {item.ram !== '' ? `${item.ram} RAM` : ''}
+                  </Typography>
+                  <TextField
+                    label="Precio"
+                    type="text"
+                    variant="filled"
+                    fullWidth
+                    {...register(`priceAndStockVariations.${i}.price`, {
+                      required: 'Este campo es requerido',
+                      pattern: {
+                        value: /^\d+(\.\d{1,2})?$/,
+                        message: 'Por favor, ingresa un precio válido',
+                      },
+                      min: { value: 1, message: 'Mínimo valor es 1' },
+                    })}
+                    error={!!errors.priceAndStockVariations?.[i]?.price}
+                  />
+                  <TextField
+                    label="Stock"
+                    variant="filled"
+                    fullWidth
+                    {...register(`priceAndStockVariations.${i}.stock`, {
+                      required: 'Este campo es requerido',
+                      pattern: {
+                        value: /^\d+(\.\d{1,2})?$/,
+                        message: 'Por favor, ingresa un stock válido',
+                      },
+                      min: { value: 0, message: 'Mínimo valor es 0' },
+                    })}
+                    error={!!errors.priceAndStockVariations?.[i]?.stock}
+                  />
+                </Box>
+              </Grid>
+            ))}
+          </Grid>
         </Grid>
         <Grid item xs={12} sm={6}>
           <Box sx={{ display: 'flex', mb: 1 }}>

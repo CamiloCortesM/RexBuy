@@ -20,15 +20,15 @@ export const ProductDetail: FC<Props> = ({ product }) => {
 
   const router = useRouter();
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
-    _id: product._id,
-    image: product.images[0],
-    price: product.price,
-    slug: product.slug,
-    title: product.title,
-    brand: product.brand,
-    model: product.model,
+    _id     : product._id,
+    image   : product.images[0],
+    price   : product.price,
+    slug    : product.slug,
+    title   : product.title,
+    brand   : product.brand,
+    model   : product.model,
     capacity: undefined,
-    ram: undefined,
+    ram     : undefined,
     quantity: 1,
   });
 

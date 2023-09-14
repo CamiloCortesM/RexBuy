@@ -12,7 +12,7 @@ export interface IProduct {
   capacity?               : string[];
   ram?                    : string[];
   type                    : ITechnologyType;
-  priceAndStockVariations?: PriceAndStockVariations[];
+  priceAndStockVariations : PriceAndStockVariations[] | [];
 
   createdAt: string;
   updatedAt: string;
