@@ -16,7 +16,34 @@ Rename the __.env.template__ file to __.env__.
 ```
 MONGO_URL=mongodb://localhost:27018/rexbuydb
 ```
-
+* Secret seed next:
+```
+NEXTAUTH_SECRET=yoursecretseed
+```
+* Github provide:
+Set up your secret key and your [github](https://github.com/settings/apps) provider id
+```
+GITHUB_SECRET=
+GITHUB_ID=
+```
+* Product taxes :
+Configure the taxes for the invoice of the products
+```
+NEXT_PUBLIC_TAX_RATE=0.15
+```
+* Paypal providers :
+Configure [Paypal](https://developer.paypal.com/dashboard/applications/sandbox) CLIENT ID and Secret key in sandbox mode
+```
+NEXT_PUBLIC_PAYPAL_CLIENT_ID=
+PAYPAL_SECRET=
+PAYPAL_OAUTH_URL=https://api-m.sandbox.paypal.com/v1/oauth2/token
+PAYPAL_ORDERS_URL=https://api.sandbox.paypal.com/v2/checkout/orders
+```
+* Cloudinary :
+configure [Cloudinary](https://console.cloudinary.com/console/c-5c1e32904ddb6b51d2f155f99e498f/getting-started) url to store product and user images
+```
+CLOUDINARY_URL=
+```
 First, run the development server:
 
 ```bash
