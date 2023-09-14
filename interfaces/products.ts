@@ -43,3 +43,22 @@ type ITechnologyType =
   | 'tabletas'
   | 'smartwatch'
   | 'monitores';
+
+
+export interface ProductManagementData {
+  _id        : string;
+  description: string;
+  images     : string[];
+  inStock    : number;
+  price      : number;
+  slug       : string;
+  tags       : string[];
+  title      : string;
+  brand      : string;
+  model      : string;
+  capacity   : string[];
+  ram        : string[];
+  type       : string;
+
+  priceAndStockVariations: PriceAndStockVariations[] | [];
+}
