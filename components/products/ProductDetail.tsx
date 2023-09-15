@@ -1,4 +1,4 @@
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Button, Chip, Typography } from '@mui/material';
 import { ICartProduct, IProduct } from '@/interfaces';
@@ -31,11 +31,19 @@ export const ProductDetail: FC<Props> = ({ product }) => {
     ram     : undefined,
     quantity: 1,
   });
+  
+  const isValidProductSelection = useMemo(() => {
+    return () => {
+        if (product.capacity!.length > 0 && !tempCartProduct.capacity) return false;
+        if (product.ram!.length > 0 && !tempCartProduct.ram) return false;
+        return true;
+    };
+  }, [product.capacity, tempCartProduct.capacity, product.ram, tempCartProduct.ram]);
 
   useEffect(() => {
     if (
       product.priceAndStockVariations?.length === 0 ||
-      !isValidProductSelection
+      !isValidProductSelection()
     )
       return;
 
@@ -57,13 +65,7 @@ export const ProductDetail: FC<Props> = ({ product }) => {
         price: matchingVariation.price,
       }));
     }
-  }, [tempCartProduct.capacity, tempCartProduct.ram]);
-
-  const isValidProductSelection = () => {
-    if (product.capacity!.length > 0 && !tempCartProduct.capacity) return false;
-    if (product.ram!.length > 0 && !tempCartProduct.ram) return false;
-    return true;
-  };
+  }, [tempCartProduct.capacity, tempCartProduct.ram, product.priceAndStockVariations,isValidProductSelection]);
 
   const onSelectedSize = (value: string, name: string = 'capacity') => {
     setTempCartProduct((currentProduct) => ({

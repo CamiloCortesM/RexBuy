@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useMemo, useState } from 'react';
 import { Box, Chip, IconButton, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
 import { rexbuyApi } from '@/api';
@@ -35,27 +35,26 @@ export const ItemCounter: FC<Props> = ({
       ? `/products/stock/${idProduct}?ram=${ram}`
       : `/products/stock/${idProduct}`;
 
-  const getMaxStock = async () => {
-    try {
-      const { data } = await rexbuyApi.get(url);
-      const { inStockValue } = data;
-      setMaxValue(inStockValue);
-      if (currentValue > inStockValue && inStockValue !== 0)
-        onUpdateValue(inStockValue);
-      if (isValidProductSelection() && inStockValue === 0) {
-        setCanAddToCart(false);
-        setMaxValue(-1);
-        return;
-      }
-      if (isValidProductSelection()) setCanAddToCart(true);
-    } catch (error) {
-      console.error('Error obtaining API data itemCounter', error);
-    }
-  };
-
   useEffect(() => {
+    const getMaxStock = async () => {
+      try {
+        const { data } = await rexbuyApi.get(url);
+        const { inStockValue } = data;
+        setMaxValue(inStockValue);
+        if (currentValue > inStockValue && inStockValue !== 0)
+          onUpdateValue(inStockValue);
+        if (isValidProductSelection() && inStockValue === 0) {
+          setCanAddToCart(false);
+          setMaxValue(-1);
+          return;
+        }
+        if (isValidProductSelection()) setCanAddToCart(true);
+      } catch (error) {
+        console.error('Error obtaining API data itemCounter', error);
+      }
+    };
     getMaxStock();
-  }, [ram, capacity]);
+  }, [url, currentValue, onUpdateValue, isValidProductSelection,setCanAddToCart]);
 
   const addOrRemove = (value: number) => {
     if (!isValidProductSelection()) return;
