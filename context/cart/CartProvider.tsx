@@ -4,19 +4,15 @@ import axios from 'axios';
 
 import { CartContext, cartReducer } from './';
 import { rexbuyApi } from '@/api';
-import {
-  ICartProduct,
-  IOrder,
-  ShippingAddress,
-} from '@/interfaces';
+import { ICartProduct, IOrder, ShippingAddress } from '@/interfaces';
 
 export interface CartState {
-  isLoaded        : boolean;
-  cart            : ICartProduct[];
-  numberOfItems   : number;
-  subTotal        : number;
-  tax             : number;
-  total           : number;
+  isLoaded     : boolean;
+  cart         : ICartProduct[];
+  numberOfItems: number;
+  subTotal     : number;
+  tax          : number;
+  total        : number;
 
   shippingAddress?: ShippingAddress;
 }
@@ -35,18 +31,11 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
   const [state, dispatch] = useReducer(cartReducer, CART_INITIAL_STATE);
 
   useEffect(() => {
-    try {
-      const cookieCart = JSON.parse(Cookie.get('cart') || '[]');
-      dispatch({
-        type: 'Cart - LoadCart from cookies | storage',
-        payload: cookieCart,
-      });
-    } catch (error) {
-      dispatch({
-        type: 'Cart - LoadCart from cookies | storage',
-        payload: [],
-      });
-    }
+    const cookieCart: ICartProduct[] = JSON.parse(Cookie.get('cart') || '[]');
+    dispatch({
+      type: 'Cart - LoadCart from cookies | storage',
+      payload: cookieCart,
+    });
   }, []);
 
   useEffect(() => {
@@ -171,7 +160,7 @@ export const CartProvider: FC<PropsWithChildren> = ({ children }) => {
 
     try {
       const { data } = await rexbuyApi.post<IOrder>('/orders', body);
-      dispatch({type: 'Cart - Order complete'});
+      dispatch({ type: 'Cart - Order complete' });
 
       return {
         hasError: false,

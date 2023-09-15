@@ -8,7 +8,8 @@ type Data = {
   message: string;
 };
 
-const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const handler = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
+  await db.connect();
   switch (req.method) {
     case 'POST':
       return payOrder(req, res);
@@ -73,18 +74,15 @@ const payOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     return res.status(401).json({ message: 'Order not recognized' });
   }
 
-  await db.connect();
   const dbOrder = await Order.findById(orderId);
 
   if (!dbOrder) {
-    await db.disconnect();
     return res
       .status(401)
       .json({ message: 'Order does not exist in the database' });
   }
 
   if (dbOrder.total !== Number(data.purchase_units[0].amount.value)) {
-    await db.disconnect();
     return res
       .status(401)
       .json({ message: 'Paypal amounts and our order are not the same.' });
@@ -94,7 +92,6 @@ const payOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   dbOrder.isPaid = true;
 
   await dbOrder.save();
-  await db.disconnect();
 
   return res.status(200).json({ message: 'Order Paid' });
 };

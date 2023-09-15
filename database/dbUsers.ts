@@ -9,7 +9,6 @@ export const checkUserEmailPassword = async (
 ) => {
   await db.connect();
   const user = await User.findOne({ email });
-  await db.disconnect();
 
   if (!user) return null;
 
@@ -30,7 +29,6 @@ export const oAuthToDbUser = async (oAuthEmail: string, oAutName: string) => {
   const user = await User.findOne({ email: oAuthEmail });
 
   if (user) {
-    await db.disconnect();
     const { _id, role, name, email } = user;
     return { _id, role, name, email };
   }
@@ -43,7 +41,6 @@ export const oAuthToDbUser = async (oAuthEmail: string, oAutName: string) => {
   });
 
   await newUser.save();
-  await db.disconnect();
 
   const { _id, role, name, email } = newUser;
 

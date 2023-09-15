@@ -7,6 +7,6 @@ export interface ICartProduct {
   brand    : string;
   model    : string;
   capacity?: string;
-  ram?     : string[];
+  ram?     : string;
   quantity : number;
 }

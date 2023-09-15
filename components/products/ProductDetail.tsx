@@ -1,10 +1,11 @@
-import { FC, useContext, useState } from 'react';
+import { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
 import { Box, Button, Chip, Typography } from '@mui/material';
 import { ICartProduct, IProduct } from '@/interfaces';
 import { ItemCounter } from '../ui';
 import { ItemSelector } from './ItemSelector';
 import { CartContext } from '@/context';
+import { AlertErrorMessage } from '../auth';
 
 type Props = {
   product: IProduct;
@@ -12,6 +13,10 @@ type Props = {
 
 export const ProductDetail: FC<Props> = ({ product }) => {
   const { addProductToCart } = useContext(CartContext);
+
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [canAddToCart, setCanAddToCart] = useState(false);
 
   const router = useRouter();
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
@@ -26,6 +31,41 @@ export const ProductDetail: FC<Props> = ({ product }) => {
     ram     : undefined,
     quantity: 1,
   });
+  
+  const isValidProductSelection = useMemo(() => {
+    return () => {
+        if (product.capacity!.length > 0 && !tempCartProduct.capacity) return false;
+        if (product.ram!.length > 0 && !tempCartProduct.ram) return false;
+        return true;
+    };
+  }, [product.capacity, tempCartProduct.capacity, product.ram, tempCartProduct.ram]);
+
+  useEffect(() => {
+    if (
+      product.priceAndStockVariations?.length === 0 ||
+      !isValidProductSelection()
+    )
+      return;
+
+    const matchingVariation = product.priceAndStockVariations?.find(
+      (PriceAndStock) => {
+        return (
+          (PriceAndStock.capacity === tempCartProduct.capacity ||
+            (PriceAndStock.capacity === '' &&
+              tempCartProduct.capacity === undefined)) &&
+          (PriceAndStock.ram === tempCartProduct.ram ||
+            (PriceAndStock.ram === '' && tempCartProduct.ram === undefined))
+        );
+      }
+    );
+
+    if (matchingVariation) {
+      setTempCartProduct((currentProduct) => ({
+        ...currentProduct,
+        price: matchingVariation.price,
+      }));
+    }
+  }, [tempCartProduct.capacity, tempCartProduct.ram, product.priceAndStockVariations,isValidProductSelection]);
 
   const onSelectedSize = (value: string, name: string = 'capacity') => {
     setTempCartProduct((currentProduct) => ({
@@ -34,9 +74,20 @@ export const ProductDetail: FC<Props> = ({ product }) => {
     }));
   };
 
+  const printErrorMessage = (errorMessage: string) => {
+    setErrorMessage(errorMessage);
+    setShowError(true);
+  };
+
   const onAddProduct = () => {
-    if (product.capacity!.length > 0 && !tempCartProduct.capacity) return;
-    if (product.ram!.length > 0 && !tempCartProduct.ram) return;
+    if (!isValidProductSelection()) {
+      printErrorMessage('Especificaciones incorrectas');
+      return;
+    }
+    if (!canAddToCart) {
+      printErrorMessage('Producto sin stock');
+      return;
+    }
     addProductToCart(tempCartProduct);
     router.push('/cart');
   };
@@ -48,21 +99,34 @@ export const ProductDetail: FC<Props> = ({ product }) => {
     }));
   };
 
+  const setOpen = (isOpen: boolean) => {
+    setShowError(isOpen);
+  };
+
   return (
     <Box display="flex" flexDirection="column">
+      <AlertErrorMessage
+        setOpen={setOpen}
+        showError={showError}
+        errorMessage={errorMessage}
+      />
       <Typography variant="h1" component="h1">
         {product.title}
       </Typography>
       <Typography
         variant="subtitle1"
         component="h2"
-      >{`$${product.price}`}</Typography>
+      >{`$${tempCartProduct.price}`}</Typography>
       <Box sx={{ my: 2 }}>
         <Typography variant="subtitle2">Cantidad</Typography>
         <ItemCounter
           currentValue={tempCartProduct.quantity}
           onUpdateValue={onUpdateValue}
-          maxValue={product.inStock}
+          idProduct={product._id}
+          isValidProductSelection={isValidProductSelection}
+          capacity={tempCartProduct.capacity}
+          ram={tempCartProduct.ram}
+          setCanAddToCart={setCanAddToCart}
         />
         {product.capacity && product.capacity.length > 0 && (
           <>

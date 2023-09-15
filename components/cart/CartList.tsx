@@ -18,7 +18,7 @@ import { IOrderItem } from '@/interfaces';
 type Props = {
   editable?: boolean;
   products?: IOrderItem[];
-}
+};
 
 export const CartList: FC<Props> = ({ editable = false, products }) => {
   const { cart, updateCartQuantity, removeCartProduct } =
@@ -35,6 +35,8 @@ export const CartList: FC<Props> = ({ editable = false, products }) => {
   const onDeleteProduct = (product: ICartProduct) => {
     removeCartProduct(product);
   };
+
+  const isValidProductSelection = () => true;
 
   const showProducts = products ? products : cart;
 
@@ -78,7 +80,10 @@ export const CartList: FC<Props> = ({ editable = false, products }) => {
                   onUpdateValue={(value) =>
                     onNewCartQuantityValue(product, value)
                   }
-                  maxValue={1000}
+                  idProduct={product._id}
+                  isValidProductSelection={isValidProductSelection}
+                  capacity={product.capacity}
+                  ram={product.ram}
                 />
               ) : (
                 <Typography variant="h5">

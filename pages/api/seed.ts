@@ -21,9 +21,6 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   await Product.insertMany(seedDatabase.initialData.products);
 
   await Order.deleteMany();
-
-  await db.disconnect();
-
   res.status(200).json({ message: 'Process carried out correctly' });
 };
 

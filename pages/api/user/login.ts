@@ -14,7 +14,8 @@ type Data =
       };
     };
 
-const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
+const handler = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
+  await db.connect();
   switch (req.method) {
     case 'POST':
       return loginUser(req, res);
@@ -32,9 +33,7 @@ const loginUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     email: string;
   };
 
-  await db.connect();
   const user = await User.findOne({ email });
-  await db.disconnect();
 
   if (!user) {
     return res.status(400).json({

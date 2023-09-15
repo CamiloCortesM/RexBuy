@@ -33,8 +33,6 @@ const handler = async(
     Product.find({ inStock: { $lte: 10 } }).count(),
   ]);
 
-  await db.disconnect();
-
   res.status(200).json({
     numberOfOrders,
     paidOrders,

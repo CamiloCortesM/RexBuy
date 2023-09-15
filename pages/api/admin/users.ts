@@ -7,7 +7,8 @@ import { VALID_ROLES } from '@/constants';
 
 type Data = { message: string } | IUser[];
 
-export default function (req: NextApiRequest, res: NextApiResponse<Data>) {
+export default async function (req: NextApiRequest, res: NextApiResponse<Data>) {
+  await db.connect();
   switch (req.method) {
     case 'GET':
       return getUsers(res);
@@ -19,9 +20,7 @@ export default function (req: NextApiRequest, res: NextApiResponse<Data>) {
   }
 }
 const getUsers = async (res: NextApiResponse<Data>) => {
-  await db.connect();
   const users = await User.find().select('-password').lean();
-  await db.disconnect();
 
   return res.status(200).json(users);
 };
@@ -38,16 +37,13 @@ const updateUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       .json({ message: 'role not allowed: ' + VALID_ROLES.join(', ') });
   }
 
-  await db.connect();
   const user = await User.findById(userId);
   if (!user) {
-    await db.disconnect();
     return res.status(404).json({ message: 'user not found with that id' });
   }
 
   user.role = role;
   await user.save();
-  await db.disconnect();
 
   return res.status(200).json({ message: 'Updated user' });
 };

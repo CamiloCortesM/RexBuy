@@ -1,18 +1,20 @@
+import { PriceAndStockVariations } from '@/interfaces';
 import bcrypt from 'bcryptjs';
 
 interface SeedProduct {
-  description: string;
-  images     : string[];
-  inStock    : number;
-  price      : number;
-  slug       : string;
-  tags       : string[];
-  title      : string;
-  brand      : string;
-  model      : string;
-  capacity?  : string[];
-  ram?       : string[];
-  type       : TechnologyType;
+  description             : string;
+  images                  : string[];
+  inStock                 : number;
+  price                   : number;
+  slug                    : string;
+  tags                    : string[];
+  title                   : string;
+  brand                   : string;
+  model                   : string;
+  capacity?               : string[];
+  ram?                    : string[];
+  type                    : TechnologyType;
+  priceAndStockVariations?: PriceAndStockVariations[];
 }
 
 interface SeedUser {
@@ -76,29 +78,106 @@ export const initialData: SeedData = {
       description:
         'Potente smartphone de Apple con cámara dual y pantalla OLED.',
       images: ['iphone12.webp', 'iphone12-2.webp', 'iphone12-3.webp'],
-      inStock: 50,
       price: 999.99,
-      capacity: ['128GB', '256GB', '512GB', '1TB'],
       slug: 'iphone-12',
       tags: ['smartphone', 'Apple', 'iOS'],
       brand: 'Apple',
       model: 'iPhone 12',
+      inStock: 50,
+      capacity: ['128GB', '256GB', '512GB', '1TB'],
+      ram: ['4GB', '8GB'],
       type: 'celulares',
+      priceAndStockVariations: [
+        {
+          capacity: '128GB',
+          ram: '4GB',
+          stock: 20,
+          price: 999.99,
+        },
+        {
+          capacity: '128GB',
+          ram: '8GB',
+          stock: 15,
+          price: 1049.99,
+        },
+        {
+          capacity: '256GB',
+          ram: '4GB',
+          stock: 18,
+          price: 1099.99,
+        },
+        {
+          capacity: '256GB',
+          ram: '8GB',
+          stock: 12,
+          price: 1149.99,
+        },
+        {
+          capacity: '512GB',
+          ram: '4GB',
+          stock: 10,
+          price: 1199.99,
+        },
+        {
+          capacity: '512GB',
+          ram: '8GB',
+          stock: 5,
+          price: 1249.99,
+        },
+        {
+          capacity: '1TB',
+          ram: '4GB',
+          stock: 8,
+          price: 1299.99,
+        },
+        {
+          capacity: '1TB',
+          ram: '8GB',
+          stock: 3,
+          price: 1349.99,
+        },
+      ],
     },
     {
       title: 'Dell XPS 13',
       description:
         'Portátil ultradelgado con pantalla táctil y potente rendimiento.',
       images: ['xps13.webp', 'xps13-2.webp', 'xps13-3.webp'],
-      inStock: 20,
-      capacity: ['512GB', '1TB'],
-      ram: ['4GB', '8GB'],
       price: 1499.99,
       slug: 'dell-xps-13',
       tags: ['laptop', 'Dell', 'Windows'],
       brand: 'Dell',
       model: 'XPS 13',
+      inStock: 20,
+      capacity: ['512GB', '1TB'],
+      ram: ['4GB', '8GB'],
       type: 'computadores',
+      priceAndStockVariations: [
+        {
+          capacity: '512GB',
+          ram: '4GB',
+          stock: 10,
+          price: 1499.99,
+        },
+        {
+          capacity: '512GB',
+          ram: '8GB',
+          stock: 5,
+          price: 1599.99,
+        },
+        {
+          capacity: '1TB',
+          ram: '4GB',
+          stock: 8,
+          price: 1699.99,
+        },
+        {
+          capacity: '1TB',
+          ram: '8GB',
+          stock: 4,
+          price: 1799.99,
+        },
+      ],
     },
     {
       title: 'Nintendo Switch',
@@ -126,10 +205,25 @@ export const initialData: SeedData = {
       inStock: 10,
       price: 1999.99,
       slug: 'macbook-pro',
+      ram: ['4GB', '8GB'],
       tags: ['laptop', 'Apple', 'macOS'],
       brand: 'Apple',
       model: 'MacBook Pro',
       type: 'computadores',
+      priceAndStockVariations: [
+        {
+          capacity: '',
+          ram: '4GB',
+          stock: 10,
+          price: 1499.99,
+        },
+        {
+          capacity: '',
+          ram: '8GB',
+          stock: 5,
+          price: 1599.99,
+        },
+      ],
     },
     {
       title: 'Samsung Galaxy S20',

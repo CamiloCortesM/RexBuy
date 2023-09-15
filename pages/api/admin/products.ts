@@ -9,10 +9,11 @@ cloudinary.config(process.env.CLOUDINARY_URL || '');
 
 type Data = { message: string } | IProduct[] | IProduct;
 
-export default function handler(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
+  await db.connect();
   switch (req.method) {
     case 'GET':
       return getProducts(res);
@@ -26,10 +27,7 @@ export default function handler(
 }
 
 const getProducts = async (res: NextApiResponse<Data>) => {
-  await db.connect();
   const products = await Product.find().sort({ title: 'asc' }).lean();
-  await db.disconnect();
-
   //TODO FIX PATHS
   const updatedProducts = products.map((product) => {
     product.images = product.images.map((image) => {
@@ -62,7 +60,6 @@ const updatedProduct = async (
   }
 
   try {
-    await db.connect();
     const product = await Product.findById(_id);
     if (!product) {
       return res
@@ -81,12 +78,10 @@ const updatedProduct = async (
     });
 
     await product.updateOne(req.body);
-    await db.disconnect();
 
     return res.status(200).json(product);
   } catch (error) {
     console.log(error);
-    await db.disconnect();
     return res.status(400).json({ message: 'Revisar mensaje en el servidor' });
   }
 };
@@ -104,7 +99,6 @@ const createProduct = async (
   }
 
   try {
-    await db.connect();
     const productInDB = await Product.findOne({ slug: req.body.slug });
 
     if (productInDB) {
@@ -114,12 +108,10 @@ const createProduct = async (
     }
     const product = new Product(req.body);
     await product.save();
-    await db.disconnect();
 
     res.status(201).json(product);
   } catch (error) {
     console.log(error);
-    await db.disconnect();
     return res.status(400).json({ message: 'Revisar logs del servidor' });
   }
 };

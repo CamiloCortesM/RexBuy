@@ -25,7 +25,6 @@ const ProductPage: NextPage<Props> = ({ product }) => {
         <Grid
           item
           sm={6}
-          spacing={2}
           sx={{
             display: { xs: 'none', sm: 'block' },
             margin: '10px',
@@ -83,7 +82,8 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       product,
     },
-    revalidate: 60 * 60 * 24,
+    // revalidate: 60 * 60 * 24,
+    revalidate: 60,
   };
 };
 

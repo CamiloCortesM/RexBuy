@@ -1,22 +1,21 @@
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { GetServerSideProps } from 'next';
 
-import {
-  DriveFileRenameOutline,
-} from '@mui/icons-material';
+import { DriveFileRenameOutline } from '@mui/icons-material';
 
 import { AdminLayout } from '../../../components/layouts';
 import { IProduct } from '../../../interfaces';
 import { dbProducts } from '../../../database';
 import { Product } from '@/models';
 import { FormProduct } from '@/components/admin/FormProduct';
-
+import { AlertSuccessMessage } from '@/components/ui';
 
 type Props = {
   product: IProduct;
 };
 
 const ProductAdminPage: FC<Props> = ({ product }) => {
+  const [showAlert, setShowAlert] = useState(false);
 
   return (
     <AdminLayout
@@ -24,7 +23,12 @@ const ProductAdminPage: FC<Props> = ({ product }) => {
       subTitle={`Editando: ${product.title}`}
       icon={<DriveFileRenameOutline />}
     >
-      <FormProduct product={product} />t
+      <AlertSuccessMessage
+        message="Producto Actualizado Correctamente"
+        setOpen={setShowAlert}
+        showAlert={showAlert}
+      />
+      <FormProduct product={product} setShowAlert={setShowAlert} />
     </AdminLayout>
   );
 };
