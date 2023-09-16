@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Cookies from 'js-cookie';
 
-import { Grid, Typography } from '@mui/material';
+import { Box, Grid, Typography } from '@mui/material';
 
 import { ShopLayout } from '../../components/layouts/ShopLayout';
 import { CartList } from '../../components/cart';
@@ -26,6 +26,7 @@ const SummaryPage = () => {
       title="Resumen de orden"
       pageDescription={'Resumen de la orden'}
     >
+      <Box padding='20px 30px'>
       <Typography mb={1} variant="h1" component="h1">
         Resumen de la orden
       </Typography>
@@ -40,6 +41,7 @@ const SummaryPage = () => {
         />
       </Grid>
       <AlertErrorMessage errorMessage={errorMessage} showError={showError} setOpen={setShowError} />
+      </Box>
     </ShopLayout>
   );
 };

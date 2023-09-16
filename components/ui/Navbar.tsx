@@ -30,7 +30,9 @@ export const Navbar = () => {
   };
 
   return (
-    <AppBar>
+    <AppBar sx={{
+      borderBottom:'solid 1px #e9eaec'
+    }}>
       <Toolbar>
         <NavbarLogo />
         <Box flex={1} />

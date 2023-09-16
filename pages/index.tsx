@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 
 import { useProducts } from '@/hooks';
 import { ShopLayout } from '@/components/layouts/ShopLayout';
@@ -13,13 +13,26 @@ const Home: NextPage = () => {
       title={'RexBuy - Home'}
       pageDescription={'Encuentra los mejores productos de tecnologia aquí'}
     >
-      {/* TODO: header section,announcements */}
-      <Typography variant="h1" component="h1" color="primary">
-        Tienda
-      </Typography>
-      <Typography variant="h2" sx={{ mb: 1 }}>
-        Todos los productos
-      </Typography>
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        width="100%"
+        height="300px"
+        sx={{
+          borderBottom:'1px solid #e9eaec',
+          backgroundColor:'#fafafa'
+        }}
+      >
+        <Typography variant="h1" component="h1" color="primary">
+          Tienda
+        </Typography>
+        <Typography variant="body1" sx={{ mb: 1 }}>
+          Todos los productos
+        </Typography>
+      </Box>
+
       {isLoading ? <FullScreenLoading /> : <ProductList products={products} />}
     </ShopLayout>
   );
