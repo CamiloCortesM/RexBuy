@@ -1,21 +1,21 @@
 import { FC } from 'react';
 
-import NextLink from 'next/link';
 import Link from 'next/link';
 
 import {
   Box,
-  Button,
   Divider,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
-  useMediaQuery,
 } from '@mui/material';
 
-export const PrincipalPage: FC = () => {
-  const isSmallScreen = useMediaQuery('(max-width: 600px)');
+interface initialProps {
+  isSmallScreen: boolean
+}
+
+export const PrincipalPage: FC<initialProps> = ({isSmallScreen}) => {
   return (
     <Box width={{ xs: '100%', sm: 'auto' }}>
       {isSmallScreen ? (
