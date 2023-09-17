@@ -2,7 +2,7 @@ import { Grid } from '@mui/material';
 import { CardLoading } from './CardLoading';
 
 export const FullScreenLoading = () => {
-  const numberOfCards = 8;
+  const numberOfCards = 12;
   const cardLoadings = [];
 
   for (let i = 0; i < numberOfCards; i++) {
@@ -10,7 +10,15 @@ export const FullScreenLoading = () => {
   }
 
   return (
-    <Grid container spacing={0.5}>
+    <Grid
+      container
+      sx={{
+        backgroundColor: '#fafafa',
+        border: 'solid 1px #e9eaec',
+        padding: { xs: 0, sm: 2, md: 4 },
+      }}
+      spacing={0.5}
+    >
       {cardLoadings}
     </Grid>
   );

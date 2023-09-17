@@ -20,7 +20,7 @@ export const CategoryItem: FC<Props> = ({ link, title }) => {
           sx={{
             ...(asPath === link && {
               ':hover': {
-                backgroundColor: 'rgb(98, 45, 24)',
+                backgroundColor: '#001853',
                 transition: 'all 0.3s ease-in-out',
               },
             }),

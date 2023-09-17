@@ -15,7 +15,7 @@ export const CartButton = () => {
         <IconButton>
           <Badge
             badgeContent={numberOfItems > 99 ? '+99' : numberOfItems}
-            color="secondary"
+            color="primary"
           >
             <ShoppingCartOutlined />
           </Badge>

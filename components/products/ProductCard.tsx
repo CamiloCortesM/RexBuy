@@ -147,6 +147,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
                 <Typography
                   sx={{
                     opacity: '.7',
+                    fontSize:'.8rem'
                   }}
                   variant="subtitle2"
                   fontWeight={400}
