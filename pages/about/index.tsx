@@ -1,11 +1,11 @@
-import { FC } from 'react';
+import { NextPage } from 'next';
 
 import { ShopLayout } from '@/components/layouts';
 import { Grid, Typography } from '@mui/material';
 
 import { About, Benefits, ListItemBenefits } from '@/components/footer';
 
-const AboutPage: FC = () => {
+const AboutPage: NextPage = () => {
   return (
     <ShopLayout
       title={'RexBuy - Acerca de'}
