@@ -1,0 +1,36 @@
+.image_ads {
+  border-radius: 5px;
+  width: 90%;
+}
+
+.slider_container {
+  width: 100%;
+  text-align: center;
+}
+
+.button_next_previous {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: white;
+  border: solid 1px #e9eaec;
+  box-shadow: 0px 2px 8px rgba(18, 18, 18, 0.363);
+}
+
+.arrow {
+  fill: black;
+}
+
+.button_next_previous:hover .arrow {
+  fill: white;
+}
+
+.button_next_previous:hover {
+  fill: white;
+  background: #00008b;
+  border: solid 1px #00008b;
+  color: white;
+}

@@ -74,7 +74,7 @@ export const ImageManagement: FC<Props> = ({ getValues, setValue }) => {
       />
 
       <Chip
-        label="Es necesario al 2 imagenes"
+        label="Es necesario almenos 2 imagenes"
         color="error"
         variant="outlined"
         sx={{

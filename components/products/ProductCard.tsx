@@ -38,6 +38,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
       xs={6}
       sm={4}
       md={3}
+      lg={2}
       height={400}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
