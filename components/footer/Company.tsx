@@ -1,5 +1,7 @@
 import { FC, useState } from 'react';
 
+import Link from 'next/link';
+
 import {
   Box,
   Collapse,
@@ -8,16 +10,15 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
-  useMediaQuery,
 } from '@mui/material';
-import Link from 'next/link';
-import NextLink from 'next/link';
+import { repository } from '@/constants';
 
-const repository = 'https://github.com/CamiloCortesM/RexBuy';
+interface initialProps {
+  isSmallScreen: boolean;
+}
 
-export const Company: FC = () => {
+export const Company: FC<initialProps> = ({ isSmallScreen }) => {
   const [open, setOpen] = useState(false);
-  const isSmallScreen = useMediaQuery('(max-width: 600px)');
 
   const handleClick = () => {
     setOpen(!open);
