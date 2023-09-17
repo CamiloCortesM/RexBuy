@@ -5,10 +5,10 @@ import { Navbar, SideMenu } from '../ui';
 import { FooterNav } from '../footer';
 
 type Props = {
-  children: ReactNode;
-  title: string;
+  children       : ReactNode;
+  title          : string;
   pageDescription: string;
-  imageFullUrl?: string;
+  imageFullUrl?  : string;
 };
 
 export const ShopLayout: FC<Props> = ({
