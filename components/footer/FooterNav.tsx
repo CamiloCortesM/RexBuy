@@ -11,12 +11,10 @@ export const FooterNav: FC = () => {
       <Grid
         container
         height={{ sm: '180px', xs: '400px' }}
-        // paddingX={{ sm: 'auto', xs: '20px' }}
         display="flex"
         margin="0 auto"
-
-        justifyContent='space-between'
-        alignItems='center'
+        justifyContent="space-between"
+        alignItems="center"
         gridAutoFlow={{ sm: 'column', xs: 'row' }}
         sx={{
           width: '90%',
@@ -55,8 +53,8 @@ export const FooterNav: FC = () => {
           alignItems={{ sm: 'center', xs: 'flex-start' }}
           gap={1}
         >
-          <PrincipalPage />
-          <Company />
+          <PrincipalPage isSmallScreen={isSmallScreen} />
+          <Company isSmallScreen={isSmallScreen} />
           {isSmallScreen && <Contacts />}
         </Grid>
       </Grid>
