@@ -98,6 +98,7 @@ export const AdsSlideShow = () => {
             >
               <img
                 src={image}
+                alt={`ad ${index}`}
                 className={`${styles.image_ads} ${styles.fadeInSlide}`}
               />
             </div>
