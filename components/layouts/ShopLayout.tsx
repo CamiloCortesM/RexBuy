@@ -1,14 +1,15 @@
 import { FC, ReactNode } from 'react';
 import Head from 'next/head';
 
-import { Navbar,SideMenu } from '../ui';
+import { Navbar, SideMenu } from '../ui';
+import { FooterNav } from '../footer';
 
 type Props = {
   children       : ReactNode;
   title          : string;
   pageDescription: string;
   imageFullUrl?  : string;
-}
+};
 
 export const ShopLayout: FC<Props> = ({
   children,
@@ -43,7 +44,9 @@ export const ShopLayout: FC<Props> = ({
       >
         {children}
       </main>
-      <footer>{/* TODO: mi custom footer */}</footer>
+      <footer>
+        <FooterNav />
+      </footer>
     </>
   );
 };
