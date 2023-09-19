@@ -9,7 +9,7 @@ import {
   ListItemText,
 } from '@mui/material';
 
-import { developerData } from '@/constants';
+import { DEVELOPER_DATA } from '@/constants';
 
 export const Contacts: FC = () => {
   const [open, setOpen] = useState(false);
@@ -34,7 +34,7 @@ export const Contacts: FC = () => {
         <Divider />
 
         <Collapse in={open} timeout="auto" unmountOnExit>
-          {developerData.map((developer, i) => (
+          {DEVELOPER_DATA.map((developer, i) => (
             <List key={i} component="div" disablePadding>
               <ListItemButton href={developer.github}>
                 <ListItemText

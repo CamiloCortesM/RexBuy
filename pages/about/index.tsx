@@ -3,12 +3,12 @@ import { NextPage } from 'next';
 import { ShopLayout } from '@/components/layouts';
 import { Grid, Typography } from '@mui/material';
 
-import { About, Benefits, ListItemBenefits } from '@/components/footer';
+import { About, Benefits, ListItemBenefits } from '@/components/about';
 
 const AboutPage: NextPage = () => {
   return (
     <ShopLayout
-      title={'RexBuy - Acerca de'}
+      title={'RexBuy - Acerca de Nosotros'}
       pageDescription={'Información sobre RexBuy'}
     >
       <Grid

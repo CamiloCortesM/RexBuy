@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { IconButton, Input, InputAdornment } from '@mui/material';
 import { ClearOutlined, SearchOutlined } from '@mui/icons-material';
 
-import { SearchableComponents } from '@/constants/navbarConstants';
+import { SEARCHABLE_COMPONENTS } from '@/constants/navbarConstants';
 
 type Props = {
   handleSearchTerm: () => void;
@@ -17,7 +17,7 @@ export const SearchButton: FC<Props> = ({
   searchTerm,
   setSearchTerm,
   toggleSearch,
-  component = SearchableComponents.Navbar,
+  component = SEARCHABLE_COMPONENTS.Navbar,
 }) => {
   return (
     <Input
@@ -30,7 +30,7 @@ export const SearchButton: FC<Props> = ({
       placeholder="Buscar..."
       sx={{
         display:
-          component === SearchableComponents.Navbar
+          component === SEARCHABLE_COMPONENTS.Navbar
             ? { xs: 'none', md: 'flex' }
             : 'flex',
       }}
@@ -40,7 +40,7 @@ export const SearchButton: FC<Props> = ({
             aria-label="toggle password visibility"
             onClick={toggleSearch}
           >
-            {component === SearchableComponents.Navbar ? (
+            {component === SEARCHABLE_COMPONENTS.Navbar ? (
               <ClearOutlined />
             ) : (
               <SearchOutlined />
