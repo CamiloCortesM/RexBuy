@@ -23,7 +23,7 @@ export const ListItemBenefits: FC = () => {
           return (
             <ListItem key={i} alignItems="flex-start">
               <ListItemAvatar>
-                <Avatar style={{ backgroundColor: 'primary' }}>
+                <Avatar style={{ backgroundColor: '#00306d' }}>
                   <IconComponent />
                 </Avatar>
               </ListItemAvatar>
