@@ -33,7 +33,7 @@ const CartPage = () => {
       title="Carrito"
       pageDescription={'Carrito de compras de la tienda'}
     >
-      <Grid container mt={3} padding='10px 30px' >
+      <Grid container mt={3} padding='10px 30px' minHeight={'67vh'} >
         <Grid item xs={12} md={7}>
           <CartList editable />
         </Grid>

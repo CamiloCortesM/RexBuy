@@ -39,13 +39,15 @@ export const ProductCard: FC<Props> = ({ product }) => {
       sm={4}
       md={3}
       lg={2}
-      height={400}
+      sx={{
+        height: { xs: 240, sm: 400 },
+      }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <Card
         sx={{
-          height: 400,
+          height: { xs: 240, sm: 400 },
           position: 'relative',
           cursor: 'pointer',
           transition: 'transform 0.2s, box-shadow 0.2s',
@@ -84,7 +86,7 @@ export const ProductCard: FC<Props> = ({ product }) => {
           <Link>
             <CardActionArea
               sx={{
-                height: { md: 280, sm: 270, xs: 260 },
+                height: { sm: 260, xs: 120 },
               }}
             >
               {product.inStock === 0 && (
@@ -110,7 +112,12 @@ export const ProductCard: FC<Props> = ({ product }) => {
                 alt={product.title}
               />
             </CardActionArea>
-            <CardContent className="fadeIn">
+            <CardContent sx={{
+              height: { xs: 120, sm: 140 },
+              display:'flex',
+              flexDirection:'column',
+              justifyContent:'center'
+            }} className="fadeIn">
               <Box
                 display="flex"
                 gap={0.5}
@@ -129,7 +136,13 @@ export const ProductCard: FC<Props> = ({ product }) => {
                   3.6
                 </Typography>
               </Box>
-              <Typography fontWeight={700} variant="h2">
+              <Typography
+                sx={{
+                  fontWeight: { xs: 600, sm: 700 },
+                  fontSize: { xs: '1rem', sm: '1.3rem' },
+                }}
+                variant="h2"
+              >
                 {product.title}
               </Typography>
               <Box
@@ -141,13 +154,14 @@ export const ProductCard: FC<Props> = ({ product }) => {
                 <Typography
                   sx={{
                     color: '#f8596b',
+                    fontWeight: { xs: 400, sm: 500 },
+                    fontSize: { xs:'.7rem', sm: '1rem' },
                   }}
-                  fontWeight={500}
                 >{`$${product.price}`}</Typography>
                 <Typography
                   sx={{
                     opacity: '.7',
-                    fontSize:'.8rem'
+                    fontSize: {xs:'.6rem',sm:'.8rem'},
                   }}
                   variant="subtitle2"
                   fontWeight={400}
