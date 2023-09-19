@@ -1,4 +1,4 @@
-export const Categories: {
+export const CATEGORIES: {
   title: string;
   link: string;
 }[] = [
@@ -11,7 +11,7 @@ export const Categories: {
   { title: 'smartwatch',   link: '/category/smartwatch' },
 ];
 
-export const SearchableComponents: {
+export const SEARCHABLE_COMPONENTS: {
   Navbar: string;
   SideMenu: string;
 } = {

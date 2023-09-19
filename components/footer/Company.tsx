@@ -11,7 +11,7 @@ import {
   ListItemButton,
   ListItemText,
 } from '@mui/material';
-import { repository } from '@/constants';
+import { REPOSITORY } from '@/constants';
 
 interface initialProps {
   isSmallScreen: boolean;
@@ -54,7 +54,7 @@ export const Company: FC<initialProps> = ({ isSmallScreen }) => {
                       }}
                     />
                   </ListItemButton>
-                  <ListItemButton href={repository}>
+                  <ListItemButton href={REPOSITORY}>
                     <ListItemText
                       primary="Github"
                       primaryTypographyProps={{
@@ -94,7 +94,7 @@ export const Company: FC<initialProps> = ({ isSmallScreen }) => {
               </ListItem>
               <ListItem disablePadding>
                 <Link
-                  href={repository}
+                  href={REPOSITORY}
                   style={{
                     textDecoration: 'none',
                     color: '#000',

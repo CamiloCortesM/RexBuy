@@ -3,7 +3,7 @@ import { FC } from 'react';
 import { Box } from '@mui/material';
 
 import { CategoryItem } from './';
-import { Categories } from '@/constants/navbarConstants';
+import { CATEGORIES } from '@/constants/navbarConstants';
 
 type Props = {
   isSearchVisible: boolean;
@@ -17,7 +17,7 @@ export const CategoryButtons: FC<Props> = ({ isSearchVisible }) => {
       }}
       className="fadeIn"
     >
-      {Categories.map(({ link, title }) => (
+      {CATEGORIES.map(({ link, title }) => (
         <CategoryItem key={link} link={link} title={title} />
       ))}
     </Box>

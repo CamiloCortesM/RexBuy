@@ -5,7 +5,7 @@ import { Box, Drawer, List, ListItem } from '@mui/material';
 import { AuthContext, UiContext } from '@/context';
 import { SearchButton } from '../navbar';
 import { AdminNavigationMenu, UserNavigationMenu } from '../sidemenu';
-import { SearchableComponents } from '@/constants';
+import { SEARCHABLE_COMPONENTS } from '@/constants';
 
 export const SideMenu = () => {
   const { isMenuOpen, toggleSideMenu } = useContext(UiContext);
@@ -34,7 +34,7 @@ export const SideMenu = () => {
             <SearchButton
               handleSearchTerm={handleSearchTerm}
               searchTerm={searchTerm}
-              component={SearchableComponents.SideMenu}
+              component={SEARCHABLE_COMPONENTS.SideMenu}
               setSearchTerm={setSearchTerm}
               toggleSearch={handleSearchTerm}
             />

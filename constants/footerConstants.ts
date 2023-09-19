@@ -1,4 +1,4 @@
-export const developerData = [
+export const DEVELOPER_DATA = [
   {
     name: 'Daniel Silva',
     github: 'https://github.com/DANIELSSF',
@@ -13,4 +13,4 @@ export const developerData = [
   },
 ];
 
-export const repository = 'https://github.com/CamiloCortesM/RexBuy';
+export const REPOSITORY = 'https://github.com/CamiloCortesM/RexBuy';
