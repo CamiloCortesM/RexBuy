@@ -2,7 +2,7 @@ import { GetServerSideProps, NextPage } from 'next';
 import NextLink from 'next/link';
 import { getSession } from 'next-auth/react';
 
-import { Typography, Grid, Chip, Link } from '@mui/material';
+import { Typography, Grid, Chip, Link, Box } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
@@ -68,6 +68,7 @@ const HistoryPage: NextPage<Props> = ({ orders }) => {
       title={'Historial de ordenes'}
       pageDescription={'Historial de ordenes del cliente'}
     >
+      <Box padding='30px 40px'>
       <Typography variant="h1" component="h1">
         Historial de ordenes
       </Typography>
@@ -90,6 +91,7 @@ const HistoryPage: NextPage<Props> = ({ orders }) => {
           />
         </Grid>
       </Grid>
+      </Box>
     </ShopLayout>
   );
 };

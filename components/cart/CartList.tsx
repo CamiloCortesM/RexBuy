@@ -60,7 +60,7 @@ export const CartList: FC<Props> = ({ editable = false, products }) => {
               </Link>
             </NextLink>
           </Grid>
-          <Grid item xs={7} md={6}>
+          <Grid item xs={6} md={6}>
             <Box display="flex" flexDirection="column">
               <Typography variant="body1" fontWeight={500}>
                 {product.title}

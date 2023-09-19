@@ -22,7 +22,7 @@ export const ItemSelector: FC<Props> = ({
         <Button
           key={item}
           size="small"
-          color={selectedItem === item ? 'primary' : 'info'}
+          color={selectedItem === item ? 'secondary' : 'info'}
           className={selectedItem === item ? styles['btn-item-selected'] : ''}
           onClick={() => onSelectedSize(item, itemName)}
         >

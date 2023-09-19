@@ -1,0 +1,30 @@
+.banner_img {
+  position: absolute;
+  bottom: 0;
+  height: 140px;
+}
+
+.left_image {
+  left: 0;
+}
+
+.right_image {
+  right: 0;
+}
+
+@media (max-width: 1200px) {
+  .banner_img {
+    height: 100px;
+  }
+}
+
+@media (max-width: 900px) {
+  .banner_img {
+    height: 90px;
+  }
+}
+@media (max-width: 600px) {
+  .banner_img {
+    height: 73px;
+  }
+}

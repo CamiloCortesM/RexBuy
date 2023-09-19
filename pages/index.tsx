@@ -1,10 +1,11 @@
 import { NextPage } from 'next';
-import { Typography } from '@mui/material';
 
 import { useProducts } from '@/hooks';
 import { ShopLayout } from '@/components/layouts/ShopLayout';
 import { ProductList } from '../components/products';
 import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
+import { Banner } from '@/components/ui/';
+import { AdsSlideShow } from '@/components/ui/AdsSlideShow';
 
 const Home: NextPage = () => {
   const { isLoading, products } = useProducts('products');
@@ -13,13 +14,9 @@ const Home: NextPage = () => {
       title={'RexBuy - Home'}
       pageDescription={'Encuentra los mejores productos de tecnologia aquí'}
     >
-      {/* TODO: header section,announcements */}
-      <Typography variant="h1" component="h1" color="primary">
-        Tienda
-      </Typography>
-      <Typography variant="h2" sx={{ mb: 1 }}>
-        Todos los productos
-      </Typography>
+      <Banner />
+      <AdsSlideShow />
+
       {isLoading ? <FullScreenLoading /> : <ProductList products={products} />}
     </ShopLayout>
   );

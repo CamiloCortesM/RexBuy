@@ -38,7 +38,7 @@ const OrderPage: NextPage<Props> = ({ order }) => {
       title="Resumen de la orden"
       pageDescription={'Resumen de la orden'}
     >
-      <Grid container className="fadeIn">
+      <Grid container className="fadeIn" padding='40px 40px' >
         <Grid item xs={12} sm={7}>
           <Typography variant="h1" component="h1">
             Orden: {_id}
