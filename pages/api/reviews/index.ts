@@ -67,7 +67,7 @@ const createReviewAndMarkAsReviewed = async (
 
 const getAllReviews = async (res: NextApiResponse<Data>) => {
   try {
-    const reviews = await Review.find()
+    const reviews = await Review.find({ reviewed: true })
       .select('rating reviewed comment product -_id')
       .lean();
 
