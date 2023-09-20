@@ -76,6 +76,7 @@ export const AdsSlideShow = () => {
       alignContent="center"
       sx={{
         padding: { xs: 3, sm: 5 },
+        userSelect: 'none',
       }}
     >
       <div className={`${styles.slider_container} ${styles.fadeInSlide}`}>
