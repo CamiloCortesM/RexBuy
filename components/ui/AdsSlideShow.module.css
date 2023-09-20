@@ -2,13 +2,19 @@
   border-radius: 5px;
   width: 90%;
   height: 100%;
+  user-select: none;
+  pointer-events: none;
 }
 
 .slider_container {
   width: 100%;
   text-align: center;
+  cursor: grab;
 }
 
+.slider_container:active {
+  cursor: grabbing;
+}
 
 .button_next_previous {
   display: flex;
