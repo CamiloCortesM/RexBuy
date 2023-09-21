@@ -9,6 +9,7 @@ import { AdsSlideShow } from '@/components/ui/AdsSlideShow';
 
 const Home: NextPage = () => {
   const { isLoading, products } = useProducts('products');
+  console.log(products);
   return (
     <ShopLayout
       title={'RexBuy - Home'}

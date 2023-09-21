@@ -11,6 +11,7 @@ import {
   HeadphonesBatteryOutlined,
   LoginOutlined,
   PhoneAndroidOutlined,
+  ReviewsOutlined,
   TabletAndroidOutlined,
   VpnKeyOutlined,
   WatchSharp,
@@ -47,7 +48,13 @@ export const UserNavigationMenu: FC<Props> = ({ isLoggedIn }) => {
             <ListItemIcon>
               <ConfirmationNumberOutlined />
             </ListItemIcon>
-            <ListItemText primary={'Mis ordenes'} />
+            <ListItemText primary={'Mis Ordenes'} />
+          </ListItemButton>
+          <ListItemButton onClick={() => navigateTo('/reviews')}>
+            <ListItemIcon>
+              <ReviewsOutlined />
+            </ListItemIcon>
+            <ListItemText primary={'Reseñas'} />
           </ListItemButton>
         </>
       )}
@@ -56,7 +63,7 @@ export const UserNavigationMenu: FC<Props> = ({ isLoggedIn }) => {
         onClick={() => navigateTo('/category/cellphones')}
       >
         <ListItemIcon>{<PhoneAndroidOutlined />}</ListItemIcon>
-        <ListItemText primary={'celulares'} />
+        <ListItemText primary={'Celulares'} />
       </ListItemButton>
 
       <ListItemButton
@@ -64,7 +71,7 @@ export const UserNavigationMenu: FC<Props> = ({ isLoggedIn }) => {
         onClick={() => navigateTo('/category/computers')}
       >
         <ListItemIcon>{<ComputerOutlined />}</ListItemIcon>
-        <ListItemText primary={'computadores'} />
+        <ListItemText primary={'Computadores'} />
       </ListItemButton>
 
       <ListItemButton
@@ -72,7 +79,7 @@ export const UserNavigationMenu: FC<Props> = ({ isLoggedIn }) => {
         onClick={() => navigateTo('/category/videogames')}
       >
         <ListItemIcon>{<GamesOutlined />}</ListItemIcon>
-        <ListItemText primary={'videojuegos'} />
+        <ListItemText primary={'Videojuegos'} />
       </ListItemButton>
 
       <ListItemButton
@@ -80,7 +87,7 @@ export const UserNavigationMenu: FC<Props> = ({ isLoggedIn }) => {
         onClick={() => navigateTo('/category/accessories')}
       >
         <ListItemIcon>{<HeadphonesBatteryOutlined />}</ListItemIcon>
-        <ListItemText primary={'accesorios'} />
+        <ListItemText primary={'Accesorios'} />
       </ListItemButton>
 
       <ListItemButton
@@ -88,7 +95,7 @@ export const UserNavigationMenu: FC<Props> = ({ isLoggedIn }) => {
         onClick={() => navigateTo('/category/tablets')}
       >
         <ListItemIcon>{<TabletAndroidOutlined />}</ListItemIcon>
-        <ListItemText primary={'tabletas'} />
+        <ListItemText primary={'Tabletas'} />
       </ListItemButton>
 
       <ListItemButton
@@ -96,7 +103,7 @@ export const UserNavigationMenu: FC<Props> = ({ isLoggedIn }) => {
         onClick={() => navigateTo('/category/monitors')}
       >
         <ListItemIcon>{<DesktopWindowsOutlined />}</ListItemIcon>
-        <ListItemText primary={'monitores'} />
+        <ListItemText primary={'Monitores'} />
       </ListItemButton>
 
       <ListItemButton
@@ -104,7 +111,7 @@ export const UserNavigationMenu: FC<Props> = ({ isLoggedIn }) => {
         onClick={() => navigateTo('/category/smartwatch')}
       >
         <ListItemIcon>{<WatchSharp />}</ListItemIcon>
-        <ListItemText primary={'smartwatch'} />
+        <ListItemText primary={'Smartwatch'} />
       </ListItemButton>
 
       {isLoggedIn ? (
