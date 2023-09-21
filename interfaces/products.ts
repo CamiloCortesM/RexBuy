@@ -13,6 +13,8 @@ export interface IProduct {
   ram?                    : string[];
   type                    : ITechnologyType;
   priceAndStockVariations : PriceAndStockVariations[] | [];
+  rating                  : number;
+  numReviewers            : number;
 
   createdAt: string;
   updatedAt: string;

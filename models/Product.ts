@@ -38,6 +38,8 @@ const productSchema = new Schema(
         price: Number,
       },
     ],
+    rating: { type: Number, required: true, default: 0 },
+    numReviewers: { type: Number, required: true, default: 0 },
   },
   { timestamps: true }
 );
