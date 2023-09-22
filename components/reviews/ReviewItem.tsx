@@ -1,5 +1,7 @@
-import { Box, Button, Grid, Rating, Typography } from '@mui/material';
 import { FC } from 'react';
+import { useRouter } from 'next/router';
+import { Box, Button, Grid, Rating, Typography } from '@mui/material';
+import StarIcon from '@mui/icons-material/Star';
 
 import styles from './ReviewItem.module.css';
 
@@ -7,7 +9,6 @@ type Props = {
   review: {
     _id: string;
     comment: string;
-    user: string;
     product: {
       _id: string;
       title: string;
@@ -20,9 +21,11 @@ type Props = {
 };
 
 export const ReviewItem: FC<Props> = ({ review, isCompleted = true }) => {
+  const router = useRouter();
   const OnNewReview = (newValue: number | null) => {
-    //TODO: change de page /review/new?value=newValue
-    console.log({ newValue });
+    router.push(
+      `http://localhost:3000/reviews/new/${review._id}?rating=${newValue}`
+    );
   };
   return (
     <Grid item xs={12}>
@@ -75,8 +78,11 @@ export const ReviewItem: FC<Props> = ({ review, isCompleted = true }) => {
             {review.product.title}
           </Typography>
           <Rating
-            name="read-only"
+            name={isCompleted ? 'read-only' : 'simple-controlled'}
             sx={{ fontSize: { xs: isCompleted ? 15 : 24, sm: 30, lg: 40 } }}
+            emptyIcon={
+              <StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />
+            }
             value={review.rating}
             readOnly={isCompleted}
             onChange={(e, newValue) => OnNewReview(newValue)}
@@ -107,6 +113,9 @@ export const ReviewItem: FC<Props> = ({ review, isCompleted = true }) => {
                 backgroundColor: '#0d2243',
               },
             }}
+            onClick={() =>
+              router.push(`http://localhost:3000/reviews/new/${review._id}`)
+            }
           >
             Editar reseña
           </Button>

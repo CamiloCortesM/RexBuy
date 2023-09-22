@@ -1,4 +1,3 @@
-import { Box, Grid, Rating, Typography } from '@mui/material';
 import { ReviewItem } from './ReviewItem';
 
 const reviewsPending = [
