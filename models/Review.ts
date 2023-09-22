@@ -1,4 +1,4 @@
-import { IReview } from '@/interfaces/review';
+import { IReview } from '@/interfaces/reviews';
 import mongoose, { Schema, model, Model } from 'mongoose';
 
 const reviewSchema = new Schema(

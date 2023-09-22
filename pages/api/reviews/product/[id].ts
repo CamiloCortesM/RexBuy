@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { isValidObjectId } from 'mongoose';
 import { db } from '@/database';
-import { IReview } from '@/interfaces/review';
+import { IReview } from '@/interfaces/reviews';
 import { Review } from '@/models';
 
 type Data =

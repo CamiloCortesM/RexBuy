@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import authOptions from '@/pages/api/auth/[...nextauth]';
 import { db } from '@/database';
-import { IReview } from '@/interfaces/review';
+import { IReview } from '@/interfaces/reviews';
 import { Product, Review, User } from '@/models';
 
 type Data =
@@ -37,13 +37,15 @@ const createReviewAndMarkAsReviewed = async (
   try {
     const { product, comment = '', images = [], rating } = req.body as IReview;
 
+    console.log({ product, comment, images, rating });
+
     const session: any = await getServerSession(req, res, authOptions);
     if (!session) {
       return res
         .status(401)
         .json({ message: 'You must be logged in to post a review' });
     }
-    const productInDB = await Product.findById(product);
+    const productInDB = await Product.findById(product._id);
 
     if (!productInDB) {
       return res
@@ -53,7 +55,7 @@ const createReviewAndMarkAsReviewed = async (
     const user = await User.findOne({ email: session.user.email }).lean();
     const userId = user!._id.toString();
 
-    const review = await Review.findOne({ product, user: userId });
+    const review = await Review.findOne({ product: product._id, user: userId });
 
     if (!review) {
       return res
@@ -68,9 +70,9 @@ const createReviewAndMarkAsReviewed = async (
 
     if (!review.reviewed) {
       review.reviewed = true;
-
       productInDB.rating =
         (ratingInDB * numReviewers + rating) / (numReviewers + 1);
+      productInDB.numReviewers = numReviewers + 1;
     } else {
       productInDB.rating =
         (ratingInDB * numReviewers + (rating - previousRating)) / numReviewers;

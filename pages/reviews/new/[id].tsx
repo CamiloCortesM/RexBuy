@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react';
+import { ChangeEvent, FC, useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
@@ -42,6 +42,14 @@ const NewReview: FC<Props> = ({ review }) => {
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
   const [isUpload, setIsUpload] = useState(false);
+
+  const { rating = '' } = router.query;
+
+  useEffect(() => {
+    const newLocal = rating !== '';
+    if (newLocal && Number(rating) > 0 && Number(rating) < 6)
+      setValue('rating', Number(rating) * 1, { shouldValidate: true });
+  }, [rating]);
 
   const { register, handleSubmit, getValues, setValue, watch } =
     useForm<ReviewData>({

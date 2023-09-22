@@ -3,7 +3,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import authOptions from '@/pages/api/auth/[...nextauth]';
 import { Review, User } from '@/models';
-import { IReview } from '@/interfaces/review';
+import { IReview } from '@/interfaces/reviews';
 
 type Data =
   | {
