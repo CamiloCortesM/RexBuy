@@ -3,6 +3,10 @@ export const BANNER_IMAGES = {
     'https://res.cloudinary.com/dnba3kkh6/image/upload/v1694882793/imagebanner2_ddmdz7.webp',
   image2Url:
     'https://res.cloudinary.com/dnba3kkh6/image/upload/v1694882798/imagebanner1_ku97n4.webp',
+  title: 'RexBuy: Descubre la Mejor Tecnología al Mejor Precio',
+  description: `Explora nuestra variedad de tecnología en RexBuy: smartphones, laptops,
+    accesorios y más. ¡Ofertas exclusivas para actualizar tu estilo de vida
+    digital!`,
 };
 
 export const ADS_IMAGES = [
