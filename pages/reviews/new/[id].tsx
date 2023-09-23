@@ -270,7 +270,7 @@ const NewReview: FC<Props> = ({ review }) => {
 
             <Grid container spacing={2} mb={2}>
               {watch('images').map((img, i) => (
-                <Grid item xs={4} sm={2} key={img}>
+                <Grid item xs={6} sm={3} key={img}>
                   <Card
                     sx={{
                       position: 'relative',
@@ -280,16 +280,22 @@ const NewReview: FC<Props> = ({ review }) => {
                       onClick={() => onDeleteImage(img)}
                       aria-label="delete"
                       size="small"
+                      color='error'
+                      
                       sx={{
                         position: 'absolute',
                         zIndex: 1,
                       }}
                     >
-                      <CloseRounded fontSize="inherit" />
+                      <CloseRounded fontSize="small" />
                     </IconButton>
                     <CardMedia
                       component="img"
                       className="fadeIn"
+                      height={150}
+                      sx={{
+                        objectFit:'contain'
+                      }}
                       image={img}
                       alt={`review ${review.product.title} #${i}`}
                     />

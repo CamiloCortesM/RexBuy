@@ -5,6 +5,9 @@ import { db } from '@/database';
 import { IReview } from '@/interfaces/reviews';
 import { Product, Review, User } from '@/models';
 
+import { v2 as cloudinary } from 'cloudinary';
+cloudinary.config(process.env.CLOUDINARY_URL || '');
+
 type Data =
   | {
       message: string;
@@ -62,6 +65,17 @@ const createReviewAndMarkAsReviewed = async (
         .status(400)
         .json({ message: 'there is no review for this user or this product' });
     }
+
+    review.images.forEach(async (image) => {
+      if (!images.includes(image)) {
+        const [fileId, extension] = image
+          .substring(image.lastIndexOf('/') + 1)
+          .split('.');
+
+        await cloudinary.uploader.destroy(fileId);
+      }
+    });
+
     const previousRating = review.rating;
     const { numReviewers, rating: ratingInDB } = productInDB;
     review.comment = comment;
