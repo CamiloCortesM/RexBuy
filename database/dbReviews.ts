@@ -7,6 +7,19 @@ export const getReviewById = async (id: string) => {
   if (!isValidObjectId(id)) {
     return null;
   }
-  const review = await Review.findById(id).select('-__v').populate('product','_id images title');
+  const review = await Review.findById(id)
+    .select('-__v')
+    .populate('product', '_id images title');
   return review;
+};
+
+export const getReviewsByUserId = async (id: string, tab: string) => {
+  const reviewed = tab === 'COMPLETED' ? true : false;
+  db.connect();
+  const reviews = await Review.find({ user: id, reviewed })
+    .select('-user -__v -images')
+    .populate('product', 'images title')
+    .lean();
+
+  return reviews;
 };
