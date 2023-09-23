@@ -1,9 +1,18 @@
+import { FC } from 'react';
+
 import { Box, Typography } from '@mui/material';
 
 import { BannerImage } from './BannerImage';
-import { BANNER_IMAGES } from '@/constants';
 
-export const Banner = () => {
+interface InitialProps {
+  image1Url: string;
+  image2Url: string;
+  title: string;
+  description: string;
+}
+
+export const Banner: FC<InitialProps> = (props) => {
+  const { image1Url, image2Url, title, description } = props;
   return (
     <Box
       display="flex"
@@ -19,8 +28,8 @@ export const Banner = () => {
         padding: '65px 10px',
       }}
     >
-      <BannerImage src={BANNER_IMAGES.image1Url} />
-      <BannerImage src={BANNER_IMAGES.image2Url} direction="right" />
+      <BannerImage src={image1Url} />
+      <BannerImage src={image2Url} direction="right" />
       <Typography
         variant="h1"
         component="h1"
@@ -32,7 +41,7 @@ export const Banner = () => {
           textAlign: 'center',
         }}
       >
-        RexBuy: Descubre la Mejor Tecnología al Mejor Precio
+        {title}
       </Typography>
       <Typography
         variant="body1"
@@ -43,9 +52,7 @@ export const Banner = () => {
           textAlign: 'center',
         }}
       >
-        Explora nuestra variedad de tecnología en RexBuy: smartphones, laptops,
-        accesorios y más. ¡Ofertas exclusivas para actualizar tu estilo de vida
-        digital!
+        {description}
       </Typography>
     </Box>
   );
