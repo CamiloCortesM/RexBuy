@@ -23,3 +23,13 @@ export const getReviewsByUserId = async (id: string, tab: string) => {
 
   return reviews;
 };
+
+export const getReviewsByProduct = async (productId: string) => {
+  db.connect;
+  const reviews = await Review.find({ product: productId, reviewed: true })
+    .select('-user -__v')
+    .populate('product', 'images title')
+    .lean();
+
+  return JSON.parse(JSON.stringify(reviews));
+};
