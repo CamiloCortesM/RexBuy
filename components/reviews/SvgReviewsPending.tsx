@@ -8,8 +8,8 @@ export const SvgReviewsPending = () => {
         maxWidth: '150px',
         marginBottom: 40,
       }}
-      data-name="Layer 1"
       width="100%"
+      data-name="Layer 1"
       viewBox="0 0 801.95277 537"
     >
       <path

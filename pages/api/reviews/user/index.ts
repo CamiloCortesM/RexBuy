@@ -41,9 +41,19 @@ const getReviewsByUser = async (
   const user = await User.findOne({ email: session.user.email }).lean();
   const userId = user!._id.toString();
 
-  const reviews = await Review.find({ user: userId })
+  let query: { user: string; reviewed: boolean } = {
+    user: userId,
+    reviewed: false,
+  };
+
+  const { reviewed = 'false' } = req.query;
+  if (reviewed === 'true') {
+    query = { ...query, reviewed: true };
+  }
+
+  const reviews = await Review.find(query)
     .select('-user')
-    .populate('product', '_id images slug title brand model type');
+    .populate('product', '_id images slug title');
 
   res.status(200).json(reviews);
 };
