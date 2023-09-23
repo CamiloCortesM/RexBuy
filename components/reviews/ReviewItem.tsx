@@ -4,6 +4,7 @@ import { Box, Button, Grid, Rating, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 
 import styles from './ReviewItem.module.css';
+import { date } from '@/utils';
 
 type Props = {
   review: {
@@ -16,17 +17,38 @@ type Props = {
       slug: string;
     };
     rating: number;
+    createdAt?: string;
+    updatedAt?: string;
   };
   isCompleted?: boolean;
 };
 
 export const ReviewItem: FC<Props> = ({ review, isCompleted = true }) => {
+  // const formatDate = (isoDate: string): string => {
+  //   const options: Intl.DateTimeFormatOptions = {
+  //     year: 'numeric',
+  //     month: 'long',
+  //     day: 'numeric',
+  //   };
+  //   const formattedDate = new Date(isoDate).toLocaleDateString(
+  //     'es-ES',
+  //     options
+  //   );
+  //   return formattedDate;
+  // };
+
+  // console.log(review);
+  // const mongoDate: string = review.createdAt!;
+  // const formattedDate: string = formatDate(mongoDate);
+
   const router = useRouter();
+
   const OnNewReview = (newValue: number | null) => {
     router.push(
       `http://localhost:3000/reviews/new/${review._id}?rating=${newValue}`
     );
   };
+
   return (
     <Grid item xs={12}>
       <Box
@@ -97,7 +119,9 @@ export const ReviewItem: FC<Props> = ({ review, isCompleted = true }) => {
             marginLeft: '50px',
           }}
         >
-          {isCompleted ? 'Realizada' : 'Comparado'} el 11 de junio, 2023
+          {isCompleted
+            ? `Realizada el ${date.formatDate(review.updatedAt!)}`
+            : `Comprado el ${date.formatDate(review.createdAt!)}`}
         </Typography>
 
         {isCompleted && (

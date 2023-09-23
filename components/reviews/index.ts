@@ -1,3 +1,5 @@
 export * from './ReviewsCompleted'
 export * from './ReviewsPending'
 export * from './ReviewItem'
+export * from './SvgReviewsPending'
+export * from './EmptyReviewsSection '

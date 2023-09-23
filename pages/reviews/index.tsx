@@ -3,8 +3,17 @@ import NextLink from 'next/link';
 import { ShopLayout } from '@/components/layouts';
 import { Box, Grid, Link, Typography } from '@mui/material';
 import { ReviewsCompleted, ReviewsPending } from '@/components/reviews';
+import { GetServerSideProps, NextPage } from 'next';
+import { getSession } from 'next-auth/react';
+import { dbReviews } from '@/database';
+import { IReview } from '@/interfaces';
 
-const ReviewPage = () => {
+type Props = {
+  reviews: IReview[];
+};
+
+const ReviewPage: NextPage<Props> = ({ reviews }) => {
+  console.log(reviews);
   const router = useRouter();
   const { tab } = router.query;
 
@@ -15,11 +24,13 @@ const ReviewPage = () => {
     >
       <Box
         sx={{
+          display:'flex',
+          flexDirection:'column',
           width: '100%',
           minHeight: 'calc(100vh - 200px)',
           backgroundColor: '#ededed',
           borderBottom: '1px solid #e5e5e5',
-          padding: { xs: '30px 10px', lg: '60px 180px' },
+          padding: { xs: '30px 10px', lg: '60px 200px' },
         }}
       >
         <Typography variant="h1" component="h1" mb={4} fontSize="1.4rem">
@@ -33,7 +44,7 @@ const ReviewPage = () => {
             height="37px"
             display="flex"
             alignItems="center"
-            mb={2}
+            mb={1}
           >
             <NextLink href="/reviews?tab=PENDING" passHref legacyBehavior>
               <Link
@@ -71,11 +82,44 @@ const ReviewPage = () => {
               </Link>
             </NextLink>
           </Grid>
-          {tab === 'COMPLETED' ? <ReviewsCompleted /> : <ReviewsPending />}
+          {tab === 'COMPLETED' ? (
+            <ReviewsCompleted reviews={reviews} />
+          ) : (
+            <ReviewsPending reviews={reviews} />
+          )}
         </Grid>
       </Box>
     </ShopLayout>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async ({
+  req,
+  query,
+}) => {
+  const { tab = 'PENDING' } = query;
+  const session: any = await getSession({ req });
+  const idUser = session.user._id;
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: `/auth/login?p=/reviews`,
+        permanent: false,
+      },
+    };
+  }
+
+  const reviewsInDB = await dbReviews.getReviewsByUserId(
+    idUser,
+    tab.toString()
+  );
+  const reviews = JSON.parse(JSON.stringify(reviewsInDB));
+  return {
+    props: {
+      reviews,
+    },
+  };
 };
 
 export default ReviewPage;
