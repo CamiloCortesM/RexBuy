@@ -1,26 +1,27 @@
 import { NextPage } from 'next';
-import { Typography } from '@mui/material';
 
 import { useProducts } from '@/hooks';
 import { ShopLayout } from '@/components/layouts';
 import { ProductList } from '@/components/products';
 import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
+import { Banner } from '@/components/ui';
+import { BANNER_IMAGES_CATEGORIES } from '@/constants';
 
 const AccessoriesPage: NextPage = () => {
-  const { isLoading, products } = useProducts(
-    'products?type=accesorios'
-  );
+  const { accessories } = BANNER_IMAGES_CATEGORIES;
+  const { image1Url, image2Url, title, description } = accessories;
+  const { isLoading, products } = useProducts('products?type=accesorios');
   return (
     <ShopLayout
       title={'RexBuy - Accesorios'}
-      pageDescription={'Encuentra los mejores accesorios de tecnologia'}
+      pageDescription={'Encuentra los mejores accesorios de tecnología'}
     >
-      <Typography variant="h1" component="h1" color="primary">
-        Accesorios
-      </Typography>
-      <Typography variant="h2" sx={{ mb: 1 }}>
-        Selección de Accesorios
-      </Typography>
+      <Banner
+        image1Url={image1Url}
+        image2Url={image2Url}
+        title={title}
+        description={description}
+      />
       {isLoading ? <FullScreenLoading /> : <ProductList products={products} />}
     </ShopLayout>
   );
