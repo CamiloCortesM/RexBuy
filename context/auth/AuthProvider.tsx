@@ -9,12 +9,12 @@ import { rexbuyApi } from '@/api';
 
 export interface AuthState {
   isLoggedIn: boolean;
-  user?     : IUser;
+  user?: IUser;
 }
 
 const AUTH_INITIAL_STATE: AuthState = {
   isLoggedIn: false,
-  user      : undefined,
+  user: undefined,
 };
 
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -70,6 +70,11 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
     }
   };
 
+  const updateUser = (user: IUser) => {
+    if (!user) return;
+    dispatch({ type: '[User] - Update', payload: user as IUser });
+  };
+
   const logout = () => {
     Cookies.remove('cart');
     Cookies.remove('firstName');
@@ -93,6 +98,7 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
         loginUser,
         registerUser,
         logout,
+        updateUser,
       }}
     >
       {children}
