@@ -69,7 +69,9 @@ const getAllFavoriteProductsForUser = async (
   const user = await User.findOne({ email: session.user.email }).lean();
   const userId = user!._id.toString();
 
-  const favoriteProducts = await Favorite.find({ user: userId });
+  const favoriteProducts = await Favorite.find({ user: userId }).populate(
+    'product'
+  );
 
   return res.status(200).json(favoriteProducts);
 };
