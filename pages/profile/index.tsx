@@ -41,6 +41,7 @@ const ProfilePage: NextPage = () => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session: any = await getSession({ req });
+  
   if (!session) {
     return {
       redirect: {
