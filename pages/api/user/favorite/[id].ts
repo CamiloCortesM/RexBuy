@@ -1,10 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
+import authOptions from '@/pages/api/auth/[...nextauth]';
 import { isValidObjectId } from 'mongoose';
 import { db } from '@/database';
 import Favorite from '@/models/Favorite';
 import { IFavorite } from '@/interfaces';
 import { Product } from '@/models';
+import { getServerSession } from 'next-auth';
 
 type Data =
   | {
@@ -30,7 +31,7 @@ const deleteFavoriteProduct = async (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) => {
-  const session: any = await getSession({ req });
+  const session: any = await getServerSession(req, res, authOptions);
   if (!session) {
     return res
       .status(401)
@@ -46,8 +47,13 @@ const deleteFavoriteProduct = async (
   }
 
   try {
-    const deletedFavorite = await Favorite.findByIdAndDelete(id);
-
+    const product = await Product.findById(id);
+    let deletedFavorite: IFavorite | null;
+    if (product) {
+      deletedFavorite = await Favorite.findOneAndDelete({ product: id });
+    } else {
+      deletedFavorite = await Favorite.findByIdAndDelete(id);
+    }
     if (!deletedFavorite) {
       return res
         .status(404)
@@ -67,7 +73,7 @@ const getFavoriteProductByProduct = async (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) => {
-  const session: any = await getSession({ req });
+  const session: any = await getServerSession(req, res, authOptions);
   if (!session) {
     return res
       .status(401)

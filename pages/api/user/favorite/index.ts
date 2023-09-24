@@ -1,9 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSession } from 'next-auth/react';
 import { isValidObjectId } from 'mongoose';
 import { db } from '@/database';
 import Favorite from '@/models/Favorite';
 import { IFavorite } from '@/interfaces';
+import { getServerSession } from 'next-auth';
+import authOptions from '@/pages/api/auth/[...nextauth]';
+import { User } from '@/models';
 
 type Data =
   | {
@@ -29,14 +31,15 @@ const newFavoriteProduct = async (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) => {
-  const session: any = await getSession({ req });
+  const session: any = await getServerSession(req, res, authOptions);
   if (!session) {
     return res
       .status(401)
       .json({ message: 'You must be logged in to add to favorites' });
   }
 
-  const id = session.user._id;
+  const user = await User.findOne({ email: session.user.email }).lean();
+  const userId = user!._id.toString();
 
   const { product = '' } = req.body;
 
@@ -46,7 +49,7 @@ const newFavoriteProduct = async (
     });
   }
 
-  const favorite = new Favorite({ product, user: id });
+  const favorite = new Favorite({ product, user: userId });
   await favorite.save();
 
   return res.status(200).json(favorite);
@@ -56,16 +59,17 @@ const getAllFavoriteProductsForUser = async (
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) => {
-  const session: any = await getSession({ req });
+  const session: any = await getServerSession(req, res, authOptions);
   if (!session) {
     return res
       .status(401)
       .json({ message: 'You must be logged in to add to favorites' });
   }
 
-  const id = session.user._id;
+  const user = await User.findOne({ email: session.user.email }).lean();
+  const userId = user!._id.toString();
 
-  const favoriteProducts = await Favorite.find({ user: id });
+  const favoriteProducts = await Favorite.find({ user: userId });
 
   return res.status(200).json(favoriteProducts);
 };
