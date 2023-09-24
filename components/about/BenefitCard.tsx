@@ -1,6 +1,6 @@
 import { FC } from "react";
-import { Box, Grid, Typography } from "@mui/material";
 import Image from "next/image";
+import { Box, Grid, Typography } from "@mui/material";
 
 type Props = {
     title      :string,

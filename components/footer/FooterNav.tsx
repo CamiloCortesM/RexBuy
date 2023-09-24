@@ -1,8 +1,7 @@
 import { FC } from 'react';
-
+import Image from 'next/image';
 import { AppBar, Grid, useMediaQuery } from '@mui/material';
 import { PrincipalPage, Company, Contacts } from './';
-import Image from 'next/image';
 
 export const FooterNav: FC = () => {
   const isSmallScreen = useMediaQuery('(max-width: 600px)');

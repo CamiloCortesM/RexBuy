@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import NextLink from 'next/link';
 import { Link } from '@mui/material';
-import Image from 'next/image';
 
 export const NavbarLogo = () => {
   return (

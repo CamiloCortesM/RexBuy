@@ -1,8 +1,7 @@
+import Image from 'next/image';
 import NextLink from 'next/link';
-
 import { Box, Link, Typography } from '@mui/material';
 import { ShopLayout } from '../../components/layouts';
-import Image from 'next/image';
 
 const EmptyPage = () => {
   return (

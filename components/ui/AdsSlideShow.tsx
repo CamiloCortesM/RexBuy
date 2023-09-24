@@ -1,10 +1,10 @@
+import Image from 'next/image';
 import { Box } from '@mui/material';
 import { Slide } from 'react-slideshow-image';
-
 import { ADS_IMAGES } from '@/constants';
 import styles from './AdsSlideShow.module.css';
 import 'react-slideshow-image/dist/styles.css';
-import Image from 'next/image';
+
 
 //TODO: change slider by error in animation
 

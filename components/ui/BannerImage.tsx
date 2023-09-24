@@ -1,6 +1,7 @@
 import { FC } from 'react';
-import style from './BannerImage.module.css';
 import Image from 'next/image';
+import style from './BannerImage.module.css';
+
 
 type Props = {
   src       : string;

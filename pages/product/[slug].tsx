@@ -1,12 +1,11 @@
+import Image from 'next/image';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-
 import { Grid } from '@mui/material';
 import { ShopLayout } from '../../components/layouts';
 import { ProductSlideshow } from '../../components/products';
 import { dbProducts } from '@/database';
 import { IProduct } from '@/interfaces';
 import { ProductDetail } from '@/components/products/ProductDetail';
-import Image from 'next/image';
 
 type Props = {
   product: IProduct;
