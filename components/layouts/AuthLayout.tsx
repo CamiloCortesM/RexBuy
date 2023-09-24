@@ -5,10 +5,10 @@ import { Box, Grid, Typography } from '@mui/material';
 import { AuthLogo } from '../auth/AuthLogo';
 
 type Props = {
-  children   : ReactNode;
-  title      : string;
+  children: ReactNode;
+  title: string;
   headerTitle: string;
-}
+};
 
 export const AuthLayout: FC<Props> = ({ children, title, headerTitle }) => {
   return (
@@ -26,7 +26,12 @@ export const AuthLayout: FC<Props> = ({ children, title, headerTitle }) => {
         >
           <AuthLogo />
           <Box
-            sx={{ width: 500, padding: '50px 60px', backgroundColor: 'white' }}
+            sx={{
+              width: 500,
+              padding: '50px 60px',
+              backgroundColor: 'white',
+              border: '1px solid gray',
+            }}
           >
             <Grid container justifyContent="center">
               <Grid
@@ -49,7 +54,7 @@ export const AuthLayout: FC<Props> = ({ children, title, headerTitle }) => {
             position="absolute"
             sx={{
               bottom: 0,
-              backgroundColor: '#f6bf8c',
+              backgroundColor: '#fafafa',
               zIndex: -2,
             }}
           />

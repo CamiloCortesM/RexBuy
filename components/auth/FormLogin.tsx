@@ -88,8 +88,8 @@ export const FormLogin: FC<Props> = ({ setShowError }) => {
         <Grid item xs={12}>
           <Button
             type="submit"
-            color="secondary"
-            className="circular-btn"
+            color="primary"
+            className="circular-btn-blue"
             size="large"
             fullWidth
           >
