@@ -13,7 +13,7 @@ const EmptyPage = () => {
         display="flex"
         justifyContent="center"
         alignItems="center"
-        height="calc(100vh - 120px)"
+        height="calc(100vh - 200px)"
         sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
       >
         <Image
