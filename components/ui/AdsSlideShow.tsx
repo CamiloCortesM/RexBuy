@@ -4,6 +4,7 @@ import { Slide } from 'react-slideshow-image';
 import { ADS_IMAGES } from '@/constants';
 import styles from './AdsSlideShow.module.css';
 import 'react-slideshow-image/dist/styles.css';
+import Image from 'next/image';
 
 //TODO: change slider by error in animation
 
@@ -96,7 +97,7 @@ export const AdsSlideShow = () => {
                 maxHeight: '160px',
               }}
             >
-              <img
+              <Image
                 src={image}
                 alt={`ad ${index}`}
                 className={`${styles.image_ads} ${styles.fadeInSlide}`}

@@ -2,6 +2,7 @@ import { FC } from 'react';
 
 import { AppBar, Grid, useMediaQuery } from '@mui/material';
 import { PrincipalPage, Company, Contacts } from './';
+import Image from 'next/image';
 
 export const FooterNav: FC = () => {
   const isSmallScreen = useMediaQuery('(max-width: 600px)');
@@ -35,7 +36,7 @@ export const FooterNav: FC = () => {
           alignItems={{ sm: 'flex-start', xs: 'center' }}
           justifyContent="center"
         >
-          <img
+          <Image
             alt="footer-Icon"
             src="/logoFooter.png"
             style={{ height: '15px' }}

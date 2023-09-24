@@ -1,6 +1,7 @@
 import { Box, Typography } from '@mui/material';
 
 import { ShopLayout } from '../components/layouts';
+import Image from 'next/image';
 
 const Custom404 = () => {
   return (
@@ -15,7 +16,7 @@ const Custom404 = () => {
         height="calc(100vh - 130px)"
         sx={{ flexDirection: 'column' }}
       >
-        <img
+        <Image
           src={'/404.png'}
           alt="404 Error"
           style={{

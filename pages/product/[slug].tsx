@@ -6,6 +6,7 @@ import { ProductSlideshow } from '../../components/products';
 import { dbProducts } from '@/database';
 import { IProduct } from '@/interfaces';
 import { ProductDetail } from '@/components/products/ProductDetail';
+import Image from 'next/image';
 
 type Props = {
   product: IProduct;
@@ -34,7 +35,7 @@ const ProductPage: NextPage<Props> = ({ product }) => {
           }}
         >
           {product.images.map((image, i) => (
-            <img
+            <Image
               key={i}
               src={image}
               alt={product.title}
