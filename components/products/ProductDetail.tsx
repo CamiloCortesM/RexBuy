@@ -48,7 +48,7 @@ export const ProductDetail: FC<Props> = ({ product }) => {
     };
 
     checkIsProductFavorite();
-  }, []);
+  }, [product._id]);
 
   const handleFavoriteToggle = async () => {
     try {

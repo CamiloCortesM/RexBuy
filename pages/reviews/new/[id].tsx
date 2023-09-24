@@ -18,7 +18,6 @@ import {
   UserCommentSection,
 } from '@/components/reviews';
 
-
 type Props = {
   review: IReview;
 };
@@ -30,16 +29,16 @@ const NewReview: FC<Props> = ({ review }) => {
 
   const { rating = '' } = router.query;
 
-  useEffect(() => {
-    const newLocal = rating !== '';
-    if (newLocal && Number(rating) > 0 && Number(rating) < 6)
-      setValue('rating', Number(rating) * 1, { shouldValidate: true });
-  }, [rating]);
-
   const { register, handleSubmit, getValues, setValue, watch } =
     useForm<ReviewData>({
       defaultValues: review,
     });
+
+  useEffect(() => {
+    const newLocal = rating !== '';
+    if (newLocal && Number(rating) > 0 && Number(rating) < 6)
+      setValue('rating', Number(rating) * 1, { shouldValidate: true });
+  }, [rating, setValue]);
 
   const handleFileChange = async ({
     target,
