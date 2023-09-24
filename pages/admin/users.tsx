@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import {
   DataGrid,
@@ -13,11 +13,16 @@ import { rexbuyApi } from '@/api';
 import { AdminLayout } from '@/components/layouts';
 import { IUser } from '@/interfaces';
 import { AlertErrorMessage } from '@/components/auth';
+import { AuthContext } from '@/context';
 
 const UsersPage = () => {
   const { data, error, isLoading } = useSWR<IUser[]>('/api/admin/users');
   const [users, setUsers] = useState<IUser[]>([]);
   const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const { user } = useContext(AuthContext);
+  console.log(user);
 
   useEffect(() => {
     if (data) {
@@ -28,6 +33,13 @@ const UsersPage = () => {
   if ((!data && !error) || isLoading) return <></>;
 
   const onRoleUpdated = async (userId: string, newRole: string) => {
+    if (user?.role !== 'admin') {
+      setErrorMessage('Privilegios insuficientes para esta funcionalidad');
+      setShowError(true);
+      setTimeout(() => setShowError(false), 4000);
+      return;
+    }
+
     const previousUsers = users.map((user) => ({ ...user }));
     const updatedUsers = users.map((user) => ({
       ...user,
@@ -41,6 +53,7 @@ const UsersPage = () => {
     } catch (error) {
       console.log(error);
       setUsers(previousUsers);
+      setErrorMessage('Error del servidor al actualizar el usuario');
       setShowError(true);
       setTimeout(() => setShowError(false), 4000);
     }
@@ -71,10 +84,10 @@ const UsersPage = () => {
   ];
 
   const rows = users!.map((user) => ({
-    id   : user._id,
+    id: user._id,
     email: user.email,
-    name : user.name,
-    role : user.role,
+    name: user.name,
+    role: user.role,
   }));
 
   return (
@@ -84,7 +97,7 @@ const UsersPage = () => {
       icon={<PeopleOutline />}
     >
       <AlertErrorMessage
-        errorMessage="No se pudo actualizar el role del usuario"
+        errorMessage={errorMessage}
         showError={showError}
         setOpen={setShowError}
       />
