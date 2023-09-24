@@ -56,7 +56,9 @@ export const ProductDetail: FC<Props> = ({ product }) => {
 
   const handleFavoriteToggle = async () => {
     if (!user) {
-      return printErrorMessage('No estas Autenticado');
+      return printErrorMessage(
+        'Acceso restringido: Inicia sesión para continuar'
+      );
     }
     try {
       if (isProductFavorite) {
