@@ -37,7 +37,7 @@ export const ProductReviewCard: FC<Props> = ({
         {images.map((img, i) => (
           <Grid xs={4} sm={2} md={3} key={i} item>
             <Image
-              height={120}
+              height={100}
               width={100}
               src={img}
               alt={`review ${i}`}
@@ -45,7 +45,7 @@ export const ProductReviewCard: FC<Props> = ({
                 width: '100%',
                 height:'auto',
                 borderRadius: '10px',
-                objectFit: 'cover',
+                objectFit: 'contain',
               }}
             />
           </Grid>

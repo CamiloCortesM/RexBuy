@@ -139,9 +139,9 @@ const NewReview: FC<Props> = ({ review }) => {
                   : `http://localhost:3000/products/${review.product.images[0]}`
               }
               alt={review.product.title}
-              height={120}
+              height={100}
+              width={100}
               style={{
-                width: '100%',
                 objectFit: 'contain',
                 borderRadius: '50%',
                 border: '1px solid #ededed',

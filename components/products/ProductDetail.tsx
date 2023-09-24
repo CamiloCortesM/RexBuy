@@ -7,6 +7,7 @@ import { ItemCounter } from '../ui';
 import { ItemSelector } from './ItemSelector';
 import { CartContext } from '@/context';
 import { AlertErrorMessage } from '../auth';
+import { rexbuyApi } from '@/api';
 
 type Props = {
   product: IProduct;
@@ -24,17 +25,45 @@ export const ProductDetail: FC<Props> = ({ product }) => {
   const router = useRouter();
 
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
-    _id: product._id,
-    image: product.images[0],
-    price: product.price,
-    slug: product.slug,
-    title: product.title,
-    brand: product.brand,
-    model: product.model,
+    _id     : product._id,
+    image   : product.images[0],
+    price   : product.price,
+    slug    : product.slug,
+    title   : product.title,
+    brand   : product.brand,
+    model   : product.model,
     capacity: undefined,
-    ram: undefined,
+    ram     : undefined,
     quantity: 1,
   });
+
+  useEffect(() => {
+    const checkIsProductFavorite = async () => {
+      try {
+        const { data } = await rexbuyApi.get(`/user/favorite/${product._id}`);
+        setIsProductFavorite(!!data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    checkIsProductFavorite();
+  }, []);
+
+  const handleFavoriteToggle = async () => {
+    try {
+      if (isProductFavorite) {
+        setIsProductFavorite(false);
+        await rexbuyApi.delete(`/user/favorite/${product._id}`);
+      } else {
+        setIsProductFavorite(true);
+        await rexbuyApi.post('/user/favorite/', { product: product._id });
+      }
+    } catch (error) {
+      console.error('Error toggling favorite product:', error);
+      setIsProductFavorite(!isProductFavorite);
+    }
+  };
 
   const isValidProductSelection = useMemo(() => {
     return () => {
@@ -129,7 +158,7 @@ export const ProductDetail: FC<Props> = ({ product }) => {
         <Typography mr={2} variant="h1" component="h1">
           {product.title}
         </Typography>
-        <IconButton aria-label="settings">
+        <IconButton aria-label="settings" onClick={handleFavoriteToggle}>
           {isProductFavorite ? (
             <FavoriteOutlined
               sx={{
