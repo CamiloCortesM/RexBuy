@@ -112,12 +112,15 @@ export const ProductCard: FC<Props> = ({ product }) => {
                 alt={product.title}
               />
             </CardActionArea>
-            <CardContent sx={{
-              height: { xs: 120, sm: 140 },
-              display:'flex',
-              flexDirection:'column',
-              justifyContent:'center'
-            }} className="fadeIn">
+            <CardContent
+              sx={{
+                height: { xs: 120, sm: 140 },
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+              className="fadeIn"
+            >
               <Box
                 display="flex"
                 gap={0.5}
@@ -128,12 +131,12 @@ export const ProductCard: FC<Props> = ({ product }) => {
                 <Rating
                   name="read-only"
                   size="small"
-                  value={3.6}
+                  value={product.rating}
                   precision={0.5}
                   readOnly
                 />
                 <Typography color={'gray'} variant="caption">
-                  3.6
+                  {product.rating} ({product.numReviewers})
                 </Typography>
               </Box>
               <Typography
@@ -155,13 +158,13 @@ export const ProductCard: FC<Props> = ({ product }) => {
                   sx={{
                     color: '#f8596b',
                     fontWeight: { xs: 400, sm: 500 },
-                    fontSize: { xs:'.7rem', sm: '1rem' },
+                    fontSize: { xs: '.7rem', sm: '1rem' },
                   }}
                 >{`$${product.price}`}</Typography>
                 <Typography
                   sx={{
                     opacity: '.7',
-                    fontSize: {xs:'.6rem',sm:'.8rem'},
+                    fontSize: { xs: '.6rem', sm: '.8rem' },
                   }}
                   variant="subtitle2"
                   fontWeight={400}

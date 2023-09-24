@@ -104,7 +104,7 @@ export const ProductDetail: FC<Props> = ({ product }) => {
   };
 
   return (
-    <Box display="flex" flexDirection="column">
+    <Box display="flex" flexDirection="column" px={{xs:0,lg:10}} >
       <AlertErrorMessage
         setOpen={setOpen}
         showError={showError}

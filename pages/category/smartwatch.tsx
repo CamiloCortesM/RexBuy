@@ -1,26 +1,27 @@
 import { NextPage } from 'next';
-import { Typography } from '@mui/material';
 
 import { useProducts } from '@/hooks';
 import { ShopLayout } from '@/components/layouts';
 import { ProductList } from '@/components/products';
 import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
+import { BANNER_IMAGES_CATEGORIES } from '@/constants';
+import { Banner } from '@/components/ui';
 
 const SmartWatchPage: NextPage = () => {
-  const { isLoading, products } = useProducts(
-    'products?type=smartwatch'
-  );
+  const { smartwatch } = BANNER_IMAGES_CATEGORIES;
+  const { image1Url, image2Url, title, description } = smartwatch;
+  const { isLoading, products } = useProducts('products?type=smartwatch');
   return (
     <ShopLayout
       title={'RexBuy - Smartwatch'}
       pageDescription={'Encuentra los mejores relojes inteligentes'}
     >
-      <Typography variant="h1" component="h1" color="primary">
-        SmartWatch
-      </Typography>
-      <Typography variant="h2" sx={{ mb: 1 }}>
-        Selección de SmartWatch
-      </Typography>
+      <Banner
+        image1Url={image1Url}
+        image2Url={image2Url}
+        title={title}
+        description={description}
+      />
       {isLoading ? <FullScreenLoading /> : <ProductList products={products} />}
     </ShopLayout>
   );
