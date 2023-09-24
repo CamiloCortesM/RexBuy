@@ -4,11 +4,11 @@ const nextConfig = {
   modularizeImports: {
     '@mui/icons-material': {
       transform: '@mui/icons-material/{{member}}',
-    }
+    },
   },
-    images: {
+  images: {
       unoptimized: true
-  }
+  },
 };
 
 module.exports = nextConfig;
