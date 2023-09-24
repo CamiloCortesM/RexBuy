@@ -4,7 +4,7 @@ import { isValidObjectId } from 'mongoose';
 import { db } from '@/database';
 import Favorite from '@/models/Favorite';
 import { IFavorite } from '@/interfaces';
-import { Product } from '@/models';
+import { Product, User } from '@/models';
 import { getServerSession } from 'next-auth';
 
 type Data =
@@ -80,6 +80,9 @@ const getFavoriteProductByProduct = async (
       .json({ message: 'You must be logged in to add to favorites' });
   }
 
+  const user = await User.findOne({ email: session.user.email }).lean();
+  const userId = user!._id.toString();
+
   let { id = '' } = req.query;
 
   if (!isValidObjectId(id)) {
@@ -97,7 +100,10 @@ const getFavoriteProductByProduct = async (
   }
 
   try {
-    const favoriteProduct = await Favorite.findOne({ product: id });
+    const favoriteProduct = await Favorite.findOne({
+      product: id,
+      user: userId,
+    });
     return res.status(200).json(favoriteProduct);
   } catch (error) {
     console.log(error);
