@@ -1,15 +1,16 @@
 import { NextPage } from 'next';
-import { Typography } from '@mui/material';
 
 import { useProducts } from '@/hooks';
 import { ShopLayout } from '@/components/layouts';
 import { ProductList } from '@/components/products';
 import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
+import { Banner } from '@/components/ui';
+import { BANNER_IMAGES_CATEGORIES } from '@/constants';
 
 const MonitorsPage: NextPage = () => {
-  const { isLoading, products } = useProducts(
-    'products?type=monitores'
-  );
+  const { monitors } = BANNER_IMAGES_CATEGORIES;
+  const { image1Url, image2Url, title, description } = monitors;
+  const { isLoading, products } = useProducts('products?type=monitores');
   return (
     <ShopLayout
       title={'RexBuy - Monitores'}
@@ -17,12 +18,12 @@ const MonitorsPage: NextPage = () => {
         'Encuentra los mejores Monitores con mejores resoluciones'
       }
     >
-      <Typography variant="h1" component="h1" color="primary">
-        Monitores
-      </Typography>
-      <Typography variant="h2" sx={{ mb: 1 }}>
-        Selección de Monitores
-      </Typography>
+      <Banner
+        image1Url={image1Url}
+        image2Url={image2Url}
+        title={title}
+        description={description}
+      />
       {isLoading ? <FullScreenLoading /> : <ProductList products={products} />}
     </ShopLayout>
   );

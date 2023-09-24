@@ -2,7 +2,7 @@ import NextLink from 'next/link';
 import { AdminLayout } from '@/components/layouts';
 import { IProduct } from '@/interfaces';
 import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
-import { Box, Button, CardMedia, Chip, Grid, Link } from '@mui/material';
+import { Box, Button, CardMedia, Grid, Link } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
