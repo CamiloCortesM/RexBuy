@@ -5,11 +5,11 @@
 }
 
 .left_image {
-  left: 0;
+  left: 10px;
 }
 
 .right_image {
-  right: 0;
+  right: 10px;
 }
 
 @media (max-width: 1200px) {
