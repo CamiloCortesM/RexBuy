@@ -4,14 +4,14 @@ import { Box, Typography } from '@mui/material';
 
 import { BannerImage } from './BannerImage';
 
-interface InitialProps {
+type Props ={
   image1Url: string;
   image2Url: string;
   title: string;
   description: string;
 }
 
-export const Banner: FC<InitialProps> = (props) => {
+export const Banner: FC<Props> = (props) => {
   const { image1Url, image2Url, title, description } = props;
   return (
     <Box
