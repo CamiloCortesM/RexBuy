@@ -23,8 +23,8 @@ const ReviewPage: NextPage<Props> = ({ reviews }) => {
     >
       <Box
         sx={{
-          display:'flex',
-          flexDirection:'column',
+          display: 'flex',
+          flexDirection: 'column',
           width: '100%',
           minHeight: 'calc(100vh - 200px)',
           backgroundColor: '#ededed',
@@ -98,7 +98,6 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const { tab = 'PENDING' } = query;
   const session: any = await getSession({ req });
-  const idUser = session.user._id;
 
   if (!session) {
     return {
@@ -109,6 +108,7 @@ export const getServerSideProps: GetServerSideProps = async ({
     };
   }
 
+  const idUser = session.user._id;
   const reviewsInDB = await dbReviews.getReviewsByUserId(
     idUser,
     tab.toString()

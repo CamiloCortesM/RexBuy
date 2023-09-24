@@ -71,7 +71,6 @@ const FavoritesPage: NextPage<Props> = ({ favorites }) => {
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session: any = await getSession({ req });
-  const idUser = session.user._id;
 
   if (!session) {
     return {
@@ -82,6 +81,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     };
   }
 
+  const idUser = session.user._id;
   const favorites = await dbFavorites.getFavoritesByUser(idUser);
   return {
     props: {
