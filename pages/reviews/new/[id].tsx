@@ -3,7 +3,7 @@ import { GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 
 import { rexbuyApi } from '@/api';
@@ -95,6 +95,11 @@ const NewReview: FC<Props> = ({ review }) => {
   const onNewReview = (newValue: number | null) => {
     if (newValue) setValue('rating', newValue);
   };
+
+  const handleCancel = () => {
+    router.replace(`/reviews?tab=COMPLETED`);
+  };
+
   return (
     <ShopLayout
       title="Crear Reseña"
@@ -161,7 +166,11 @@ const NewReview: FC<Props> = ({ review }) => {
             justifyContent="center"
             alignItems="center"
             my={4}
+            gap={2}
           >
+            <Button color="error" variant="outlined" onClick={handleCancel}>
+              Cancelar
+            </Button>
             <LoadingButton
               loading={isSaving}
               variant="contained"

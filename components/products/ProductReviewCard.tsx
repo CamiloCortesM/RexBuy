@@ -37,10 +37,12 @@ export const ProductReviewCard: FC<Props> = ({
           <Grid xs={3} key={i} item>
             <img
               width="100%"
+              height={100}
               src={img}
               alt={`review ${i}`}
               style={{
                 borderRadius: '10px',
+                objectFit:'cover'
               }}
             />
           </Grid>
