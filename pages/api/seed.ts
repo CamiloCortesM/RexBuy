@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 import { db, seedDatabase } from '../../database';
 import { Order, Product, Review, User } from '../../models';
+import Favorite from '@/models/Favorite';
 
 type Data = {
   message: string;
@@ -21,6 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   await Product.insertMany(seedDatabase.initialData.products);
 
   await Review.deleteMany();
+  await Favorite.deleteMany();
   await Order.deleteMany();
   res.status(200).json({ message: 'Process carried out correctly' });
 };

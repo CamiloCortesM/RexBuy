@@ -5,7 +5,7 @@ import { FavoriteBorderOutlined, FavoriteOutlined } from '@mui/icons-material';
 import { ICartProduct, IProduct } from '@/interfaces';
 import { ItemCounter } from '../ui';
 import { ItemSelector } from './ItemSelector';
-import { CartContext } from '@/context';
+import { AuthContext, CartContext } from '@/context';
 import { AlertErrorMessage } from '../auth';
 import { rexbuyApi } from '@/api';
 
@@ -16,6 +16,8 @@ type Props = {
 export const ProductDetail: FC<Props> = ({ product }) => {
   const { addProductToCart } = useContext(CartContext);
 
+  const { user, isLoggedIn } = useContext(AuthContext);
+
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [canAddToCart, setCanAddToCart] = useState(false);
@@ -25,19 +27,21 @@ export const ProductDetail: FC<Props> = ({ product }) => {
   const router = useRouter();
 
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
-    _id     : product._id,
-    image   : product.images[0],
-    price   : product.price,
-    slug    : product.slug,
-    title   : product.title,
-    brand   : product.brand,
-    model   : product.model,
+    _id: product._id,
+    image: product.images[0],
+    price: product.price,
+    slug: product.slug,
+    title: product.title,
+    brand: product.brand,
+    model: product.model,
     capacity: undefined,
-    ram     : undefined,
+    ram: undefined,
     quantity: 1,
   });
 
   useEffect(() => {
+    if (!isLoggedIn) return;
+    if (!user) return;
     const checkIsProductFavorite = async () => {
       try {
         const { data } = await rexbuyApi.get(`/user/favorite/${product._id}`);
@@ -48,9 +52,12 @@ export const ProductDetail: FC<Props> = ({ product }) => {
     };
 
     checkIsProductFavorite();
-  }, [product._id]);
+  }, [product._id, isLoggedIn]);
 
   const handleFavoriteToggle = async () => {
+    if (!user) {
+      return printErrorMessage('No estas Autenticado');
+    }
     try {
       if (isProductFavorite) {
         setIsProductFavorite(false);
