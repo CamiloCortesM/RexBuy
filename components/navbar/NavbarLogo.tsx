@@ -7,9 +7,12 @@ export const NavbarLogo = () => {
     <NextLink href="/" passHref legacyBehavior>
       <Link height={'90%'}>
         <Image
+          width={80}
+          height={70}
           src="/logo.png"
           alt="logo-rexbuy"
           style={{
+            width: 'auto',
             height: '90%',
           }}
         />

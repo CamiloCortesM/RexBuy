@@ -17,6 +17,6 @@ export const BannerImage: FC<Props> = ({
   const imageClass =
     direction === 'left' ? style.left_image : style.right_image;
   return (
-    <Image src={src} alt={alt} className={`${style.banner_img} ${imageClass}`} />
+    <Image width={300} height={140} src={src} alt={alt} className={`${style.banner_img} ${imageClass}`} />
   );
 };

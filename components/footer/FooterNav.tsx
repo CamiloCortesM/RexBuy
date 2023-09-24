@@ -36,9 +36,10 @@ export const FooterNav: FC = () => {
           justifyContent="center"
         >
           <Image
+            width={80}
+            height={15}
             alt="footer-Icon"
             src="/logoFooter.png"
-            style={{ height: '15px' }}
           />
         </Grid>
 
