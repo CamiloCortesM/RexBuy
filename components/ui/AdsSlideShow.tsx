@@ -5,7 +5,6 @@ import { ADS_IMAGES } from '@/constants';
 import styles from './AdsSlideShow.module.css';
 import 'react-slideshow-image/dist/styles.css';
 
-
 //TODO: change slider by error in animation
 
 const responsiveSettings = [
@@ -99,6 +98,8 @@ export const AdsSlideShow = () => {
               }}
             >
               <Image
+                width={330}
+                height={150}
                 src={image}
                 alt={`ad ${index}`}
                 className={`${styles.image_ads} ${styles.fadeInSlide}`}

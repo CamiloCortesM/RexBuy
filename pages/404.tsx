@@ -16,10 +16,13 @@ const Custom404 = () => {
         sx={{ flexDirection: 'column' }}
       >
         <Image
+          width={100}
+          height={100}
           src={'/404.png'}
           alt="404 Error"
           style={{
             width: '100%',
+            height:'auto',
             maxWidth: 400,
             opacity: 0.6,
           }}

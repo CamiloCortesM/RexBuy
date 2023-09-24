@@ -48,19 +48,20 @@ const ProductPage: NextPage<Props> = ({ product, reviews }) => {
           <ProductSlideshow images={product.images} />
           {product.images.map((image, i) => (
             <Image
-            key={i}
-            src={image}
-            alt={product.title}
-            style={{
-              width: '25%',
-              maxWidth: 210,
-              height: 120,
-              objectFit: 'contain',
-              border: '1px solid rgba(0,0,0,0.05)',
-              borderRadius: 15,
-              margin: '10px',
-            }}
-          />
+              key={i}
+              src={image}
+              height={120}
+              width={200}
+              alt={product.title}
+              style={{
+                width: '25%',
+                maxWidth: 210,
+                objectFit: 'contain',
+                border: '1px solid rgba(0,0,0,0.05)',
+                borderRadius: 15,
+                margin: '10px',
+              }}
+            />
           ))}
         </Grid>
 

@@ -17,10 +17,13 @@ const EmptyPage = () => {
         sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
       >
         <Image
+          width={100}
+          height={100}
           src={'/emptycart.png'}
           alt="empty cart"
           style={{
             width: '100%',
+            height:'auto',
             maxWidth: 400,
             opacity: 0.6,
           }}
