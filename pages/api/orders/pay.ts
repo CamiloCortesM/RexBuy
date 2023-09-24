@@ -1,14 +1,14 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
+import axios from 'axios';
 import { db } from '@/database';
 import { IPaypal } from '@/interfaces';
-import { Order } from '@/models';
-import axios from 'axios';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { Order, Review } from '@/models';
 
 type Data = {
   message: string;
 };
 
-const handler = async(req: NextApiRequest, res: NextApiResponse<Data>) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   await db.connect();
   switch (req.method) {
     case 'POST':
@@ -87,6 +87,15 @@ const payOrder = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
       .status(401)
       .json({ message: 'Paypal amounts and our order are not the same.' });
   }
+
+  const { orderItems, user } = dbOrder;
+
+  orderItems.forEach(async ({ _id }) => {
+    const review = await Review.exists({ product: _id, user });
+    if (review) return;
+    const newReview = new Review({ product: _id, user });
+    await newReview.save();
+  });
 
   dbOrder.transactionId = transactionId;
   dbOrder.isPaid = true;
