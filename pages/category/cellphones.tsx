@@ -1,26 +1,28 @@
 import { NextPage } from 'next';
-import { Typography } from '@mui/material';
 
 import { useProducts } from '@/hooks';
 import { ShopLayout } from '@/components/layouts';
 import { ProductList } from '@/components/products';
 import { FullScreenLoading } from '@/components/ui/FullScreenLoading';
+import { Banner } from '@/components/ui';
+import { BANNER_IMAGES_CATEGORIES } from '@/constants/categoryConstants';
 
 const CellPhonesPage: NextPage = () => {
-  const { isLoading, products } = useProducts(
-    'products?type=celulares'
-  );
+  const { cellphone } = BANNER_IMAGES_CATEGORIES;
+  const { image1Url, image2Url, title, description } = cellphone;
+
+  const { isLoading, products } = useProducts('products?type=celulares');
   return (
     <ShopLayout
       title={'RexBuy - Celulares'}
       pageDescription={'Encuentra los mejores celulares de marca'}
     >
-      <Typography variant="h1" component="h1" color="primary">
-        Celulares
-      </Typography>
-      <Typography variant="h2" sx={{ mb: 1 }}>
-        Selección de Celulares
-      </Typography>
+      <Banner
+        image1Url={image1Url}
+        image2Url={image2Url}
+        title={title}
+        description={description}
+      />
       {isLoading ? <FullScreenLoading /> : <ProductList products={products} />}
     </ShopLayout>
   );
