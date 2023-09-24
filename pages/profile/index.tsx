@@ -20,7 +20,7 @@ const ProfilePage: NextPage = () => {
         container
         mt={3}
         padding="10px 30px"
-        minHeight={'67vh'}
+        minHeight="calc(100vh - 200px)"
         justifyContent="center"
         alignItems="center"
         flexDirection="column"
