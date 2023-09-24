@@ -48,8 +48,8 @@ export const ModalNameEdit: FC<Props> = ({ handleClose, open, updateUser }) => {
     setIsLoading(true);
 
     try {
-      const { data } = await rexbuyApi.post<{ updatedUser: IUser }>(
-        '/profile/edit-name',
+      const { data } = await rexbuyApi.put<{ updatedUser: IUser }>(
+        '/user',
         info
       );
       const user: IUser = data.updatedUser;

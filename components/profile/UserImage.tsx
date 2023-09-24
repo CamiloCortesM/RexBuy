@@ -41,12 +41,12 @@ export const UserImage: FC<Props> = ({ user, updateUser }) => {
         formData
       );
 
-      const info = { imageUrl: data.message };
-      const { data: dataUser } = await rexbuyApi.post<{ updatedUser: IUser }>(
-        '/profile/edit-user-image',
+      const info = { userImage: data.message };
+      const { data: dataUser } = await rexbuyApi.put<{ updatedUser: IUser }>(
+        '/user',
         info
       );
-
+      
       const user: IUser = dataUser.updatedUser;
       const { email } = user;
 

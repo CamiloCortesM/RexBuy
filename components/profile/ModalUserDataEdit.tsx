@@ -71,8 +71,8 @@ export const ModalUserDataEdit: FC<Props> = ({
   const onSubmit: SubmitHandler<Inputs> = async (info) => {
     setIsLoading(true);
     try {
-      const { data } = await rexbuyApi.post<{ updatedUser: IUser }>(
-        '/profile/edit-personal-information',
+      const { data } = await rexbuyApi.put<{ updatedUser: IUser }>(
+        '/user',
         info
       );
       const user: IUser = data.updatedUser;
