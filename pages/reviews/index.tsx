@@ -13,7 +13,6 @@ type Props = {
 };
 
 const ReviewPage: NextPage<Props> = ({ reviews }) => {
-  console.log(reviews);
   const router = useRouter();
   const { tab } = router.query;
 

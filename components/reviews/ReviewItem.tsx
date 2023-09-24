@@ -24,23 +24,6 @@ type Props = {
 };
 
 export const ReviewItem: FC<Props> = ({ review, isCompleted = true }) => {
-  // const formatDate = (isoDate: string): string => {
-  //   const options: Intl.DateTimeFormatOptions = {
-  //     year: 'numeric',
-  //     month: 'long',
-  //     day: 'numeric',
-  //   };
-  //   const formattedDate = new Date(isoDate).toLocaleDateString(
-  //     'es-ES',
-  //     options
-  //   );
-  //   return formattedDate;
-  // };
-
-  // console.log(review);
-  // const mongoDate: string = review.createdAt!;
-  // const formattedDate: string = formatDate(mongoDate);
-
   const router = useRouter();
 
   const OnNewReview = (newValue: number | null) => {
