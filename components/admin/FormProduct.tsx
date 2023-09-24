@@ -2,22 +2,22 @@ import { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { SaveOutlined } from '@mui/icons-material';
-import {
-  Box,
-  Button,
-  Grid,
-} from '@mui/material';
+import { Box, Button, Grid } from '@mui/material';
 
 import { rexbuyApi } from '@/api';
-import { IProduct, PriceAndStockVariations, ProductManagementData } from '@/interfaces';
-import { ProductInfo,ProductConfiguration } from './';
+import {
+  IProduct,
+  PriceAndStockVariations,
+  ProductManagementData,
+} from '@/interfaces';
+import { ProductInfo, ProductConfiguration } from './';
 
 type Props = {
   product     : IProduct;
-  setShowAlert:(arg0: boolean) => void
+  setShowAlert: (arg0: boolean) => void;
 };
 
-export const FormProduct: FC<Props> = ({ product,setShowAlert }) => {
+export const FormProduct: FC<Props> = ({ product, setShowAlert }) => {
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
 
@@ -229,7 +229,7 @@ export const FormProduct: FC<Props> = ({ product,setShowAlert }) => {
     });
 
     return () => subscription.unsubscribe();
-  }, [watch, setValue]);
+  }, [watch, setValue, getValues]);
 
   const onSubmit = async (form: ProductManagementData) => {
     console.log({ form });
@@ -259,24 +259,34 @@ export const FormProduct: FC<Props> = ({ product,setShowAlert }) => {
   };
 
   return (
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <Box display="flex" justifyContent="end" sx={{ mb: 1 }}>
-          <Button
-            color="secondary"
-            startIcon={<SaveOutlined />}
-            sx={{ width: '150px' }}
-            type="submit"
-            className="circular-btn"
-            disabled={isSaving}
-          >
-            Guardar
-          </Button>
-        </Box>
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <Box display="flex" justifyContent="end" sx={{ mb: 1 }}>
+        <Button
+          color="secondary"
+          startIcon={<SaveOutlined />}
+          sx={{ width: '150px' }}
+          type="submit"
+          className="circular-btn"
+          disabled={isSaving}
+        >
+          Guardar
+        </Button>
+      </Box>
 
-        <Grid container spacing={2}>
-          <ProductInfo errors={errors} getValues={getValues} register={register} setValue={setValue} />
-          <ProductConfiguration errors={errors} getValues={getValues} register={register} setValue={setValue} />
-        </Grid>
-      </form>
+      <Grid container spacing={2}>
+        <ProductInfo
+          errors={errors}
+          getValues={getValues}
+          register={register}
+          setValue={setValue}
+        />
+        <ProductConfiguration
+          errors={errors}
+          getValues={getValues}
+          register={register}
+          setValue={setValue}
+        />
+      </Grid>
+    </form>
   );
 };

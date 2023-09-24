@@ -7,7 +7,7 @@ import { VALID_ROLES } from '@/constants';
 
 type Data = { message: string } | IUser[];
 
-export default async function (req: NextApiRequest, res: NextApiResponse<Data>) {
+const handler = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
   await db.connect();
   switch (req.method) {
     case 'GET':
@@ -18,7 +18,7 @@ export default async function (req: NextApiRequest, res: NextApiResponse<Data>) 
     default:
       return res.status(400).json({ message: 'Bad request' });
   }
-}
+};
 const getUsers = async (res: NextApiResponse<Data>) => {
   const users = await User.find().select('-password').lean();
 
@@ -47,3 +47,5 @@ const updateUser = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
 
   return res.status(200).json({ message: 'Updated user' });
 };
+
+export default handler;

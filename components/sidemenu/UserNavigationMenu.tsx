@@ -7,6 +7,7 @@ import {
   ComputerOutlined,
   ConfirmationNumberOutlined,
   DesktopWindowsOutlined,
+  Favorite,
   GamesOutlined,
   HeadphonesBatteryOutlined,
   LoginOutlined,
@@ -55,6 +56,12 @@ export const UserNavigationMenu: FC<Props> = ({ isLoggedIn }) => {
               <ReviewsOutlined />
             </ListItemIcon>
             <ListItemText primary={'Reseñas'} />
+          </ListItemButton>
+          <ListItemButton onClick={() => navigateTo('/user/favorites')}>
+            <ListItemIcon>
+              <Favorite />
+            </ListItemIcon>
+            <ListItemText primary={'Favoritos'} />
           </ListItemButton>
         </>
       )}

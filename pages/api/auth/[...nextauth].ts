@@ -58,8 +58,7 @@ const authOptions: NextAuthOptions = {
   },
 
   callbacks: {
-    async jwt({ token, account, user }) {
-    
+    async jwt({ token, account, user, session, trigger }) {
       if (account) {
         token.accessToken = account.access_token;
 
@@ -76,11 +75,18 @@ const authOptions: NextAuthOptions = {
             break;
         }
       }
+
+      if (trigger === 'update' && session?.email) {
+        const userInfo = await dbUsers.updateUserInformation(
+          session.email || ''
+        );
+
+        token.user = userInfo?.user;
+      }
       return token;
     },
 
     async session({ session, token, user }) {
-    
       session.accessToken = token.accessToken as any;
       session.user = token.user as any;
 

@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { Box, Button, Grid, Rating, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
@@ -45,10 +46,15 @@ export const ReviewItem: FC<Props> = ({ review, isCompleted = true }) => {
           height: '100px',
         }}
       >
-        <img
-          src={`http://localhost:3000/products/${review.product.images[0]}`}
+        <Image
+          src={
+            review.product.images[0].startsWith('http')
+              ? review.product.images[0]
+              : `http://localhost:3000/products/${review.product.images[0]}`
+          }
           width={55}
           height={55}
+          alt={review.product.title}
           className={styles.image_product}
         />
         <Box

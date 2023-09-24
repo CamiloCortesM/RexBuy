@@ -15,6 +15,11 @@ const userSchema = new Schema(
         required: true,
       },
     },
+    userImage: { type: String },
+    department: { type: String },
+    city: { type: String },
+    address: { type: String },
+    cellphone: { type: String },
   },
   {
     timestamps: true,

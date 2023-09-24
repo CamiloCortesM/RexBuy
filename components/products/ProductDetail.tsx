@@ -1,11 +1,13 @@
 import { FC, useContext, useEffect, useMemo, useState } from 'react';
 import { useRouter } from 'next/router';
-import { Box, Button, Chip, Typography } from '@mui/material';
+import { Box, Button, Chip, IconButton, Typography } from '@mui/material';
+import { FavoriteBorderOutlined, FavoriteOutlined } from '@mui/icons-material';
 import { ICartProduct, IProduct } from '@/interfaces';
 import { ItemCounter } from '../ui';
 import { ItemSelector } from './ItemSelector';
 import { CartContext } from '@/context';
 import { AlertErrorMessage } from '../auth';
+import { rexbuyApi } from '@/api';
 
 type Props = {
   product: IProduct;
@@ -18,7 +20,10 @@ export const ProductDetail: FC<Props> = ({ product }) => {
   const [errorMessage, setErrorMessage] = useState('');
   const [canAddToCart, setCanAddToCart] = useState(false);
 
+  const [isProductFavorite, setIsProductFavorite] = useState(false);
+
   const router = useRouter();
+
   const [tempCartProduct, setTempCartProduct] = useState<ICartProduct>({
     _id     : product._id,
     image   : product.images[0],
@@ -31,14 +36,48 @@ export const ProductDetail: FC<Props> = ({ product }) => {
     ram     : undefined,
     quantity: 1,
   });
-  
+
+  useEffect(() => {
+    const checkIsProductFavorite = async () => {
+      try {
+        const { data } = await rexbuyApi.get(`/user/favorite/${product._id}`);
+        setIsProductFavorite(!!data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    checkIsProductFavorite();
+  }, [product._id]);
+
+  const handleFavoriteToggle = async () => {
+    try {
+      if (isProductFavorite) {
+        setIsProductFavorite(false);
+        await rexbuyApi.delete(`/user/favorite/${product._id}`);
+      } else {
+        setIsProductFavorite(true);
+        await rexbuyApi.post('/user/favorite/', { product: product._id });
+      }
+    } catch (error) {
+      console.error('Error toggling favorite product:', error);
+      setIsProductFavorite(!isProductFavorite);
+    }
+  };
+
   const isValidProductSelection = useMemo(() => {
     return () => {
-        if (product.capacity!.length > 0 && !tempCartProduct.capacity) return false;
-        if (product.ram!.length > 0 && !tempCartProduct.ram) return false;
-        return true;
+      if (product.capacity!.length > 0 && !tempCartProduct.capacity)
+        return false;
+      if (product.ram!.length > 0 && !tempCartProduct.ram) return false;
+      return true;
     };
-  }, [product.capacity, tempCartProduct.capacity, product.ram, tempCartProduct.ram]);
+  }, [
+    product.capacity,
+    tempCartProduct.capacity,
+    product.ram,
+    tempCartProduct.ram,
+  ]);
 
   useEffect(() => {
     if (
@@ -65,7 +104,12 @@ export const ProductDetail: FC<Props> = ({ product }) => {
         price: matchingVariation.price,
       }));
     }
-  }, [tempCartProduct.capacity, tempCartProduct.ram, product.priceAndStockVariations,isValidProductSelection]);
+  }, [
+    tempCartProduct.capacity,
+    tempCartProduct.ram,
+    product.priceAndStockVariations,
+    isValidProductSelection,
+  ]);
 
   const onSelectedSize = (value: string, name: string = 'capacity') => {
     setTempCartProduct((currentProduct) => ({
@@ -104,15 +148,32 @@ export const ProductDetail: FC<Props> = ({ product }) => {
   };
 
   return (
-    <Box display="flex" flexDirection="column" px={{xs:0,lg:10}} >
+    <Box display="flex" flexDirection="column" px={{ xs: 0, lg: 10 }}>
       <AlertErrorMessage
         setOpen={setOpen}
         showError={showError}
         errorMessage={errorMessage}
       />
-      <Typography variant="h1" component="h1">
-        {product.title}
-      </Typography>
+      <Box display="flex" alignItems="center">
+        <Typography mr={2} variant="h1" component="h1">
+          {product.title}
+        </Typography>
+        <IconButton aria-label="settings" onClick={handleFavoriteToggle}>
+          {isProductFavorite ? (
+            <FavoriteOutlined
+              sx={{
+                color: 'red',
+              }}
+            />
+          ) : (
+            <FavoriteBorderOutlined
+              sx={{
+                color: 'red',
+              }}
+            />
+          )}
+        </IconButton>
+      </Box>
       <Typography
         variant="subtitle1"
         component="h2"

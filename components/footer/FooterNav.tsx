@@ -1,5 +1,5 @@
 import { FC } from 'react';
-
+import Image from 'next/image';
 import { AppBar, Grid, useMediaQuery } from '@mui/material';
 import { PrincipalPage, Company, Contacts } from './';
 
@@ -35,10 +35,11 @@ export const FooterNav: FC = () => {
           alignItems={{ sm: 'flex-start', xs: 'center' }}
           justifyContent="center"
         >
-          <img
+          <Image
+            width={80}
+            height={15}
             alt="footer-Icon"
             src="/logoFooter.png"
-            style={{ height: '15px' }}
           />
         </Grid>
 

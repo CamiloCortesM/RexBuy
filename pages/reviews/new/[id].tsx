@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
@@ -28,16 +29,16 @@ const NewReview: FC<Props> = ({ review }) => {
 
   const { rating = '' } = router.query;
 
-  useEffect(() => {
-    const newLocal = rating !== '';
-    if (newLocal && Number(rating) > 0 && Number(rating) < 6)
-      setValue('rating', Number(rating) * 1, { shouldValidate: true });
-  }, [rating]);
-
   const { register, handleSubmit, getValues, setValue, watch } =
     useForm<ReviewData>({
       defaultValues: review,
     });
+
+  useEffect(() => {
+    const newLocal = rating !== '';
+    if (newLocal && Number(rating) > 0 && Number(rating) < 6)
+      setValue('rating', Number(rating) * 1, { shouldValidate: true });
+  }, [rating, setValue]);
 
   const handleFileChange = async ({
     target,
@@ -130,14 +131,15 @@ const NewReview: FC<Props> = ({ review }) => {
               padding: '10px',
             }}
           >
-            <img
+            <Image
               src={
                 review.product.images[0].startsWith('https')
                   ? review.product.images[0]
                   : `http://localhost:3000/products/${review.product.images[0]}`
               }
-              width={120}
-              height={120}
+              alt={review.product.title}
+              height={100}
+              width={100}
               style={{
                 objectFit: 'contain',
                 borderRadius: '50%',

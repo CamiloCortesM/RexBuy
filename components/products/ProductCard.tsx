@@ -9,15 +9,12 @@ import {
   Typography,
   Link,
   CardContent,
-  IconButton,
   Chip,
   Rating,
   Box,
 } from '@mui/material';
 
 import { IProduct } from '../../interfaces';
-
-import { FavoriteBorderOutlined, FavoriteOutlined } from '@mui/icons-material';
 
 type Props = {
   product: IProduct;
@@ -59,24 +56,6 @@ export const ProductCard: FC<Props> = ({ product }) => {
           },
         }}
       >
-        {isHovered && (
-          <IconButton
-            aria-label="settings"
-            sx={{
-              position: 'absolute',
-              padding: 1,
-              zIndex: 1,
-              top: 5,
-              right: 5,
-            }}
-          >
-            <FavoriteOutlined
-              sx={{
-                color: 'red',
-              }}
-            />
-          </IconButton>
-        )}
         <NextLink
           href={`/product/${product.slug}`}
           passHref
@@ -168,7 +147,9 @@ export const ProductCard: FC<Props> = ({ product }) => {
                   }}
                   variant="subtitle2"
                   fontWeight={400}
-                >{`36x $ 10.99`}</Typography>
+                >
+                  Envio gratis
+                </Typography>
               </Box>
             </CardContent>
           </Link>

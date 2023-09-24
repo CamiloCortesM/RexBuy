@@ -1,4 +1,5 @@
-import { Box } from '@mui/material';
+import Image from 'next/image';
+import { Box, autocompleteClasses } from '@mui/material';
 
 export const AuthLogo = () => {
   return (
@@ -13,10 +14,14 @@ export const AuthLogo = () => {
         zIndex: -1,
       }}
     >
-      <img
+      <Image
         src="/logo.png"
+        width={100}
+        height={100}
         alt="logo"
         style={{
+          width: 100,
+          height: 'auto',
           position: 'absolute',
           top: 0,
           left: '50%',

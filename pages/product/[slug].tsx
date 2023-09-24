@@ -1,5 +1,5 @@
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
-
+import Image from 'next/image';
 import { Box, Divider, Grid, Typography } from '@mui/material';
 import { ShopLayout } from '../../components/layouts';
 import {
@@ -47,14 +47,15 @@ const ProductPage: NextPage<Props> = ({ product, reviews }) => {
         <Grid item xs={12} md={5}>
           <ProductSlideshow images={product.images} />
           {product.images.map((image, i) => (
-            <img
+            <Image
               key={i}
               src={image}
+              height={120}
+              width={200}
               alt={product.title}
               style={{
                 width: '25%',
                 maxWidth: 210,
-                height: 120,
                 objectFit: 'contain',
                 border: '1px solid rgba(0,0,0,0.05)',
                 borderRadius: 15,
