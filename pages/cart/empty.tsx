@@ -1,5 +1,5 @@
+import Image from 'next/image';
 import NextLink from 'next/link';
-
 import { Box, Link, Typography } from '@mui/material';
 import { ShopLayout } from '../../components/layouts';
 
@@ -16,7 +16,7 @@ const EmptyPage = () => {
         height="calc(100vh - 120px)"
         sx={{ flexDirection: { xs: 'column', sm: 'row' } }}
       >
-        <img
+        <Image
           src={'/emptycart.png'}
           alt="empty cart"
           style={{

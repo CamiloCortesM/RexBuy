@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Image from 'next/image';
 import { Box, Divider, Grid, Rating, Typography } from '@mui/material';
 import { date } from '@/utils';
 
@@ -35,12 +36,12 @@ export const ProductReviewCard: FC<Props> = ({
       <Grid container mb={1}>
         {images.map((img, i) => (
           <Grid xs={3} key={i} item>
-            <img
-              width="100%"
+            <Image
               height={100}
               src={img}
               alt={`review ${i}`}
               style={{
+                width: "100%",
                 borderRadius: '10px',
                 objectFit:'cover'
               }}

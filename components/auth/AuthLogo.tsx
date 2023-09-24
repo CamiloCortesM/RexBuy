@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Box } from '@mui/material';
 
 export const AuthLogo = () => {
@@ -13,7 +14,7 @@ export const AuthLogo = () => {
         zIndex: -1,
       }}
     >
-      <img
+      <Image
         src="/logo.png"
         alt="logo"
         style={{
