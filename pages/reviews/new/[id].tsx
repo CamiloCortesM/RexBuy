@@ -1,5 +1,6 @@
 import { ChangeEvent, FC, useState, useEffect } from 'react';
 import { GetServerSideProps } from 'next';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { getSession } from 'next-auth/react';
 import { useForm } from 'react-hook-form';
@@ -16,6 +17,7 @@ import {
   ReviewImageSection,
   UserCommentSection,
 } from '@/components/reviews';
+
 
 type Props = {
   review: IReview;
@@ -130,15 +132,16 @@ const NewReview: FC<Props> = ({ review }) => {
               padding: '10px',
             }}
           >
-            <img
+            <Image
               src={
                 review.product.images[0].startsWith('https')
                   ? review.product.images[0]
                   : `http://localhost:3000/products/${review.product.images[0]}`
               }
-              width={120}
+              alt={review.product.title}
               height={120}
               style={{
+                width: '100%',
                 objectFit: 'contain',
                 borderRadius: '50%',
                 border: '1px solid #ededed',

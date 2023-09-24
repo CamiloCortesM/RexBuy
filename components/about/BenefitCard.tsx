@@ -1,4 +1,5 @@
 import { FC } from "react";
+import Image from "next/image";
 import { Box, Grid, Typography } from "@mui/material";
 
 type Props = {
@@ -23,7 +24,7 @@ export const BenefitCard:FC<Props> = ({ title, imageSrc, description }) => {
           {title}
         </Typography>
         <Box height="100px">
-          <img src={imageSrc} alt={title} style={{ height: '100%' }} />
+          <Image src={imageSrc} alt={title} style={{ height: '100%' }} />
         </Box>
         <Box width="80%">
           <Typography textAlign="center">{description}</Typography>
