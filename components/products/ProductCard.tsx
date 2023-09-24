@@ -147,7 +147,9 @@ export const ProductCard: FC<Props> = ({ product }) => {
                   }}
                   variant="subtitle2"
                   fontWeight={400}
-                >{`36x $ 10.99`}</Typography>
+                >
+                  Envio gratis
+                </Typography>
               </Box>
             </CardContent>
           </Link>
