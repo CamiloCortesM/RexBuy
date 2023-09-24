@@ -5,4 +5,6 @@ export interface IFavorite {
     _id       : string;
     user      : IUser | string;
     product   : IProduct;
+
+    createdAt : string;
 }
