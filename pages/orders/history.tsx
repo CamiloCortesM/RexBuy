@@ -13,16 +13,45 @@ import {
 import { dbOrders } from '@/database';
 import { IOrder } from '@/interfaces';
 import { ShopLayout } from '../../components/layouts';
+import { date } from '@/utils';
 
 const columns: GridColDef[] = [
   { field: 'id', headerName: 'ID', width: 100 },
-  { field: 'fullName', headerName: 'Nombre Completo', width: 300 },
-
+  {
+    field: 'fullName',
+    headerName: 'Nombre Completo',
+    width: 250,
+    headerAlign: 'center',
+    align: 'center',
+  },
+  {
+    field: 'numberOfItems',
+    headerName: 'N. Productos',
+    width: 250,
+    headerAlign: 'center',
+    align: 'center',
+  },
+  {
+    field: 'createdAt',
+    headerName: 'Fecha',
+    width: 150,
+    headerAlign: 'center',
+    align: 'center',
+  },
+  {
+    field: 'total',
+    headerName: 'Total',
+    width: 150,
+    headerAlign: 'center',
+    align: 'center',
+  },
   {
     field: 'paid',
     headerName: 'Pagada',
     description: 'Muestra información si está pagada la orden o no',
     width: 200,
+    headerAlign: 'center',
+    align: 'center',
     renderCell: (params: GridRenderCellParams) => {
       return params.row.paid ? (
         <Chip color="success" label="Pagada" variant="outlined" />
@@ -36,6 +65,8 @@ const columns: GridColDef[] = [
     headerName: 'Ver orden',
     width: 200,
     sortable: false,
+    headerAlign: 'center',
+    align: 'center',
     renderCell: (params: GridRenderCellParams) => {
       return (
         <NextLink
@@ -54,12 +85,16 @@ type Props = {
 };
 
 const HistoryPage: NextPage<Props> = ({ orders }) => {
+  console.log(orders);
   const rows = orders.map((order, index) => {
     return {
       id: index + 1,
       paid: order.isPaid,
       fullName: `${order.shippingAddress.firstName} ${order.shippingAddress.lastName}`,
       orderId: order._id,
+      createdAt: date.formatDateShort(order.createdAt!),
+      numberOfItems: order.numberOfItems,
+      total: `$ ${order.total}`,
     };
   });
 
@@ -68,29 +103,31 @@ const HistoryPage: NextPage<Props> = ({ orders }) => {
       title={'Historial de ordenes'}
       pageDescription={'Historial de ordenes del cliente'}
     >
-      <Box padding='30px 40px'>
-      <Typography variant="h1" component="h1">
-        Historial de ordenes
-      </Typography>
+      <Box padding="30px 40px">
+        <Typography variant="h1" component="h1">
+          Historial de ordenes
+        </Typography>
 
-      <Grid container className="fadeIn">
-        <Grid item xs={12} sx={{ height: 460, width: '100%' }}>
-          <DataGrid
-            rows={rows}
-            columns={columns}
-            localeText={{
-              toolbarDensity: 'Size',
-              toolbarDensityLabel: 'Size',
-              toolbarDensityCompact: 'Small',
-              toolbarDensityStandard: 'Medium',
-              toolbarDensityComfortable: 'Large',
-            }}
-            slots={{
-              toolbar: GridToolbar,
-            }}
-          />
+        <Grid container className="fadeIn">
+          <Grid item xs={12} sx={{ height: 460, width: '100%' }}>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              localeText={{
+                toolbarDensity: 'Size',
+                toolbarDensityLabel: 'Size',
+                toolbarDensityCompact: 'Small',
+                toolbarDensityStandard: 'Medium',
+                toolbarDensityComfortable: 'Large',
+              }}
+              slots={{
+                toolbar: GridToolbar,
+              }}
+              checkboxSelection
+              disableRowSelectionOnClick
+            />
+          </Grid>
         </Grid>
-      </Grid>
       </Box>
     </ShopLayout>
   );
