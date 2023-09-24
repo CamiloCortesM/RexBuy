@@ -1,5 +1,5 @@
-import Image from 'next/image';
 import { GetStaticPaths, GetStaticProps, NextPage } from 'next';
+import Image from 'next/image';
 import { Box, Divider, Grid, Typography } from '@mui/material';
 import { ShopLayout } from '../../components/layouts';
 import {
