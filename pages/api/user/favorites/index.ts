@@ -9,11 +9,14 @@ type Data =
   | {
       message: string;
     }
-  | IFavorite;
+  | IFavorite
+  | IFavorite[];
 
 const handler = (req: NextApiRequest, res: NextApiResponse<Data>) => {
   db.connect();
   switch (req.method) {
+    case 'GET':
+      return getAllFavoriteProductsForUser(req, res);
     case 'POST':
       return newFavoriteProduct(req, res);
     default:
@@ -47,6 +50,24 @@ const newFavoriteProduct = async (
   await favorite.save();
 
   return res.status(200).json(favorite);
+};
+
+const getAllFavoriteProductsForUser = async (
+  req: NextApiRequest,
+  res: NextApiResponse<Data>
+) => {
+  const session: any = await getSession({ req });
+  if (!session) {
+    return res
+      .status(401)
+      .json({ message: 'You must be logged in to add to favorites' });
+  }
+
+  const id = session.user._id;
+
+  const favoriteProducts = await Favorite.find({ user: id });
+
+  return res.status(200).json(favoriteProducts);
 };
 
 export default handler;
