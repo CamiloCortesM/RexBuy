@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Box, Button } from '@mui/material';
 
-import styles from './ItemSelector.module.css';
+import './ItemSelector.module.css';
 
 type Props = {
   onSelectedSize: (value: string, name: string) => void;
@@ -23,7 +23,7 @@ export const ItemSelector: FC<Props> = ({
           key={item}
           size="small"
           color={selectedItem === item ? 'secondary' : 'info'}
-          className={selectedItem === item ? styles['btn-item-selected'] : ''}
+          className={selectedItem === item ? 'btn-item-selected' : ''}
           onClick={() => onSelectedSize(item, itemName)}
         >
           {item}
