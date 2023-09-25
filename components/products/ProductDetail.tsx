@@ -252,7 +252,7 @@ export const ProductDetail: FC<Props> = ({ product }) => {
 
       <Box sx={{ mt: 3 }}>
         <Typography variant="subtitle2">Descripción</Typography>
-        <Typography variant="body2">{product.description}</Typography>
+        <Typography variant="body2" sx={{whiteSpace:'pre-line'}}>{product.description}</Typography>
       </Box>
     </Box>
   );
