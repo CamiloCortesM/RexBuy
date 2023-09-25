@@ -7,7 +7,10 @@ const nextConfig = {
     },
   },
   images: {
-      unoptimized: true
+    unoptimized: true,
+  },
+  env: {
+    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
   },
 };
 
