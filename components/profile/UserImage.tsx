@@ -4,7 +4,7 @@ import { useSession } from 'next-auth/react';
 import { Avatar, Badge, Button, Stack } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 import { IUser } from '@/interfaces';
 
 type Props = {

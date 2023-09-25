@@ -11,7 +11,7 @@ import {
 } from '@mui/material';
 import { CreditScoreOutlined } from '@mui/icons-material';
 import { PayPalButtons } from '@paypal/react-paypal-js';
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 import { OrderSummary } from '../cart';
 import { ShippingAddress } from '@/interfaces';
 import { AddressInfo } from './AddressInfo';

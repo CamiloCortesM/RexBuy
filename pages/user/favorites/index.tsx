@@ -1,4 +1,4 @@
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 import { CardFavorite } from '@/components/favorites/CardFavorite';
 import { ShopLayout } from '@/components/layouts';
 import { dbFavorites } from '@/database';

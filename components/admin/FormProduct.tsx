@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { SaveOutlined } from '@mui/icons-material';
 import { Box, Button, Grid } from '@mui/material';
 
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 import {
   IProduct,
   PriceAndStockVariations,

@@ -7,7 +7,7 @@ import { ItemCounter } from '../ui';
 import { ItemSelector } from './ItemSelector';
 import { AuthContext, CartContext } from '@/context';
 import { AlertErrorMessage } from '../auth';
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 
 type Props = {
   product: IProduct;

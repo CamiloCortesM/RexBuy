@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form';
 import { Box, Button } from '@mui/material';
 import LoadingButton from '@mui/lab/LoadingButton';
 
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 
 import { ShopLayout } from '@/components/layouts';
 import { IReview, ReviewData } from '@/interfaces';

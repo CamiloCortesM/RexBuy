@@ -10,7 +10,7 @@ import {
   FormLabel,
   Grid,
 } from '@mui/material';
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
 import { ProductManagementData } from '@/interfaces';
 

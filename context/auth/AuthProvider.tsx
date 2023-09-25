@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { AuthContext, authReducer } from './';
 import { IUser } from '@/interfaces';
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 
 export interface AuthState {
   isLoggedIn: boolean;
