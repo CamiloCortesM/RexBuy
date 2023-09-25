@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import Image from 'next/image';
-import style from './BannerImage.module.css';
 
 
 type Props = {
@@ -15,8 +14,8 @@ export const BannerImage: FC<Props> = ({
   direction = 'left',
 }) => {
   const imageClass =
-    direction === 'left' ? style.left_image : style.right_image;
+    direction === 'left' ? 'left_image' : 'right_image';
   return (
-    <Image width={300} height={140} src={src} alt={alt} className={`${style.banner_img} ${imageClass}`} />
+    <Image width={300} height={140} src={src} alt={alt} className='banner_img imageClass' />
   );
 };

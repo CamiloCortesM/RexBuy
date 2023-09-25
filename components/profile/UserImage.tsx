@@ -6,7 +6,6 @@ import { styled } from '@mui/material/styles';
 
 import { rexbuyApi } from '@/api';
 import { IUser } from '@/interfaces';
-import style from './Successfully.module.css';
 
 type Props = {
   user: IUser;
@@ -61,7 +60,7 @@ export const UserImage: FC<Props> = ({ user, updateUser }) => {
   return (
     <>
       <Button
-        className={successfully ? `${style.pulse} ${style.circle}` : ''}
+        className={successfully ? 'pulse circle' : ''}
         component="label"
         style={{ height: '62px', borderRadius: '50%', width: '62px' }}
       >
