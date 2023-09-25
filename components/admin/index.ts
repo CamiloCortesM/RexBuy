@@ -11,3 +11,5 @@ export * from './FeatureSelection';
 export * from './PriceAndStockVariations';
 export * from './DashboardSkeleton';
 export * from './DashboardSummary';
+export * from './TableSkeleton';
+export * from './ButtonSkeleton';

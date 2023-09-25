@@ -10,23 +10,50 @@ import {
 import { AdminLayout } from '@/components/layouts';
 import { IOrder, IUser } from '@/interfaces';
 import { formatDate } from '@/utils/date';
+import { TableSkeleton } from '@/components/admin';
 
 const defaultImage = '/profile/default-profile.svg';
 
 const columns: GridColDef[] = [
-  { field: 'id', headerName: 'Orden ID', width: 250 },
+  {
+    field: 'id',
+    headerName: 'Orden ID',
+    width: 250,
+    headerAlign: 'center',
+    align: 'center',
+  },
   {
     field: 'avatar',
     headerName: 'Avatar',
+    headerAlign: 'center',
+    align: 'center',
     width: 60,
     renderCell: ({ row }: GridRenderCellParams) => {
       const userImage = row.avatar || defaultImage;
       return <Avatar src={userImage} alt="user-image" />;
     },
   },
-  { field: 'name', headerName: 'Cliente', width: 250 },
-  { field: 'email', headerName: 'Correo', width: 250 },
-  { field: 'total', headerName: 'Monto total', minWidth: 150 },
+  {
+    field: 'name',
+    headerName: 'Cliente',
+    width: 250,
+    headerAlign: 'center',
+    align: 'center',
+  },
+  {
+    field: 'email',
+    headerName: 'Correo',
+    width: 250,
+    headerAlign: 'center',
+    align: 'center',
+  },
+  {
+    field: 'total',
+    headerName: 'Monto total',
+    minWidth: 150,
+    headerAlign: 'center',
+    align: 'center',
+  },
   {
     field: 'isPaid',
     headerName: 'Pagada',
@@ -38,12 +65,15 @@ const columns: GridColDef[] = [
       );
     },
     minWidth: 120,
+    headerAlign: 'center',
+    align: 'center',
   },
   {
     field: 'noProducts',
     headerName: 'No.Productos',
     align: 'center',
     minWidth: 180,
+    headerAlign: 'center',
   },
   {
     field: 'check',
@@ -56,26 +86,43 @@ const columns: GridColDef[] = [
       );
     },
     minWidth: 160,
+    headerAlign: 'center',
+    align: 'center',
   },
-  { field: 'createdAt', headerName: 'Creada en', width: 250 },
+  {
+    field: 'createdAt',
+    headerName: 'Creada en',
+    width: 250,
+    headerAlign: 'center',
+    align: 'center',
+  },
 ];
 
 const OrdersPage = () => {
-  const { data, error, isLoading } = useSWR<IOrder[]>('/api/admin/orders');
+  const { data, isLoading } = useSWR<IOrder[]>('/api/admin/orders');
 
-  if ((!data && !error) || isLoading) return <></>;
+  if (isLoading)
+    return (
+      <AdminLayout
+        title={'Ordenes'}
+        subTitle={'Mantenimiento de ordenes'}
+        icon={<ConfirmationNumberOutlined />}
+      >
+        <TableSkeleton />
+      </AdminLayout>
+    );
 
   console.log(data);
 
   const rows = data!.map((order) => ({
-    id: order._id,
-    email: (order.user as IUser).email,
-    avatar: (order.user as IUser).userImage,
-    name: (order.user as IUser).name,
-    total: order.total,
-    isPaid: order.isPaid,
+    id        : order._id,
+    email     : (order.user as IUser).email,
+    avatar    : (order.user as IUser).userImage,
+    name      : (order.user as IUser).name,
+    total     : order.total,
+    isPaid    : order.isPaid,
     noProducts: order.numberOfItems,
-    createdAt: formatDate(order.createdAt!),
+    createdAt : formatDate(order.createdAt!),
   }));
   return (
     <AdminLayout

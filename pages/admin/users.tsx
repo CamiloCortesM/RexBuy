@@ -7,22 +7,24 @@ import {
   GridToolbar,
 } from '@mui/x-data-grid';
 import { PeopleOutline } from '@mui/icons-material';
-import { Grid, MenuItem, Select } from '@mui/material';
+import { Avatar, Grid, MenuItem, Select } from '@mui/material';
 
 import { rexbuyApi } from '@/api';
 import { AdminLayout } from '@/components/layouts';
 import { IUser } from '@/interfaces';
 import { AlertErrorMessage } from '@/components/auth';
 import { AuthContext } from '@/context';
+import { TableSkeleton } from '@/components/admin';
+
+const defaultImage = '/profile/default-profile.svg';
 
 const UsersPage = () => {
-  const { data, error, isLoading } = useSWR<IUser[]>('/api/admin/users');
+  const { data, isLoading } = useSWR<IUser[]>('/api/admin/users');
   const [users, setUsers] = useState<IUser[]>([]);
   const [showError, setShowError] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
   const { user } = useContext(AuthContext);
-  console.log(user);
 
   useEffect(() => {
     if (data) {
@@ -30,7 +32,16 @@ const UsersPage = () => {
     }
   }, [data]);
 
-  if ((!data && !error) || isLoading) return <></>;
+  if (isLoading)
+    return (
+      <AdminLayout
+        title={'Usuarios'}
+        subTitle={'Mantenimiento de usuarios'}
+        icon={<PeopleOutline />}
+      >
+        <TableSkeleton />
+      </AdminLayout>
+    );
 
   const onRoleUpdated = async (userId: string, newRole: string) => {
     if (user?.role !== 'admin') {
@@ -60,8 +71,31 @@ const UsersPage = () => {
   };
 
   const columns: GridColDef[] = [
-    { field: 'email', headerName: 'Correo', width: 250 },
-    { field: 'name', headerName: 'Nombre completo', width: 300 },
+    {
+      field: 'avatar',
+      headerName: 'Avatar',
+      width: 60,
+      renderCell: ({ row }: GridRenderCellParams) => {
+        const userImage = row.avatar || defaultImage;
+        return <Avatar src={userImage} alt="user-image" />;
+      },
+      headerAlign: 'center',
+      align: 'center',
+    },
+    {
+      field: 'email',
+      headerName: 'Correo',
+      width: 250,
+      headerAlign: 'center',
+      align: 'center',
+    },
+    {
+      field: 'name',
+      headerName: 'Nombre completo',
+      width: 300,
+      headerAlign: 'center',
+      align: 'center',
+    },
     {
       field: 'role',
       headerName: 'Rol',
@@ -80,14 +114,17 @@ const UsersPage = () => {
           </Select>
         );
       },
+      headerAlign: 'center',
+      align: 'center',
     },
   ];
 
   const rows = users!.map((user) => ({
-    id: user._id,
-    email: user.email,
-    name: user.name,
-    role: user.role,
+    id    : user._id,
+    email : user.email,
+    name  : user.name,
+    role  : user.role,
+    avatar: user.userImage,
   }));
 
   return (

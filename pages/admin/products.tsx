@@ -1,6 +1,5 @@
 import NextLink from 'next/link';
-import { AdminLayout } from '@/components/layouts';
-import { IProduct } from '@/interfaces';
+import useSWR from 'swr';
 import { AddOutlined, CategoryOutlined } from '@mui/icons-material';
 import { Box, Button, CardMedia, Grid, Link } from '@mui/material';
 import {
@@ -9,7 +8,9 @@ import {
   GridRenderCellParams,
   GridToolbar,
 } from '@mui/x-data-grid';
-import useSWR from 'swr';
+import { AdminLayout } from '@/components/layouts';
+import { ButtonSkeleton, TableSkeleton } from '@/components/admin';
+import { IProduct } from '@/interfaces';
 
 const columns: GridColDef[] = [
   {
@@ -59,7 +60,7 @@ const columns: GridColDef[] = [
     },
   },
   {
-    field : 'brand',
+    field: 'brand',
     headerName: 'Marca',
     headerAlign: 'center',
     align: 'center',
@@ -103,20 +104,30 @@ const columns: GridColDef[] = [
 ];
 
 const ProductsPage = () => {
-  const { data, error, isLoading } = useSWR<IProduct[]>('/api/admin/products');
+  const { data, isLoading } = useSWR<IProduct[]>('/api/admin/products');
 
-  if ((!data && !error) || isLoading) return <></>;
+  if (isLoading)
+    return (
+      <AdminLayout
+        title={`Productos (...)`}
+        subTitle={'Mantenimiento de Productos'}
+        icon={<CategoryOutlined />}
+      >
+        <ButtonSkeleton />
+        <TableSkeleton />
+      </AdminLayout>
+    );
 
   const rows = data!.map((product) => ({
-    id     : product._id,
-    img    : product.images[0],
-    title  : product.title,
-    brand  : product.brand,
-    type   : product.type,
-    inStock: product.inStock,
-    price  : product.price,
-    model  : product.model,
-    slug   : product.slug,
+    id      : product._id,
+    img     : product.images[0],
+    title   : product.title,
+    brand   : product.brand,
+    type    : product.type,
+    inStock : product.inStock,
+    price   : product.price,
+    model   : product.model,
+    slug    : product.slug,
     capacity:
       product.capacity!.length > 0 ? product.capacity!.join(', ') : 'No aplica',
     ram: product.ram!.length > 0 ? product.ram!.join(', ') : 'No aplica',
