@@ -14,12 +14,12 @@ import { date } from '@/utils';
 import { useRouter } from 'next/router';
 
 type Props = {
-  title: string;
+  title    : string;
   createdAt: string;
-  image: string;
-  price: number;
-  id: string;
-  slug: string;
+  image    : string;
+  price    : number;
+  id       : string;
+  slug     : string;
   deleteFavoriteProduct: (arg0: string) => void;
 };
 export const CardFavorite: FC<Props> = ({
@@ -38,7 +38,7 @@ export const CardFavorite: FC<Props> = ({
   };
 
   return (
-    <Grid item xs={12} sm={6} md={4} lg={3}>
+    <Grid item xs={12} sm={6} md={4}>
       <Card
         sx={{
           width: '100%',

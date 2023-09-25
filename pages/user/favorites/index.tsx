@@ -4,7 +4,7 @@ import { ShopLayout } from '@/components/layouts';
 import { dbFavorites } from '@/database';
 import { IFavorite } from '@/interfaces';
 import { FavoriteBorderSharp } from '@mui/icons-material';
-import { Box, Divider, Grid, IconButton, Typography } from '@mui/material';
+import { Box, Divider, Grid, Typography } from '@mui/material';
 import { GetServerSideProps, NextPage } from 'next';
 import { getSession } from 'next-auth/react';
 import { useState } from 'react';
