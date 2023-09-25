@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { Grid, Typography } from '@mui/material';
+import { Box, Grid, Skeleton, Typography } from '@mui/material';
 import {
   AccessTimeOutlined,
   AttachMoneyOutlined,
@@ -17,7 +17,7 @@ import { AdminLayout } from '@/components/layouts';
 import { DashboardSummaryResponse } from '@/interfaces';
 
 const DashboardPage = () => {
-  const { data, error, isLoading } = useSWR<DashboardSummaryResponse>(
+  const { data, isLoading } = useSWR<DashboardSummaryResponse>(
     '/api/admin/dashboard',
     {
       refreshInterval: 30 * 1000, // 30 seconds
@@ -34,17 +34,28 @@ const DashboardPage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  if (isLoading) return <div>loading...</div>; // TODO change loading
-
-  if (!error && !data) {
-    return <></>;
-  }
-
-  if (error) {
-    console.log(error);
-    return <Typography>Error al cargar la informacion</Typography>;
-  }
-
+  const numCycles = 8;
+  if (isLoading)
+    return (
+      <AdminLayout
+        title="Dashboard"
+        subTitle="Estadisticas generales"
+        icon={<DashboardOutlined />}
+      >
+        <Grid container spacing={2}>
+          {[...Array(numCycles)].map((_, index) => (
+            <Grid item xs={12} sm={4} md={3} key={index}>
+              <Skeleton
+                sx={{ bgcolor: 'grey.300' }}
+                variant="rectangular"
+                width="100%"
+                height={120}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </AdminLayout>
+    );
 
   const {
     numberOfOrders,
