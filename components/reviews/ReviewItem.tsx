@@ -28,7 +28,7 @@ export const ReviewItem: FC<Props> = ({ review, isCompleted = true }) => {
 
   const OnNewReview = (newValue: number | null) => {
     router.push(
-      `http://localhost:3000/reviews/new/${review._id}?rating=${newValue}`
+      `/reviews/new/${review._id}?rating=${newValue}`
     );
   };
 
@@ -126,7 +126,7 @@ export const ReviewItem: FC<Props> = ({ review, isCompleted = true }) => {
               },
             }}
             onClick={() =>
-              router.push(`http://localhost:3000/reviews/new/${review._id}`)
+              router.push(`reviews/new/${review._id}`)
             }
           >
             Editar reseña
