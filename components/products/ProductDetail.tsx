@@ -52,7 +52,7 @@ export const ProductDetail: FC<Props> = ({ product }) => {
     };
 
     checkIsProductFavorite();
-  }, [product._id, isLoggedIn]);
+  }, [product._id, isLoggedIn,user]);
 
   const handleFavoriteToggle = async () => {
     if (!user) {
