@@ -8,39 +8,31 @@ export const checkUserEmailPassword = async (
   password: string
 ) => {
   await db.connect();
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).lean();
 
   if (!user) return null;
 
   if (!bcrypt.compareSync(password, user.password)) return null;
 
-  const { _id, role, name, cellphone, userImage, department, city, address } =
-    user;
+  const { password: userPassword, updatedAt, createdAt, __v, ...rest } = user;
 
   return {
-    _id,
-    email: email.toLowerCase(),
-    role,
-    name,
-    cellphone,
-    userImage,
-    department,
-    city,
-    address,
+    ...rest,
   };
 };
 
-export const oAuthToDbUser = async (oAuthEmail: string, oAutName: string) => {
+export const oAuthToDbUser = async (
+  oAuthEmail: string,
+  oAutName: string,
+  image: string
+) => {
   await db.connect();
-  const user = await User.findOne({ email: oAuthEmail });
+  const user = await User.findOne({ email: oAuthEmail }).lean();
 
   if (user) {
-    const { _id, role, name, email } = user;
+    const { password, updatedAt, createdAt, __v, ...rest } = user;
     return {
-      _id,
-      role,
-      name,
-      email,
+      ...rest,
     };
   }
 
@@ -49,13 +41,15 @@ export const oAuthToDbUser = async (oAuthEmail: string, oAutName: string) => {
     name: oAutName,
     password: '@',
     role: 'client',
+    userImage: image,
   });
 
   await newUser.save();
 
-  const { _id, role, name, email } = newUser;
-
-  return { _id, role, name, email };
+  const { password, updatedAt, createdAt, __v, ...rest } = newUser;
+  return {
+    ...rest,
+  };
 };
 
 export const updateUserInformation = async (email: string) => {

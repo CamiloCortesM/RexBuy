@@ -110,7 +110,7 @@ export const FormRegister: FC<Props> = ({
           <Button
             type="submit"
             color="secondary"
-            className="circular-btn"
+            className="circular-btn-blue"
             size="large"
             fullWidth
           >

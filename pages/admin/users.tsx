@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import useSWR from 'swr';
 import {
   DataGrid,
@@ -7,17 +7,24 @@ import {
   GridToolbar,
 } from '@mui/x-data-grid';
 import { PeopleOutline } from '@mui/icons-material';
-import { Grid, MenuItem, Select } from '@mui/material';
+import { Avatar, Grid, MenuItem, Select } from '@mui/material';
 
 import { rexbuyApi } from '@/api';
 import { AdminLayout } from '@/components/layouts';
 import { IUser } from '@/interfaces';
 import { AlertErrorMessage } from '@/components/auth';
+import { AuthContext } from '@/context';
+import { TableSkeleton } from '@/components/admin';
+
+const defaultImage = '/profile/default-profile.svg';
 
 const UsersPage = () => {
-  const { data, error, isLoading } = useSWR<IUser[]>('/api/admin/users');
+  const { data, isLoading } = useSWR<IUser[]>('/api/admin/users');
   const [users, setUsers] = useState<IUser[]>([]);
   const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
     if (data) {
@@ -25,9 +32,25 @@ const UsersPage = () => {
     }
   }, [data]);
 
-  if ((!data && !error) || isLoading) return <></>;
+  if (isLoading)
+    return (
+      <AdminLayout
+        title={'Usuarios'}
+        subTitle={'Mantenimiento de usuarios'}
+        icon={<PeopleOutline />}
+      >
+        <TableSkeleton />
+      </AdminLayout>
+    );
 
   const onRoleUpdated = async (userId: string, newRole: string) => {
+    if (user?.role !== 'admin') {
+      setErrorMessage('Privilegios insuficientes para esta funcionalidad');
+      setShowError(true);
+      setTimeout(() => setShowError(false), 4000);
+      return;
+    }
+
     const previousUsers = users.map((user) => ({ ...user }));
     const updatedUsers = users.map((user) => ({
       ...user,
@@ -41,14 +64,38 @@ const UsersPage = () => {
     } catch (error) {
       console.log(error);
       setUsers(previousUsers);
+      setErrorMessage('Error del servidor al actualizar el usuario');
       setShowError(true);
       setTimeout(() => setShowError(false), 4000);
     }
   };
 
   const columns: GridColDef[] = [
-    { field: 'email', headerName: 'Correo', width: 250 },
-    { field: 'name', headerName: 'Nombre completo', width: 300 },
+    {
+      field: 'avatar',
+      headerName: 'Avatar',
+      width: 60,
+      renderCell: ({ row }: GridRenderCellParams) => {
+        const userImage = row.avatar || defaultImage;
+        return <Avatar src={userImage} alt="user-image" />;
+      },
+      headerAlign: 'center',
+      align: 'center',
+    },
+    {
+      field: 'email',
+      headerName: 'Correo',
+      width: 250,
+      headerAlign: 'center',
+      align: 'center',
+    },
+    {
+      field: 'name',
+      headerName: 'Nombre completo',
+      width: 300,
+      headerAlign: 'center',
+      align: 'center',
+    },
     {
       field: 'role',
       headerName: 'Rol',
@@ -67,14 +114,17 @@ const UsersPage = () => {
           </Select>
         );
       },
+      headerAlign: 'center',
+      align: 'center',
     },
   ];
 
   const rows = users!.map((user) => ({
-    id   : user._id,
-    email: user.email,
-    name : user.name,
-    role : user.role,
+    id    : user._id,
+    email : user.email,
+    name  : user.name,
+    role  : user.role,
+    avatar: user.userImage,
   }));
 
   return (
@@ -84,7 +134,7 @@ const UsersPage = () => {
       icon={<PeopleOutline />}
     >
       <AlertErrorMessage
-        errorMessage="No se pudo actualizar el role del usuario"
+        errorMessage={errorMessage}
         showError={showError}
         setOpen={setShowError}
       />

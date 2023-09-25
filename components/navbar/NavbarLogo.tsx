@@ -5,15 +5,22 @@ import { Link } from '@mui/material';
 export const NavbarLogo = () => {
   return (
     <NextLink href="/" passHref legacyBehavior>
-      <Link height={'90%'}>
+      <Link
+        height={'100%'}
+        sx={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
         <Image
           width={80}
           height={70}
-          src="/logo.png"
+          src="https://res.cloudinary.com/dnba3kkh6/image/upload/v1695598349/logofinal2_feapfb.webp"
           alt="logo-rexbuy"
           style={{
             width: 'auto',
-            height: '90%',
+            height: '55%',
           }}
         />
       </Link>

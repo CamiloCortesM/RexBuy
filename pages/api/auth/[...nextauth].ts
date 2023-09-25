@@ -61,12 +61,12 @@ const authOptions: NextAuthOptions = {
     async jwt({ token, account, user, session, trigger }) {
       if (account) {
         token.accessToken = account.access_token;
-
         switch (account.type) {
           case 'oauth':
             token.user = await dbUsers.oAuthToDbUser(
               user?.email || '',
-              user?.name || ''
+              user?.name || '',
+              user?.image || ''
             );
             break;
 
