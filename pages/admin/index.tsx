@@ -1,18 +1,9 @@
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { Box, Grid, Skeleton, Typography } from '@mui/material';
-import {
-  AccessTimeOutlined,
-  AttachMoneyOutlined,
-  CategoryOutlined,
-  CreditCardOffOutlined,
-  CreditCardOutlined,
-  DashboardOutlined,
-  GroupOutlined,
-  ProductionQuantityLimitsOutlined,
-} from '@mui/icons-material';
 
-import { SummaryTile } from '@/components/admin';
+import { DashboardOutlined } from '@mui/icons-material';
+
+import { DashboardSkeleton, DashboardSummary } from '@/components/admin';
 import { AdminLayout } from '@/components/layouts';
 import { DashboardSummaryResponse } from '@/interfaces';
 
@@ -34,7 +25,6 @@ const DashboardPage = () => {
     return () => clearInterval(interval);
   }, []);
 
-  const numCycles = 8;
   if (isLoading)
     return (
       <AdminLayout
@@ -42,139 +32,18 @@ const DashboardPage = () => {
         subTitle="Estadisticas generales"
         icon={<DashboardOutlined />}
       >
-        <Grid container spacing={2}>
-          {[...Array(numCycles)].map((_, index) => (
-            <Grid item xs={12} sm={4} md={3} key={index}>
-              <Skeleton
-                sx={{ bgcolor: 'grey.300' }}
-                variant="rectangular"
-                width="100%"
-                height={120}
-              />
-            </Grid>
-          ))}
-        </Grid>
+        <DashboardSkeleton numCycles={8} />
       </AdminLayout>
     );
 
-  const {
-    numberOfOrders,
-    paidOrders,
-    notPaidOrders,
-    numberOfClients,
-    numberOfProducts,
-    productsWithNoInventory,
-    lowInventory,
-  } = data!;
-
+  if (!data) return;
   return (
     <AdminLayout
       title="Dashboard"
       subTitle="Estadisticas generales"
       icon={<DashboardOutlined />}
     >
-      <Grid container spacing={2}>
-        <SummaryTile
-          icon={
-            <CreditCardOutlined
-              color="secondary"
-              sx={{
-                fontSize: 40,
-              }}
-            />
-          }
-          subTitle="Ordenes totales"
-          title={numberOfOrders}
-        />
-        <SummaryTile
-          icon={
-            <AttachMoneyOutlined
-              color="success"
-              sx={{
-                fontSize: 40,
-              }}
-            />
-          }
-          subTitle="Ordenes pagadas"
-          title={paidOrders}
-        />
-        <SummaryTile
-          icon={
-            <CreditCardOffOutlined
-              color="error"
-              sx={{
-                fontSize: 40,
-              }}
-            />
-          }
-          subTitle="Ordenes pendientes"
-          title={notPaidOrders}
-        />
-        <SummaryTile
-          icon={
-            <GroupOutlined
-              color="primary"
-              sx={{
-                fontSize: 40,
-              }}
-            />
-          }
-          subTitle="Clientes"
-          title={numberOfClients}
-        />
-
-        <SummaryTile
-          icon={
-            <CategoryOutlined
-              color="warning"
-              sx={{
-                fontSize: 40,
-              }}
-            />
-          }
-          subTitle="Productos"
-          title={numberOfProducts}
-        />
-
-        <SummaryTile
-          icon={
-            <GroupOutlined
-              color="error"
-              sx={{
-                fontSize: 40,
-              }}
-            />
-          }
-          subTitle="Sin Existencias"
-          title={productsWithNoInventory}
-        />
-
-        <SummaryTile
-          icon={
-            <ProductionQuantityLimitsOutlined
-              color="warning"
-              sx={{
-                fontSize: 40,
-              }}
-            />
-          }
-          subTitle="Bajo inventario"
-          title={lowInventory}
-        />
-
-        <SummaryTile
-          icon={
-            <AccessTimeOutlined
-              color="warning"
-              sx={{
-                fontSize: 40,
-              }}
-            />
-          }
-          subTitle="Actualizacion en:"
-          title={refreshIn}
-        />
-      </Grid>
+      <DashboardSummary data={data} refreshIn={refreshIn} />
     </AdminLayout>
   );
 };

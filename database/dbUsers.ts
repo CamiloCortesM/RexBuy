@@ -8,7 +8,7 @@ export const checkUserEmailPassword = async (
   password: string
 ) => {
   await db.connect();
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).lean();
 
   if (!user) return null;
 
