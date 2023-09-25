@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Box, Button } from '@mui/material';
 
-import styles from './itemSelector.module.css';
+import styles from './ItemSelector.module.css';
 
 type Props = {
   onSelectedSize: (value: string, name: string) => void;
