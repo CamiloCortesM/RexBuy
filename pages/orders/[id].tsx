@@ -40,7 +40,7 @@ const OrderPage: NextPage<Props> = ({ order }) => {
     >
       <Grid container className="fadeIn" padding='40px 40px' >
         <Grid item xs={12} sm={7}>
-          <Typography variant="h1" component="h1">
+          <Typography variant="h1" component="h1" fontSize={{xs:'1rem',md:'1.7rem'}} >
             Orden: {_id}
           </Typography>
 

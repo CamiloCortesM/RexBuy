@@ -3,10 +3,12 @@ import { UiContext, uiReducer } from '.';
 
 export interface UiState {
   isMenuOpen: boolean;
+  isSearching: boolean;
 }
 
 const UI_INITIAL_STATE: UiState = {
   isMenuOpen: false,
+  isSearching: false,
 };
 
 export const UiProvider: FC<PropsWithChildren> = ({ children }) => {
@@ -16,11 +18,16 @@ export const UiProvider: FC<PropsWithChildren> = ({ children }) => {
     dispatch({ type: '[UI] - ToggleMenu' });
   };
 
+  const activateSearchInput = () => {
+    dispatch({ type: '[UI] - activeSearchInput' });
+  };
+
   return (
     <UiContext.Provider
       value={{
         ...state,
         toggleSideMenu,
+        activateSearchInput,
       }}
     >
       {children}

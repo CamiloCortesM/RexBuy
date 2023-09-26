@@ -85,7 +85,6 @@ type Props = {
 };
 
 const HistoryPage: NextPage<Props> = ({ orders }) => {
-  console.log(orders);
   const rows = orders.map((order, index) => {
     return {
       id: index + 1,
@@ -109,7 +108,7 @@ const HistoryPage: NextPage<Props> = ({ orders }) => {
         </Typography>
 
         <Grid container className="fadeIn">
-          <Grid item xs={12} sx={{ height: 460, width: '100%' }}>
+          <Grid item xs={12} sx={{ height: 420, width: '100%' }}>
             <DataGrid
               rows={rows}
               columns={columns}

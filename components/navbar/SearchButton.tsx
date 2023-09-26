@@ -1,9 +1,10 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
 
 import { IconButton, Input, InputAdornment } from '@mui/material';
 import { ClearOutlined, SearchOutlined } from '@mui/icons-material';
 
 import { SEARCHABLE_COMPONENTS } from '@/constants/navbarConstants';
+import { UiContext } from '@/context';
 
 type Props = {
   handleSearchTerm: () => void;
@@ -19,9 +20,10 @@ export const SearchButton: FC<Props> = ({
   toggleSearch,
   component = SEARCHABLE_COMPONENTS.Navbar,
 }) => {
+  const { isSearching } = useContext(UiContext);
   return (
     <Input
-      autoFocus
+      autoFocus={isSearching}
       className="fadeIn"
       value={searchTerm}
       onChange={(e) => setSearchTerm(e.target.value)}

@@ -15,7 +15,7 @@ import {
 
 export const Navbar = () => {
   const { push } = useRouter();
-  const { toggleSideMenu } = useContext(UiContext);
+  const { toggleSideMenu, activateSearchInput } = useContext(UiContext);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [isSearchVisible, setIsSearchVisible] = useState(false);
@@ -30,9 +30,11 @@ export const Navbar = () => {
   };
 
   return (
-    <AppBar sx={{
-      borderBottom:'solid 1px #e9eaec'
-    }}>
+    <AppBar
+      sx={{
+        borderBottom: 'solid 1px #e9eaec',
+      }}
+    >
       <Toolbar>
         <NavbarLogo />
         <Box flex={1} />
@@ -58,7 +60,7 @@ export const Navbar = () => {
           style={{
             display: { xs: 'flex', md: 'none' },
           }}
-          onClick={toggleSideMenu}
+          onClick={activateSearchInput}
         />
         <CartButton />
         <MenuButton />
