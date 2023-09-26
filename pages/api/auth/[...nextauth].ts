@@ -3,6 +3,7 @@ import Credentials from 'next-auth/providers/credentials';
 import GithubProvider from 'next-auth/providers/github';
 
 import { dbUsers } from '@/database';
+import { IUser } from '../../../interfaces/user';
 
 declare module 'next-auth' {
   interface Session {
