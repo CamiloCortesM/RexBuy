@@ -1,7 +1,7 @@
 import { FC, PropsWithChildren, useReducer, useEffect } from 'react';
 import Cookie from 'js-cookie';
 import { BotContext, botReducer } from './';
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 
 export interface botState {
   isLoading: boolean;
