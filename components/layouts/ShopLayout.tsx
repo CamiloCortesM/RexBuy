@@ -3,12 +3,13 @@ import Head from 'next/head';
 
 import { Navbar, SideMenu } from '../ui';
 import { FooterNav } from '../footer';
+import { Chat } from '../chatbot';
 
 type Props = {
-  children       : ReactNode;
-  title          : string;
+  children: ReactNode;
+  title: string;
   pageDescription: string;
-  imageFullUrl?  : string;
+  imageFullUrl?: string;
 };
 
 export const ShopLayout: FC<Props> = ({
@@ -36,6 +37,7 @@ export const ShopLayout: FC<Props> = ({
 
       <SideMenu />
 
+      <Chat />
       <main
         style={{
           margin: '60px auto 20px',
