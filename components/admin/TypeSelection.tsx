@@ -1,22 +1,35 @@
-import { FC } from 'react';
+import { FC, useEffect } from 'react';
 import { UseFormGetValues, UseFormSetValue } from 'react-hook-form';
-import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, capitalize } from '@mui/material';
+import {
+  FormControl,
+  FormControlLabel,
+  FormLabel,
+  Radio,
+  RadioGroup,
+  capitalize,
+} from '@mui/material';
 
 import { ProductManagementData } from '@/interfaces';
 import { SHOP_CONSTANTS } from '@/constants';
 
 type Props = {
   getValues: UseFormGetValues<ProductManagementData>;
-  setValue : UseFormSetValue<ProductManagementData>;
+  setValue: UseFormSetValue<ProductManagementData>;
 };
 
-export const TypeSelection:FC<Props> = ({getValues,setValue}) => {
+export const TypeSelection: FC<Props> = ({ getValues, setValue }) => {
+  useEffect(() => {
+    if (!getValues('type')) {
+      setValue('type', 'celulares');
+    }
+  }, []);
+
   return (
     <FormControl sx={{ mb: 1 }}>
       <FormLabel>Tipo</FormLabel>
       <RadioGroup
         row
-        value={getValues('type')}
+        value={getValues('type') || 'celulares'}
         onChange={({ target }) =>
           setValue('type', target.value, { shouldValidate: true })
         }

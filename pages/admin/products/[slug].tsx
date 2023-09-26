@@ -16,19 +16,24 @@ type Props = {
 
 const ProductAdminPage: FC<Props> = ({ product }) => {
   const [showAlert, setShowAlert] = useState(false);
+  const [successMessage, setSuccessMessage] = useState('');
 
   return (
     <AdminLayout
       title={'Producto'}
-      subTitle={`Editando: ${product.title}`}
+      subTitle={product._id ? `Editando: ${product.title}` : 'Creando Producto'}
       icon={<DriveFileRenameOutline />}
     >
       <AlertSuccessMessage
-        message="Producto Actualizado Correctamente"
+        message={successMessage}
         setOpen={setShowAlert}
         showAlert={showAlert}
       />
-      <FormProduct product={product} setShowAlert={setShowAlert} />
+      <FormProduct
+        product={product}
+        setShowAlert={setShowAlert}
+        setSuccessMessage={setSuccessMessage}
+      />
     </AdminLayout>
   );
 };
@@ -41,7 +46,6 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
   if (slug === 'new') {
     const tempProduct = JSON.parse(JSON.stringify(new Product()));
     delete tempProduct._id;
-    // tempProduct.images = ['img1.jpg', 'img2.jpg'];
     product = tempProduct;
   } else {
     product = await dbProducts.getProductBySlug(slug.toString());
