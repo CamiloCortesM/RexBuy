@@ -22,7 +22,7 @@ export const TypeSelection: FC<Props> = ({ getValues, setValue }) => {
     if (!getValues('type')) {
       setValue('type', 'celulares');
     }
-  }, []);
+  }, [getValues,setValue]);
 
   return (
     <FormControl sx={{ mb: 1 }}>
