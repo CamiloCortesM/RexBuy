@@ -5,7 +5,7 @@
 
 # environments
 .env
-
+.env.production
 # dependencies
 /node_modules
 /.pnp

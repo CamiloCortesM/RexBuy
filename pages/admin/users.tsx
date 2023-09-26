@@ -9,7 +9,7 @@ import {
 import { PeopleOutline } from '@mui/icons-material';
 import { Avatar, Grid, MenuItem, Select } from '@mui/material';
 
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 import { AdminLayout } from '@/components/layouts';
 import { IUser } from '@/interfaces';
 import { AlertErrorMessage } from '@/components/auth';

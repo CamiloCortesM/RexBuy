@@ -7,7 +7,7 @@ import { ItemCounter } from '../ui';
 import { ItemSelector } from './ItemSelector';
 import { AuthContext, CartContext } from '@/context';
 import { AlertErrorMessage } from '../auth';
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 
 type Props = {
   product: IProduct;
@@ -52,7 +52,7 @@ export const ProductDetail: FC<Props> = ({ product }) => {
     };
 
     checkIsProductFavorite();
-  }, [product._id, isLoggedIn]);
+  }, [product._id, isLoggedIn,user]);
 
   const handleFavoriteToggle = async () => {
     if (!user) {

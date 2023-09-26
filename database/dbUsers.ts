@@ -46,9 +46,27 @@ export const oAuthToDbUser = async (
 
   await newUser.save();
 
-  const { password, updatedAt, createdAt, __v, ...rest } = newUser;
+  const {
+    _id,
+    name,
+    email,
+    role,
+    userImage,
+    department,
+    city,
+    address,
+    cellphone,
+  } = newUser;
   return {
-    ...rest,
+    _id,
+    name,
+    email,
+    role,
+    userImage,
+    department,
+    city,
+    address,
+    cellphone,
   };
 };
 

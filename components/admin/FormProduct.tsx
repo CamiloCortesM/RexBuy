@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
-import { SaveOutlined } from '@mui/icons-material';
+import { ArrowBack, SaveOutlined } from '@mui/icons-material';
 import { Box, Button, Grid } from '@mui/material';
 
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 import {
   IProduct,
   PriceAndStockVariations,
@@ -13,11 +13,16 @@ import {
 import { ProductInfo, ProductConfiguration } from './';
 
 type Props = {
-  product     : IProduct;
+  product: IProduct;
   setShowAlert: (arg0: boolean) => void;
+  setSuccessMessage: (arg0: string) => void;
 };
 
-export const FormProduct: FC<Props> = ({ product, setShowAlert }) => {
+export const FormProduct: FC<Props> = ({
+  product,
+  setShowAlert,
+  setSuccessMessage,
+}) => {
   const router = useRouter();
   const [isSaving, setIsSaving] = useState(false);
 
@@ -232,7 +237,6 @@ export const FormProduct: FC<Props> = ({ product, setShowAlert }) => {
   }, [watch, setValue, getValues]);
 
   const onSubmit = async (form: ProductManagementData) => {
-    console.log({ form });
     if (form.images.length < 2) return alert('Minimo 2 imagenes');
 
     setShowAlert(false);
@@ -246,8 +250,13 @@ export const FormProduct: FC<Props> = ({ product, setShowAlert }) => {
       });
 
       if (!form._id) {
+        setSuccessMessage('Producto creado correctamente');
+        setShowAlert(true);
+        setTimeout(() => setShowAlert(false), 4000);
+        setIsSaving(false);
         router.replace(`/admin/products/${form.slug}`);
       } else {
+        setSuccessMessage('Producto Actualizado Correctamente');
         setShowAlert(true);
         setTimeout(() => setShowAlert(false), 4000);
         setIsSaving(false);
@@ -258,9 +267,23 @@ export const FormProduct: FC<Props> = ({ product, setShowAlert }) => {
     }
   };
 
+  const handleCancel = () => {
+    router.replace('/admin/products');
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <Box display="flex" justifyContent="end" sx={{ mb: 1 }}>
+      <Box display="flex" justifyContent="end" gap={1} sx={{ mb: 1 }}>
+        <Button
+          color="error"
+          variant="outlined"
+          startIcon={<ArrowBack />}
+          sx={{ width: '150px' }}
+          disabled={isSaving}
+          onClick={handleCancel}
+        >
+          Atrás
+        </Button>
         <Button
           color="secondary"
           startIcon={<SaveOutlined />}

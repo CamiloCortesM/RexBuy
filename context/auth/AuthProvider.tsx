@@ -5,7 +5,7 @@ import axios from 'axios';
 
 import { AuthContext, authReducer } from './';
 import { IUser } from '@/interfaces';
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 
 export interface AuthState {
   isLoggedIn: boolean;
@@ -24,7 +24,12 @@ export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
 
   useEffect(() => {
     if (status === 'authenticated') {
-      dispatch({ type: '[Auth] - Login', payload: data?.user as IUser });
+      const user = data?.user as IUser;
+      dispatch({ type: '[Auth] - Login', payload: user });
+      Cookies.set('firstName', Cookies.get('firstName') || user?.name || '');
+      Cookies.set('address', Cookies.get('address') || user?.address || '');
+      Cookies.set('city', Cookies.get('city') || user?.city || '');
+      Cookies.set('phone', Cookies.get('phone') || user?.cellphone || '');
     }
   }, [status, data]);
 

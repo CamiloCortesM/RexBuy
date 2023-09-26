@@ -5,14 +5,13 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
 import {
   Box,
-  Button,
   Divider,
   Modal,
   TextField,
   Typography,
 } from '@mui/material';
 
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 import { IUser } from '@/interfaces';
 
 type Inputs = {

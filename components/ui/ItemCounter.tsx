@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react';
 import { Box, Chip, IconButton, Typography } from '@mui/material';
 import { AddCircleOutline, RemoveCircleOutline } from '@mui/icons-material';
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 
 type Props = {
   currentValue: number;

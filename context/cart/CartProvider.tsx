@@ -3,7 +3,7 @@ import Cookie from 'js-cookie';
 import axios from 'axios';
 
 import { CartContext, cartReducer } from './';
-import { rexbuyApi } from '@/api';
+import { rexbuyApi } from '@/axios';
 import { ICartProduct, IOrder, ShippingAddress } from '@/interfaces';
 
 export interface CartState {

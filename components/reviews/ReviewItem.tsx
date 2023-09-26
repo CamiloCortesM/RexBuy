@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { Box, Button, Grid, Rating, Typography } from '@mui/material';
 import StarIcon from '@mui/icons-material/Star';
 
-import styles from './ReviewItem.module.css';
 import { date } from '@/utils';
 
 type Props = {
@@ -29,7 +28,7 @@ export const ReviewItem: FC<Props> = ({ review, isCompleted = true }) => {
 
   const OnNewReview = (newValue: number | null) => {
     router.push(
-      `http://localhost:3000/reviews/new/${review._id}?rating=${newValue}`
+      `/reviews/new/${review._id}?rating=${newValue}`
     );
   };
 
@@ -55,7 +54,7 @@ export const ReviewItem: FC<Props> = ({ review, isCompleted = true }) => {
           width={55}
           height={55}
           alt={review.product.title}
-          className={styles.image_product}
+          className='image_product'
         />
         <Box
           display="flex"
@@ -127,7 +126,7 @@ export const ReviewItem: FC<Props> = ({ review, isCompleted = true }) => {
               },
             }}
             onClick={() =>
-              router.push(`http://localhost:3000/reviews/new/${review._id}`)
+              router.push(`reviews/new/${review._id}`)
             }
           >
             Editar reseña
