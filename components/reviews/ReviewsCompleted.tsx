@@ -3,6 +3,7 @@ import { ReviewItem } from './ReviewItem';
 import { IReview } from '@/interfaces';
 import { EmptyReviewsSection } from './EmptyReviewsSection ';
 import { SvgReviewsCompleted } from './SvgReviewsCompleted';
+import { DISPLAY_EMPTY_REVIEWS } from '@/constants';
 
 type Props = {
   reviews: IReview[];
@@ -17,8 +18,8 @@ export const ReviewsCompleted: FC<Props> = ({ reviews }) => {
         })
       ) : (
         <EmptyReviewsSection
-          title="Sin reseñas aún"
-          description="Comparte tus opiniones sobre los productos que has probado. Visita 'Pendientes' para comenzar a compartir y ayudar a otros."
+          title={DISPLAY_EMPTY_REVIEWS.reviewsCompleted.title}
+          description={DISPLAY_EMPTY_REVIEWS.reviewsCompleted.description}
           svgImage={<SvgReviewsCompleted />}
         />
       )}

@@ -1,13 +1,17 @@
-import { rexbuyApi } from '@/axios';
-import { CardFavorite } from '@/components/favorites/CardFavorite';
-import { ShopLayout } from '@/components/layouts';
-import { dbFavorites } from '@/database';
-import { IFavorite } from '@/interfaces';
-import { FavoriteBorderSharp } from '@mui/icons-material';
-import { Box, Divider, Grid, Typography } from '@mui/material';
+import { useState } from 'react';
 import { GetServerSideProps, NextPage } from 'next';
 import { getSession } from 'next-auth/react';
-import { useState } from 'react';
+import { rexbuyApi } from '@/axios';
+import { Box, Divider, Grid, Typography } from '@mui/material';
+import { FavoriteBorderSharp } from '@mui/icons-material';
+
+import { CardFavorite } from '@/components/favorites/CardFavorite';
+import { SvgFavoriteEmpty } from '@/components/favorites/SvgFavoriteEmpty';
+import { ShopLayout } from '@/components/layouts';
+import { EmptyReviewsSection } from '@/components/reviews';
+import { dbFavorites } from '@/database';
+import { IFavorite } from '@/interfaces';
+import { DISPLAY_EMPTY_FAVORITE } from '@/constants';
 
 type Props = {
   favorites: IFavorite[];
@@ -63,6 +67,11 @@ const FavoritesPage: NextPage<Props> = ({ favorites }) => {
               />
             );
           })}
+          <EmptyReviewsSection
+            title={DISPLAY_EMPTY_FAVORITE.title}
+            description={DISPLAY_EMPTY_FAVORITE.description}
+            svgImage={<SvgFavoriteEmpty />}
+          />
         </Grid>
       </Box>
     </ShopLayout>

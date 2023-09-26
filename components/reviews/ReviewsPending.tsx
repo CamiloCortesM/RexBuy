@@ -2,6 +2,7 @@ import { FC } from 'react';
 import { ReviewItem } from './ReviewItem';
 import { IReview } from '@/interfaces';
 import { SvgReviewsPending, EmptyReviewsSection } from './';
+import { DISPLAY_EMPTY_REVIEWS } from '@/constants';
 
 type Props = {
   reviews: IReview[];
@@ -16,10 +17,8 @@ export const ReviewsPending: FC<Props> = ({ reviews }) => {
         })
       ) : (
         <EmptyReviewsSection
-          title="Estás al día. ¡Gracias por estar al tanto!"
-          description="Has compartido tu opinión sobre todos tus productos. ¡Sigue
-        colaborando con la comunidad añadiendo fotos y comentarios a tus
-        reseñas!"
+          title={DISPLAY_EMPTY_REVIEWS.reviewsPending.title}
+          description={DISPLAY_EMPTY_REVIEWS.reviewsPending.description}
           svgImage={<SvgReviewsPending />}
         />
       )}
