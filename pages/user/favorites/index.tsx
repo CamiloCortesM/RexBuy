@@ -16,7 +16,7 @@ import { DISPLAY_EMPTY_FAVORITE } from '@/constants';
 type Props = {
   favorites: IFavorite[];
 };
-const FavoritesPage: NextPage<Props> = ({ favorites }) => {
+const FavoritesPage: NextPage<Props> = ({ favorites = [] }) => {
   const [favoritesProducts, setFavoritesProducts] = useState<IFavorite[] | []>(
     favorites
   );
@@ -67,11 +67,13 @@ const FavoritesPage: NextPage<Props> = ({ favorites }) => {
               />
             );
           })}
-          <EmptyReviewsSection
-            title={DISPLAY_EMPTY_FAVORITE.title}
-            description={DISPLAY_EMPTY_FAVORITE.description}
-            svgImage={<SvgFavoriteEmpty />}
-          />
+          {favoritesProducts.length === 0 && (
+            <EmptyReviewsSection
+              title={DISPLAY_EMPTY_FAVORITE.title}
+              description={DISPLAY_EMPTY_FAVORITE.description}
+              svgImage={<SvgFavoriteEmpty />}
+            />
+          )}
         </Grid>
       </Box>
     </ShopLayout>
