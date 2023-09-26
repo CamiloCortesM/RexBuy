@@ -112,8 +112,6 @@ const OrdersPage = () => {
       </AdminLayout>
     );
 
-  console.log(data);
-
   const rows = data!.map((order) => ({
     id        : order._id,
     email     : (order.user as IUser).email,
