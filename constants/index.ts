@@ -5,3 +5,4 @@ export * from './homeConstants';
 export * from './footerConstants';
 export * from './aboutConstants';
 export * from './categoryConstants';
+export * from './chatbotConstants';
